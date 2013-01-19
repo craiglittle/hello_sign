@@ -1,12 +1,22 @@
 require 'hello_sign/version'
-require 'hello_sign/account_proxy'
-
-require 'faraday'
+require 'hello_sign/client'
+require 'hello_sign/account'
 
 module HelloSign
+  class << self
+    attr_accessor :email, :password
 
-  def self.account
-    AccountProxy.new
+    def account
+      Account
+    end
+
+    def client
+      @client ||= Client.new(email, password)
+    end
+
+    def configure
+      yield(self)
+    end
+
   end
-
 end

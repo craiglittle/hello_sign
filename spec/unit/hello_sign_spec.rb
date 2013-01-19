@@ -2,8 +2,8 @@ require 'helper'
 
 describe HelloSign do
   describe "::account" do
-    it "returns an account proxy object" do
-      expect(HelloSign.account).to be_a HelloSign::AccountProxy
+    it "returns the Account class" do
+      expect(HelloSign.account).to be HelloSign::Account
     end
   end
 end
