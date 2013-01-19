@@ -1,13 +1,13 @@
 require 'hello_sign/version'
 require 'hello_sign/client'
-require 'hello_sign/account'
+require 'hello_sign/account_proxy'
 
 module HelloSign
   class << self
     attr_accessor :email, :password
 
     def account
-      Account
+      AccountProxy.new
     end
 
     def client
