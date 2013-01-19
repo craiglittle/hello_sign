@@ -8,9 +8,9 @@ describe HelloSign do
     end
 
     it "sends an account creation request to the HelloSign API" do
-      a_request(:post, 'https://api.hellosign.com/v3/account/create')
-        .with(:body => {:email_address => 'david@bowman.com', :password => 'foobar'})
-        .should have_been_made
+      expect(a_request(:post, 'https://api.hellosign.com/v3/account/create')
+        .with(:body => {:email_address => 'david@bowman.com', :password => 'foobar'}))
+        .to have_been_made
     end
   end
 end
