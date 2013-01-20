@@ -3,6 +3,7 @@ require 'faraday'
 module HelloSign
   class Client
     attr_reader :email, :password
+    attr_writer :connection
 
     def initialize(email, password)
       @email    = email

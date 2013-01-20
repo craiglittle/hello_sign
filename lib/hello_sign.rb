@@ -7,7 +7,7 @@ module HelloSign
     attr_accessor :email, :password
 
     def account
-      AccountProxy.new
+      AccountProxy.new(client)
     end
 
     def client

@@ -32,7 +32,7 @@ describe HelloSign do
   end
 
   describe "::email" do
-    it "sets and reads the email address" do
+    it "sets and returns the email address" do
       HelloSign.email = 'hal@jupiter.com'
 
       expect(HelloSign.email).to eq 'hal@jupiter.com'
@@ -40,7 +40,7 @@ describe HelloSign do
   end
 
   describe "::password" do
-    it "sets and reads the password" do
+    it "sets and returns the password" do
       HelloSign.password = 'human_domination'
 
       expect(HelloSign.password).to eq 'human_domination'
