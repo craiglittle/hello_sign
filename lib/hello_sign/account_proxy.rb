@@ -1,4 +1,4 @@
-require 'hello_sign/account'
+require 'hello_sign/settings'
 
 module HelloSign
   class AccountProxy
@@ -18,7 +18,9 @@ module HelloSign
     end
 
     def settings
-      client.get('/account')
+      settings = client.get('/account')
+
+      Settings.new(settings, client)
     end
 
     private

@@ -47,8 +47,13 @@ describe HelloSign::AccountProxy do
       account_proxy.settings
     end
 
-    it "returns the response" do
-      expect(account_proxy.settings).to eq settings
+    it "creates an account object" do
+      HelloSign::Settings.should_receive(:new).with(settings, client)
+      account_proxy.settings
+    end
+
+    it "returns an account object" do
+      expect(account_proxy.settings).to be_a HelloSign::Settings
     end
   end
 end
