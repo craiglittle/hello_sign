@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.test_files    += Dir.glob('spec/**/*')
 
   gem.add_dependency('faraday', '~> 0.8.4')
+  gem.add_dependency('faraday_middleware-multi_json', '~> 0.0.5')
 
   gem.add_development_dependency('rspec', '~> 2.12.0')
   gem.add_development_dependency('webmock', '~> 1.9.0')

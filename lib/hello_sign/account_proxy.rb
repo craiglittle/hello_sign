@@ -17,10 +17,18 @@ module HelloSign
       true
     end
 
+    def settings
+      client.get('/account')
+    end
+
     private
 
     def create_account(email, password)
-      client.post('/v3/account/create', :body => {:email_address => email, :password => password})
+      client.post(
+        '/account/create',
+        :body => {:email_address => email, :password => password},
+        :unauthenticated => true
+      )
     end
 
   end

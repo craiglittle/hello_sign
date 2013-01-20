@@ -1,4 +1,5 @@
 require 'helper'
+require 'json'
 require 'hello_sign/client'
 
 describe HelloSign::Client do
