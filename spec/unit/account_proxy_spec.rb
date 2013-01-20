@@ -15,7 +15,7 @@ describe HelloSign::AccountProxy do
     context "when passed the proper parameters" do
       before do
         client.should_receive(:post)
-          .with('/v3/account/create', {:email_address => 'david@bowman.com', :password => 'space'})
+          .with('/v3/account/create', :body => {:email_address => 'david@bowman.com', :password => 'space'})
       end
 
       it "sends an account creation request" do

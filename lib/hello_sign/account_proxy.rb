@@ -20,7 +20,7 @@ module HelloSign
     private
 
     def create_account(email, password)
-      client.post('/v3/account/create', {:email_address => email, :password => password})
+      client.post('/v3/account/create', :body => {:email_address => email, :password => password})
     end
 
   end
