@@ -6,6 +6,8 @@ A Ruby interface to the HelloSign API.
 
 #### Account
 - [x] create
+
+#### Account settings
 - [x] get
 - [x] update
 
@@ -42,11 +44,17 @@ A Ruby interface to the HelloSign API.
 
 ## Usage
 
+### Account creation
+
+```ruby
+HelloSign.account.create(:email => 'david@bowman.com', :password => 'space')
+```
+
 ### Configuration
 
 HelloSign uses HTTP basic authentication to authenticate API calls.
 
-You can configure your client like this:
+Configure the client like this:
 
 ```ruby
 HelloSign.configure do |hs|
@@ -55,14 +63,11 @@ HelloSign.configure do |hs|
 end
 ```
 
-Those credentials will then be passed with each request that requires authentication.
+Your credentials will be passed with each request requiring authentication.
 
-### Account
+### Account settings
 
 ```ruby
-## create a new account
-HelloSign.account.create(:email => 'david@bowman.com', :password => 'space')
-
 ## fetch account settings
 HelloSign.account.settings
 
