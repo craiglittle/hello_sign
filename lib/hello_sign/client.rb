@@ -36,10 +36,11 @@ module HelloSign
 
     def unauth_connection(&auth)
       Faraday.new(:url => API_ENDPOINT) do |faraday|
+        auth.call(faraday) if block_given?
+        faraday.request :multipart
         faraday.request :url_encoded
         faraday.response :logger
         faraday.response :multi_json, :symbolize_keys => true
-        auth.call(faraday) if block_given?
         faraday.adapter Faraday.default_adapter
       end
     end
