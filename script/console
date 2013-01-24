@@ -1,0 +1,3 @@
+#!/bin/sh
+
+irb -rubygems -I ./lib -r ./lib/hello_sign.rb
