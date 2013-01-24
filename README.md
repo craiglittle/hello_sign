@@ -15,7 +15,7 @@ A Ruby interface to the HelloSign API.
 
 - [ ] list
 - [ ] get
-- [ ] send
+- [x] send
 - [ ] remind
 - [ ] cancel
 - [ ] final copy
@@ -75,6 +75,26 @@ HelloSign.account.settings
 HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
 ```
 
+### Signature requests
+
+```ruby
+## send a new request
+HelloSign.signature_request do |request|
+  request.title   = 'Lease'
+  request.subject = 'Sign this'
+  request.message = 'You must sign this.'
+  request.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
+  request.signers = [
+    {:name => 'Jack', :email => 'jack@hill.com'},
+    {:name => 'Jill', :email => 'jill@hill.com'}
+  ]
+  request.files   = [
+    {:name => 'test.txt', :io => text_file_io, :mime => 'text/plain'},
+    {:name => 'test.jpg', :io => image_io,     :mime => 'image/jpeg'}
+  ]
+end
+```
+
 ## Planned API Design
 
 ```ruby
@@ -83,17 +103,6 @@ HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
 HelloSign.signature_requests
 
 HelloSign.signature_request('23afj34')
-
-HelloSign.signature_request do |request|
-  request.title   = 'Lease'
-  request.subject = 'Sign this'
-  request.message = 'You must sign this.'
-  request.signers = [
-    {:name => 'Jack', :email => 'jack@hill.com'},
-    {:name => 'Jill', :email => 'jill@hill.com'}
-  ]
-  request.cc      = ['lawyer@lawfirm.com', 'spouse@family.com']
-end
 
 
 ## Signature requests with a reusable form
