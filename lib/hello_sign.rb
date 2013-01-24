@@ -1,6 +1,7 @@
 require 'hello_sign/version'
 require 'hello_sign/client'
 require 'hello_sign/account_proxy'
+require 'hello_sign/signature_request_proxy'
 
 module HelloSign
   class << self
@@ -8,6 +9,10 @@ module HelloSign
 
     def account
       AccountProxy.new(client)
+    end
+
+    def signature_request(&parameters)
+      SignatureRequestProxy.new(client).create(parameters)
     end
 
     def client

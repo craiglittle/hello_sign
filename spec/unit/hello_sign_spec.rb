@@ -8,6 +8,19 @@ describe HelloSign do
     end
   end
 
+  describe "::signature_request" do
+    let(:sr_proxy) { double('signature_request_proxy') }
+
+    before do
+      HelloSign::SignatureRequestProxy.stub(:new).and_return(sr_proxy)
+      sr_proxy.should_receive(:create).and_return(@request_result = stub)
+    end
+
+    it "calls #create on the signature request proxy and returns the result" do
+      expect(HelloSign.signature_request).to eq @request_result
+    end
+  end
+
   describe "::client" do
     context "when it has not previously been called" do
       it "returns a new client" do
