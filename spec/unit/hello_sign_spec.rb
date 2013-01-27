@@ -9,15 +9,25 @@ describe HelloSign do
   end
 
   describe "::signature_request" do
-    let(:sr_proxy) { double('signature_request_proxy') }
+    let(:sr_proxy)       { mock }
+    let(:request_result) { stub }
 
-    before do
-      HelloSign::SignatureRequestProxy.stub(:new).and_return(sr_proxy)
-      sr_proxy.should_receive(:create).and_return(@request_result = stub)
+    before { HelloSign::SignatureRequestProxy.stub(:new).and_return(sr_proxy) }
+
+    context "when called without passing a request ID" do
+      before { sr_proxy.should_receive(:create).and_return(request_result) }
+
+      it "calls #create on the signature request proxy and returns the result" do
+        expect(HelloSign.signature_request).to eq request_result
+      end
     end
 
-    it "calls #create on the signature request proxy and returns the result" do
-      expect(HelloSign.signature_request).to eq @request_result
+    context "when called with a signature ID" do
+      before { sr_proxy.should_receive(:status).with('request_id').and_return(request_result) }
+
+      it "calls #status on the signature request proxy and returns the result " do
+        expect(HelloSign.signature_request('request_id')).to eq request_result
+      end
     end
   end
 

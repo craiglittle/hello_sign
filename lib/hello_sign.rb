@@ -11,8 +11,12 @@ module HelloSign
       AccountProxy.new(client)
     end
 
-    def signature_request(&parameters)
-      SignatureRequestProxy.new(client).create(parameters)
+    def signature_request(request_id = nil, &parameters)
+      if request_id
+        SignatureRequestProxy.new(client).status(request_id)
+      else
+        SignatureRequestProxy.new(client).create(parameters)
+      end
     end
 
     def client

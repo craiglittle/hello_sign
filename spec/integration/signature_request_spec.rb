@@ -29,4 +29,15 @@ describe HelloSign do
       ).to have_been_made
     end
   end
+
+  context "when fetching a signature request" do
+    before do
+      stub_get_with_auth('/signature_request/request_id')
+      HelloSign.signature_request('request_id')
+    end
+
+    it "fetches the signature request information from the HelloSign API" do
+      expect(a_get_with_auth('/signature_request/request_id')).to have_been_made
+    end
+  end
 end

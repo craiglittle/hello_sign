@@ -14,7 +14,7 @@ A Ruby interface to the HelloSign API.
 #### Signature request
 
 - [ ] list
-- [ ] get
+- [x] get
 - [x] send
 - [ ] remind
 - [ ] cancel
@@ -93,6 +93,9 @@ HelloSign.signature_request do |request|
     {:name => 'test.jpg', :io => image_io,     :mime => 'image/jpeg'}
   ]
 end
+
+## fetch the status of a signature request
+HelloSign.signature_request('33sdf3')
 ```
 
 ## Planned API Design
@@ -101,8 +104,6 @@ end
 ## Signature requests
 
 HelloSign.signature_requests
-
-HelloSign.signature_request('23afj34')
 
 
 ## Signature requests with a reusable form
