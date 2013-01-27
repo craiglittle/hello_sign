@@ -40,4 +40,15 @@ describe HelloSign do
       expect(a_get_with_auth('/signature_request/request_id')).to have_been_made
     end
   end
+
+  context "when getting a list of signature requests" do
+    before do
+      stub_get_with_auth('/signature_request/list?page=1')
+      HelloSign.signature_requests
+    end
+
+    it "fetches a list of signature requests from the HelloSign API" do
+      expect(a_get_with_auth('/signature_request/list?page=1')).to have_been_made
+    end
+  end
 end

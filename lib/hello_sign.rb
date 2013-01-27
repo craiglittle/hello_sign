@@ -13,10 +13,15 @@ module HelloSign
 
     def signature_request(request_id = nil, &parameters)
       if request_id
-        SignatureRequestProxy.new(client).status(request_id)
+        signature_request_proxy.status(request_id)
       else
-        SignatureRequestProxy.new(client).create(parameters)
+        signature_request_proxy.create(parameters)
       end
+    end
+
+    def signature_requests(options = {})
+      options = {:page => 1}.merge!(options)
+      signature_request_proxy.list(options)
     end
 
     def client
@@ -25,6 +30,12 @@ module HelloSign
 
     def configure
       yield(self)
+    end
+
+    private
+
+    def signature_request_proxy
+      SignatureRequestProxy.new(client)
     end
 
   end

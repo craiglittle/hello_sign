@@ -34,12 +34,18 @@ describe HelloSign::SignatureRequestProxy do
   describe "#status" do
     let(:request_id) { 'request_id' }
 
-    before do
-      client.should_receive(:get).with('/signature_request/request_id').and_return(api_response)
-    end
+    before { client.should_receive(:get).with('/signature_request/request_id').and_return(api_response) }
 
     it "fetches the signature request status and returns the result" do
       expect(sr_proxy.status(request_id)).to eq api_response
+    end
+  end
+
+  describe "#list" do
+    before { client.should_receive(:get).with('/signature_request/list', :params => {:page => 10}).and_return(api_response) }
+
+    it "fetches a list of signature requests for the passed page number and returns the result" do
+      expect(sr_proxy.list(:page => 10)).to eq api_response
     end
   end
 end

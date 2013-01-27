@@ -27,8 +27,9 @@ module HelloSign
     def request(method, path, options)
       connection = options[:unauthenticated] ? unauth_connection : auth_connection
       request = connection.send(method) do |request|
-        request.path = "#{API_VERSION}#{path}"
-        request.body = options[:body]
+        request.path   = "#{API_VERSION}#{path}"
+        request.params = options[:params] if options[:params]
+        request.body   = options[:body]
       end
 
       request.body

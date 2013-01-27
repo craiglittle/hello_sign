@@ -18,6 +18,10 @@ module HelloSign
       client.get("/signature_request/#{request_id}")
     end
 
+    def list(params = {})
+      client.get('/signature_request/list', :params => params)
+    end
+
     private
 
     def request_parameters

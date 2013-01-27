@@ -13,7 +13,7 @@ A Ruby interface to the HelloSign API.
 
 #### Signature request
 
-- [ ] list
+- [x] list
 - [x] get
 - [x] send
 - [ ] remind
@@ -96,16 +96,15 @@ end
 
 ## fetch the status of a signature request
 HelloSign.signature_request('33sdf3')
+
+## fetch a list of signature requests
+HelloSign.signature_requests # defaults to page 1
+HelloSign.signature_requests(:page => 5)
 ```
 
 ## Planned API Design
 
 ```ruby
-## Signature requests
-
-HelloSign.signature_requests
-
-
 ## Signature requests with a reusable form
 
 HelloSign.signature_request_with_reusable_form('3j3kdrj') do |request|
