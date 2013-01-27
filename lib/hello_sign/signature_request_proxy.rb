@@ -9,8 +9,8 @@ module HelloSign
       @client = client
     end
 
-    def create(raw_parameters)
-      raw_parameters.call(request_parameters)
+    def send
+      yield request_parameters
       client.post('/signature_request/send', :body => request_parameters.formatted)
     end
 
@@ -19,6 +19,7 @@ module HelloSign
     end
 
     def list(params = {})
+      params = {:page => 1}.merge(params)
       client.get('/signature_request/list', :params => params)
     end
 

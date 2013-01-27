@@ -69,7 +69,7 @@ Your credentials will be passed with each request requiring authentication.
 
 ```ruby
 ## fetch account settings
-HelloSign.account.settings
+HelloSign.account.settings.show
 
 ## update account settings (callback URL as of right now)
 HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
@@ -79,7 +79,7 @@ HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
 
 ```ruby
 ## send a new request
-HelloSign.signature_request do |request|
+HelloSign.signature_request.send do |request|
   request.title   = 'Lease'
   request.subject = 'Sign this'
   request.message = 'You must sign this.'
@@ -95,11 +95,14 @@ HelloSign.signature_request do |request|
 end
 
 ## fetch the status of a signature request
-HelloSign.signature_request('33sdf3')
+HelloSign.signature_request.status('33sdf3')
 
 ## fetch a list of signature requests
-HelloSign.signature_requests # defaults to page 1
-HelloSign.signature_requests(:page => 5)
+HelloSign.signature_request.list # defaults to page 1
+HelloSign.signature_request.list(:page => 5)
+
+## send a signature request reminder
+HelloSign.signature_request.remind('34k2j4', :email => 'bob@smith.com')
 ```
 
 ## Planned API Design
@@ -107,7 +110,7 @@ HelloSign.signature_requests(:page => 5)
 ```ruby
 ## Signature requests with a reusable form
 
-HelloSign.signature_request_with_reusable_form('3j3kdrj') do |request|
+HelloSign.signature_request.send(:form => '3j3kdrj') do |request|
   request.title         = 'Lease'
   request.subject       = 'Sign this'
   request.message       = 'You must sign this.'
@@ -122,27 +125,27 @@ HelloSign.signature_request_with_reusable_form('3j3kdrj') do |request|
   }
 )
 
-HelloSign.signature_request('233rwer').remind(:email => 'bob@example.com')
+HelloSign.signature_request.remind('233rwer', :email => 'bob@example.com')
 
-HelloSign.signature_request('233rwer').cancel
+HelloSign.signature_request.cancel('233rwer')
 
-HelloSign.signature_request('233rwer').final_copy
+HelloSign.signature_request.final_copy('233rwer')
 
 
 ## Reusable forms
 
-HelloSign.reusable_forms
+HelloSign.reusable_form.list
 
-HelloSign.reusable_form('34343kdf')
+HelloSign.reusable_form.show('34343kdf')
 
-HelloSign.reusable_form('34343kdf').add_user(:email => 'john@david.com')
+HelloSign.reusable_form.add_user('34343kdf', :email => 'john@david.com')
 
-HelloSign.reusable_form('34343kdf').remove_user(:email => 'john@david.com')
+HelloSign.reusable_form.remove_user('34343kdf', :email => 'john@david.com')
 
 
 ## Teams
 
-HelloSign.team
+HelloSign.team.show
 
 HelloSign.team.create(:name => 'The Browncoats')
 

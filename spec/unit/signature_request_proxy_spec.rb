@@ -2,8 +2,8 @@ require 'helper'
 require 'hello_sign/signature_request_proxy'
 
 describe HelloSign::SignatureRequestProxy do
-  let(:client)       { mock }
-  let(:api_response) { stub }
+  let(:client)       { double('client') }
+  let(:api_response) { double('API response') }
   subject(:sr_proxy) { HelloSign::SignatureRequestProxy.new(client) }
 
   describe "#client" do
@@ -12,10 +12,9 @@ describe HelloSign::SignatureRequestProxy do
     end
   end
 
-  describe "#create" do
-    let(:formatted_request_body) { stub }
-    let(:raw_parameters)         { Proc.new { |params| params.foo = 'bar' } }
-    let(:request_parameters)     { mock }
+  describe "#send" do
+    let(:formatted_request_body) { double('formatted request body') }
+    let(:request_parameters)     { double('request parameters') }
 
     before do
       sr_proxy.request_parameters = request_parameters
@@ -27,7 +26,7 @@ describe HelloSign::SignatureRequestProxy do
     end
 
     it "sends a signature request creation request and returns the result" do
-      expect(sr_proxy.create(raw_parameters)).to eq api_response
+      expect(sr_proxy.send { |params| params.foo = 'bar' }).to eq api_response
     end
   end
 
@@ -42,10 +41,20 @@ describe HelloSign::SignatureRequestProxy do
   end
 
   describe "#list" do
-    before { client.should_receive(:get).with('/signature_request/list', :params => {:page => 10}).and_return(api_response) }
+    context "when called without options" do
+      before { client.should_receive(:get).with('/signature_request/list', :params => {:page => 1}).and_return(api_response) }
 
-    it "fetches a list of signature requests for the passed page number and returns the result" do
-      expect(sr_proxy.list(:page => 10)).to eq api_response
+      it "fetches the first page of signature requests and returns the result" do
+        expect(sr_proxy.list).to eq api_response
+      end
+    end
+
+    context "when called with a page number" do
+      before { client.should_receive(:get).with('/signature_request/list', :params => {:page => 10}).and_return(api_response) }
+
+      it "fetches a list of signature requests for the passed page number and returns the result" do
+        expect(sr_proxy.list(:page => 10)).to eq api_response
+      end
     end
   end
 end

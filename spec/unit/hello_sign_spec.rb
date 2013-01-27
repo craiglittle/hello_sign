@@ -8,45 +8,9 @@ describe HelloSign do
     end
   end
 
-  context "when interacting with signature requests" do
-    let(:sr_proxy)       { mock }
-    let(:request_result) { stub }
-
-    before { HelloSign::SignatureRequestProxy.stub(:new).and_return(sr_proxy) }
-
-    describe "::signature_request" do
-      context "when called without passing a request ID" do
-        before { sr_proxy.should_receive(:create).and_return(request_result) }
-
-        it "calls #create on the signature request proxy and returns the result" do
-          expect(HelloSign.signature_request).to eq request_result
-        end
-      end
-
-      context "when called with a signature ID" do
-        before { sr_proxy.should_receive(:status).with('request_id').and_return(request_result) }
-
-        it "calls #status on the signature request proxy and returns the result " do
-          expect(HelloSign.signature_request('request_id')).to eq request_result
-        end
-      end
-    end
-
-    describe "::signature_requests" do
-      context "when called with no options" do
-        before { sr_proxy.should_receive(:list).with(:page => 1).and_return(request_result) }
-
-        it "calls #list on the signature request proxy and returns the result" do
-          expect(HelloSign.signature_requests).to eq request_result
-        end
-      end
-
-      context "when called with a page number" do
-        it "passes that page number on to the signature request proxy" do
-          sr_proxy.should_receive(:list).with(:page => 5).and_return(request_result)
-          HelloSign.signature_requests(:page => 5)
-        end
-      end
+  describe "::signature_request" do
+    it "returns a signature request proxy" do
+      expect(HelloSign.signature_request).to be_a HelloSign::SignatureRequestProxy
     end
   end
 

@@ -7,7 +7,7 @@ describe HelloSign do
 
     before do
       stub_post_with_auth('/signature_request/send')
-      request = HelloSign.signature_request do |request|
+      request = HelloSign.signature_request.send do |request|
         request.title   = 'Lease'
         request.subject = 'Sign this'
         request.message = 'You must sign this.'
@@ -33,7 +33,7 @@ describe HelloSign do
   context "when fetching a signature request" do
     before do
       stub_get_with_auth('/signature_request/request_id')
-      HelloSign.signature_request('request_id')
+      HelloSign.signature_request.status('request_id')
     end
 
     it "fetches the signature request information from the HelloSign API" do
@@ -44,7 +44,7 @@ describe HelloSign do
   context "when getting a list of signature requests" do
     before do
       stub_get_with_auth('/signature_request/list?page=1')
-      HelloSign.signature_requests
+      HelloSign.signature_request.list
     end
 
     it "fetches a list of signature requests from the HelloSign API" do

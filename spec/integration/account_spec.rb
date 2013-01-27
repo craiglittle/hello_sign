@@ -18,7 +18,7 @@ describe HelloSign do
   context "when accessing an account's settings" do
     before do
       stub_get_with_auth('/account')
-      @settings = HelloSign.account.settings
+      HelloSign.account.settings.show
     end
 
     it "fetches the account's settings from the HelloSign API" do
@@ -28,7 +28,6 @@ describe HelloSign do
 
   context "when updating an account's settings" do
     before do
-      stub_get_with_auth('/account')
       stub_post_with_auth('/account')
       HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
     end

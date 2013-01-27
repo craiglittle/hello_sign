@@ -13,7 +13,9 @@ describe HelloSign::AccountProxy do
 
   describe "#create" do
     context "when passed the proper parameters" do
-      before { client.stub(:post) }
+      let(:api_response) { double('API response') }
+
+      before { client.stub(:post).and_return(api_response) }
 
       it "sends an account creation request" do
         client.should_receive(:post)
@@ -25,8 +27,8 @@ describe HelloSign::AccountProxy do
         account_proxy.create(:email => 'david@bowman.com', :password => 'space')
       end
 
-      it "returns true" do
-        expect(account_proxy.create(:email => 'david@bowman.com', :password => 'space')). to be true
+      it "returns the API response" do
+        expect(account_proxy.create(:email => 'david@bowman.com', :password => 'space')). to eq api_response
       end
     end
 
@@ -38,22 +40,16 @@ describe HelloSign::AccountProxy do
   end
 
   describe "#settings" do
-    let(:settings) { double('settings') }
+    let(:settings_proxy_source) { double('settings proxy source') }
+    let(:settings_proxy)        { double('settings proxy') }
 
-    before { client.stub(:get).and_return(settings) }
-
-    it "sends a request to fetch the account's settings" do
-      client.should_receive(:get).with('/account')
-      account_proxy.settings
+    before do
+      account_proxy.settings_proxy_source = settings_proxy_source
+      settings_proxy_source.should_receive(:new).with(client).and_return(settings_proxy)
     end
 
-    it "creates an account object" do
-      HelloSign::Settings.should_receive(:new).with(settings, client)
-      account_proxy.settings
-    end
-
-    it "returns an account object" do
-      expect(account_proxy.settings).to be_a HelloSign::Settings
+    it "returns a signature request proxy" do
+      expect(account_proxy.settings).to be settings_proxy
     end
   end
 end
