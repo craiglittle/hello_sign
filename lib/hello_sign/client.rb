@@ -40,7 +40,6 @@ module HelloSign
         auth.call(faraday) if block_given?
         faraday.request :multipart
         faraday.request :url_encoded
-        faraday.response :logger
         faraday.response :multi_json, :symbolize_keys => true
         faraday.adapter Faraday.default_adapter
       end

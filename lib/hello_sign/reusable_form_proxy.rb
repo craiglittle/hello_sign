@@ -11,5 +11,9 @@ module HelloSign
       client.get('/reusable_form/list', :params => params)
     end
 
+    def show(form_id)
+      client.get("/reusable_form/#{form_id}")
+    end
+
   end
 end
