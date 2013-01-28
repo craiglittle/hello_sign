@@ -21,13 +21,12 @@ A Ruby interface to the HelloSign API.
 - [x] cancel
 - [x] final copy
 
-#### Signature request with a reusable form
+#### Reusable form
 
 - [x] list
 - [x] show
-- [ ] send
-- [ ] add user
-- [ ] remove user
+- [x] grant access
+- [ ] revoke access
 
 #### Team
 
@@ -137,15 +136,18 @@ HelloSign.signature_request.final_copy('233rwer')
 HelloSign.reusable_form.list # defaults to page 1
 HelloSign.reusable_form.list(:page => 5)
 
+## fetch details on a reusable form
 HelloSign.reusable_form.show('34343kdf')
+
+## grant access to a reusable form
+HelloSign.reusable_form.grant_access('34343kdf', :email => 'john@david.com')
+HelloSign.reusable_form.grant_access('34343kdf', :account_id => '1543')
 ```
 
 ## Planned API Design
 
 ```ruby
 ## Reusable forms
-
-HelloSign.reusable_form.add_user('34343kdf', :email => 'john@david.com')
 
 HelloSign.reusable_form.remove_user('34343kdf', :email => 'john@david.com')
 

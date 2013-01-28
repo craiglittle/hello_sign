@@ -22,4 +22,17 @@ describe HelloSign do
       expect(a_get_with_auth('/reusable_form/form_id')).to have_been_made
     end
   end
+
+  context "when giving a user access to a reusable form" do
+    before do
+      stub_post_with_auth('/reusable_form/add_user/form_id')
+      HelloSign.reusable_form.grant_access('form_id', :email => 'john@johnson.com')
+    end
+
+    it "sends a request to grant form access to the HelloSign API" do
+      expect(a_post_with_auth('/reusable_form/add_user/form_id')
+        .with(:body => {:email_address => 'john@johnson.com'})
+      ).to have_been_made
+    end
+  end
 end
