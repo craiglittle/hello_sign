@@ -17,17 +17,35 @@ describe HelloSign::SignatureRequestProxy do
     let(:formatted_request_body) { double('formatted request body') }
     let(:request_parameters)     { double('request parameters') }
 
-    before do
-      sr_proxy.request_parameters = request_parameters
-      request_parameters.stub(:formatted).and_return(formatted_request_body)
-      request_parameters.should_receive(:foo=).with('bar')
-      client.should_receive(:post)
-        .with('/signature_request/send', :body => formatted_request_body)
-        .and_return(api_response)
+    context "when a reusable form is not specified" do
+      before do
+        sr_proxy.request_parameters = request_parameters
+        request_parameters.stub(:formatted).and_return(formatted_request_body)
+        request_parameters.should_receive(:foo=).with('bar')
+        client.should_receive(:post)
+          .with('/signature_request/send', :body => formatted_request_body)
+          .and_return(api_response)
+      end
+
+      it "sends a signature request creation request and returns the result" do
+        expect(sr_proxy.send { |params| params.foo = 'bar' }).to eq api_response
+      end
     end
 
-    it "sends a signature request creation request and returns the result" do
-      expect(sr_proxy.send { |params| params.foo = 'bar' }).to eq api_response
+    context "when a reusable form is specified" do
+      before do
+        sr_proxy.reusable_form_request_parameters = request_parameters
+        request_parameters.stub(:formatted).and_return(formatted_request_body)
+        request_parameters.should_receive(:reusable_form_id=).with('form_id')
+        request_parameters.should_receive(:foo=).with('bar')
+        client.should_receive(:post)
+          .with('/signature_request/send_with_reusable_form', :body => formatted_request_body)
+          .and_return(api_response)
+      end
+
+      it "sends a signature request using a reusable form and returns the result" do
+        expect(sr_proxy.send(:form => 'form_id') { |params| params.foo = 'bar' }).to eq api_response
+      end
     end
   end
 

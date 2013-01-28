@@ -2,31 +2,79 @@ require 'integration/helper'
 
 describe HelloSign do
   context "when sending a signature request" do
-    let(:text_file_io)  { File.new('spec/fixtures/test.txt') }
-    let(:image_io)      { File.new('spec/fixtures/test.jpg') }
+    context "when not using a reusable form" do
+      let(:text_file_io)  { File.new('spec/fixtures/test.txt') }
+      let(:image_io)      { File.new('spec/fixtures/test.jpg') }
 
-    before do
-      stub_post_with_auth('/signature_request/send')
-      request = HelloSign.signature_request.send do |request|
-        request.title   = 'Lease'
-        request.subject = 'Sign this'
-        request.message = 'You must sign this.'
-        request.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
-        request.signers = [
-          {:name => 'Jack', :email => 'jack@hill.com'},
-          {:name => 'Jill', :email => 'jill@hill.com'}
-        ]
-        request.files   = [
-          {:name => 'test.txt', :io => text_file_io, :mime => 'text/plain'},
-          {:name => 'test.jpg', :io => image_io,     :mime => 'image/jpeg'}
-        ]
+      before do
+        stub_post_with_auth('/signature_request/send')
+        HelloSign.signature_request.send do |request|
+          request.title   = 'Lease'
+          request.subject = 'Sign this'
+          request.message = 'You must sign this.'
+          request.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
+          request.signers = [
+            {:name => 'Jack', :email => 'jack@hill.com'},
+            {:name => 'Jill', :email => 'jill@hill.com'}
+          ]
+          request.files   = [
+            {:name => 'test.txt', :io => text_file_io, :mime => 'text/plain'},
+            {:name => 'test.jpg', :io => image_io,     :mime => 'image/jpeg'}
+          ]
+        end
+      end
+
+      it "sends a signature request to the HelloSign API" do
+        expect(a_post_with_auth('/signature_request/send')
+          .with(:headers => {'Content-Type' => /multipart\/form-data/}, :body => /This is a test upload file\./)
+        ).to have_been_made
       end
     end
 
-    it "sends a signature request to the HelloSign API" do
-      expect(a_post_with_auth('/signature_request/send')
-        .with(:headers => {'Content-Type' => /multipart\/form-data/}, :body => /This is a test upload file\./)
-      ).to have_been_made
+    context "when using a reusable form" do
+      before do
+        stub_post_with_auth('/signature_request/send_with_reusable_form')
+        HelloSign.signature_request.send(:form => 'form_id') do |request|
+          request.title         = 'Lease'
+          request.subject       = 'Sign this'
+          request.message       = 'You must sign this.'
+          request.ccs           = [
+            {:email => 'lawyer@lawfirm.com', :role => 'lawyer'},
+            {:email => 'accountant@llc.com', :role => 'accountant'}
+          ]
+          request.signers       = [
+            {:name => 'Jack', :email => 'jack@hill.com', :role => 'consultant'},
+            {:name => 'Jill', :email => 'jill@hill.com', :role => 'client'}
+          ]
+          request.custom_fields = [
+            {:name => 'cost', :value => '$20,000'},
+            {:name => 'time', :value => 'two weeks'}
+          ]
+        end
+      end
+
+      it "sends a signature request using a reusable form to the HelloSign API" do
+        expect(a_post_with_auth('/signature_request/send_with_reusable_form')
+          .with(:body => {
+            :reusable_form_id => 'form_id',
+            :title            => 'Lease',
+            :subject          => 'Sign this',
+            :message          => 'You must sign this.',
+            :ccs              => {
+              'lawyer'     => {:email_address => 'lawyer@lawfirm.com'},
+              'accountant' => {:email_address => 'accountant@llc.com'}
+            },
+            :signers          => {
+              'consultant' => {:name => 'Jack', :email_address => 'jack@hill.com'}, 
+              'client'     => {:name => 'Jill', :email_address => 'jill@hill.com'}
+            },
+            :custom_fields    => {
+              'cost' => '$20,000',
+              'time' => 'two weeks'
+            }
+          })
+        ).to have_been_made
+      end
     end
   end
 

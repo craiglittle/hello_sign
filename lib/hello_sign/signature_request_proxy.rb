@@ -1,17 +1,27 @@
-require 'hello_sign/signature_request_parameters'
+require 'hello_sign/parameters/signature_request'
+require 'hello_sign/parameters/reusable_form_signature_request'
 
 module HelloSign
   class SignatureRequestProxy
     attr_reader :client
-    attr_writer :request_parameters
+    attr_writer :request_parameters, :reusable_form_request_parameters
 
     def initialize(client)
       @client = client
     end
 
-    def send
-      yield request_parameters
-      client.post('/signature_request/send', :body => request_parameters.formatted)
+    def send(params = {})
+      if form_id = params[:form]
+        reusable_form_request_parameters.reusable_form_id = form_id
+        yield reusable_form_request_parameters
+        client.post(
+          '/signature_request/send_with_reusable_form',
+          :body => reusable_form_request_parameters.formatted
+        )
+      else
+        yield request_parameters
+        client.post('/signature_request/send', :body => request_parameters.formatted)
+      end
     end
 
     def status(request_id)
@@ -39,7 +49,11 @@ module HelloSign
     private
 
     def request_parameters
-      @request_parameters ||= SignatureRequestParameters.new
+      @request_parameters ||= Parameters::SignatureRequest.new
+    end
+
+    def reusable_form_request_parameters
+      @reusable_form_request_parameters ||= Parameters::ReusableFormSignatureRequest.new
     end
 
   end

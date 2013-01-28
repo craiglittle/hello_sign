@@ -15,19 +15,6 @@ module HelloSign
       SignatureRequestProxy.new(client)
     end
 
-#     def signature_request(request_id = nil, &parameters)
-#       if request_id
-#         signature_request_proxy.status(request_id)
-#       else
-#         signature_request_proxy.create(parameters)
-#       end
-#     end
-
-#     def signature_requests(options = {})
-#       options = {:page => 1}.merge!(options)
-#       signature_request_proxy.list(options)
-#     end
-
     def client
       @client ||= Client.new(email, password)
     end

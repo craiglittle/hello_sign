@@ -16,7 +16,7 @@ A Ruby interface to the HelloSign API.
 - [x] list
 - [x] get
 - [x] send
-- [ ] send with a reusable form
+- [x] send with a reusable form
 - [x] remind
 - [x] cancel
 - [x] final copy
@@ -95,6 +95,25 @@ HelloSign.signature_request.send do |request|
   ]
 end
 
+## send a new request using a reusable form
+HelloSign.signature_request.send(:form => 'form_id') do |request|
+  request.title         = 'Lease'
+  request.subject       = 'Sign this'
+  request.message       = 'You must sign this.'
+  request.ccs           = [
+    {:email => 'lawyer@lawfirm.com', :role => 'lawyer'},
+    {:email => 'accountant@llc.com', :role => 'accountant'}
+  ]
+  request.signers       = [
+    {:name => 'Jack', :email => 'jack@hill.com', :role => 'consultant'},
+    {:name => 'Jill', :email => 'jill@hill.com', :role => 'client'}
+  ]
+  request.custom_fields = [
+    {:name => 'cost', :value => '$20,000'},
+    {:name => 'time', :value => 'two weeks'}
+  ]
+end
+
 ## fetch the status of a signature request
 HelloSign.signature_request.status('33sdf3')
 
@@ -115,24 +134,6 @@ HelloSign.signature_request.final_copy('233rwer')
 ## Planned API Design
 
 ```ruby
-## Signature requests with a reusable form
-
-HelloSign.signature_request.send(:form => '3j3kdrj') do |request|
-  request.title         = 'Lease'
-  request.subject       = 'Sign this'
-  request.message       = 'You must sign this.'
-  request.signers       = [
-    {:role => 'client',   :name => 'Jack', :email => 'jack@hill.com'},
-    {:role => 'provider', :name => 'Jill', :email => 'jill@hill.com'}
-  ]
-  request.cc            = ['lawyer@lawfirm.com', 'spouse@family.com']
-  request.custom_fields = {
-    :cost => '$20,000',
-    :estimated_time => 'two weeks'
-  }
-)
-
-
 ## Reusable forms
 
 HelloSign.reusable_form.list
