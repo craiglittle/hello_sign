@@ -14,6 +14,12 @@ describe HelloSign do
     end
   end
 
+  describe "::reusable_form" do
+    it "returns a reusable form proxy" do
+      expect(HelloSign.reusable_form).to be_a HelloSign::ReusableFormProxy
+    end
+  end
+
   describe "::client" do
     context "when it has not previously been called" do
       it "returns a new client" do

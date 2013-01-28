@@ -2,6 +2,7 @@ require 'hello_sign/version'
 require 'hello_sign/client'
 require 'hello_sign/account_proxy'
 require 'hello_sign/signature_request_proxy'
+require 'hello_sign/reusable_form_proxy'
 
 module HelloSign
   class << self
@@ -15,18 +16,16 @@ module HelloSign
       SignatureRequestProxy.new(client)
     end
 
+    def reusable_form
+      ReusableFormProxy.new(client)
+    end
+
     def client
       @client ||= Client.new(email, password)
     end
 
     def configure
       yield(self)
-    end
-
-    private
-
-    def signature_request_proxy
-      SignatureRequestProxy.new(client)
     end
 
   end
