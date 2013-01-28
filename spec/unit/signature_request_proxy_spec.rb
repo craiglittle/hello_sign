@@ -92,4 +92,17 @@ describe HelloSign::SignatureRequestProxy do
       expect(sr_proxy.cancel(request_id)).to eq api_response
     end
   end
+
+  describe "#final_copy" do
+    before { client.stub(:get).and_return(api_response) }
+
+    it "sends a request to fetch a final copy of the signature request" do
+      client.should_receive(:get).with('/signature_request/final_copy/request_id')
+      sr_proxy.final_copy(request_id)
+    end
+
+    it "returns the API response" do
+      expect(sr_proxy.final_copy(request_id)).to eq api_response
+    end
+  end
 end

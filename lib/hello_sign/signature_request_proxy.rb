@@ -32,6 +32,10 @@ module HelloSign
       client.post("/signature_request/cancel/#{request_id}")
     end
 
+    def final_copy(request_id)
+      client.get("/signature_request/final_copy/#{request_id}")
+    end
+
     private
 
     def request_parameters

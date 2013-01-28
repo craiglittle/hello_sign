@@ -75,4 +75,15 @@ describe HelloSign do
       expect(a_post_with_auth('/signature_request/cancel/request_id')).to have_been_made
     end
   end
+
+  context "when fetching a final copy of a signature request" do
+    before do
+      stub_get_with_auth('/signature_request/final_copy/request_id')
+      HelloSign.signature_request.final_copy('request_id')
+    end
+
+    it "fetches a final copy of the signature request from the HelloSign API" do
+      expect(a_get_with_auth('/signature_request/final_copy/request_id')).to have_been_made
+    end
+  end
 end
