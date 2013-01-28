@@ -79,4 +79,17 @@ describe HelloSign::SignatureRequestProxy do
       end
     end
   end
+
+  describe "#cancel" do
+    before { client.stub(:post).and_return(api_response) }
+
+    it "sends a signature request cancellation" do
+      client.should_receive(:post).with('/signature_request/cancel/request_id')
+      sr_proxy.cancel(request_id)
+    end
+
+    it "returns the API response" do
+      expect(sr_proxy.cancel(request_id)).to eq api_response
+    end
+  end
 end

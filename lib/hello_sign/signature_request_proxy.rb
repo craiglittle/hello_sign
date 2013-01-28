@@ -28,6 +28,10 @@ module HelloSign
       client.post("/signature_request/remind/#{request_id}", :body => {:email_address => email})
     end
 
+    def cancel(request_id)
+      client.post("/signature_request/cancel/#{request_id}")
+    end
+
     private
 
     def request_parameters

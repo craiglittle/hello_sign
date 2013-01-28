@@ -16,8 +16,8 @@ A Ruby interface to the HelloSign API.
 - [x] list
 - [x] get
 - [x] send
-- [ ] remind
-- [ ] cancel
+- [x] remind
+- [x] cancel
 - [ ] final copy
 
 #### Signature request with a reusable form
@@ -103,6 +103,9 @@ HelloSign.signature_request.list(:page => 5)
 
 ## send a signature request reminder
 HelloSign.signature_request.remind('34k2j4', :email => 'bob@smith.com')
+
+## cancel a signature request
+HelloSign.signature_request.cancel('233rwer')
 ```
 
 ## Planned API Design
@@ -124,10 +127,6 @@ HelloSign.signature_request.send(:form => '3j3kdrj') do |request|
     :estimated_time => 'two weeks'
   }
 )
-
-HelloSign.signature_request.remind('233rwer', :email => 'bob@example.com')
-
-HelloSign.signature_request.cancel('233rwer')
 
 HelloSign.signature_request.final_copy('233rwer')
 

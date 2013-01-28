@@ -64,4 +64,15 @@ describe HelloSign do
       ).to have_been_made
     end
   end
+
+  context "when canceling a signature request" do
+    before do
+      stub_post_with_auth('/signature_request/cancel/request_id')
+      HelloSign.signature_request.cancel('request_id')
+    end
+
+    it "sends a signature request cancellation to the HelloSign API" do
+      expect(a_post_with_auth('/signature_request/cancel/request_id')).to have_been_made
+    end
+  end
 end
