@@ -23,6 +23,11 @@ module HelloSign
       client.get('/signature_request/list', :params => params)
     end
 
+    def remind(request_id, parameters = {})
+      email = parameters.fetch(:email)
+      client.post("/signature_request/remind/#{request_id}", :body => {:email_address => email})
+    end
+
     private
 
     def request_parameters

@@ -51,4 +51,17 @@ describe HelloSign do
       expect(a_get_with_auth('/signature_request/list?page=1')).to have_been_made
     end
   end
+
+  context "when sending a signature request reminder" do
+    before do
+      stub_post_with_auth('/signature_request/remind/request_id')
+      HelloSign.signature_request.remind('request_id', :email => 'john@johnson.com')
+    end
+
+    it "sends a reminder request to the HelloSign API" do
+      expect(a_post_with_auth('/signature_request/remind/request_id')
+        .with(:body => {:email_address => 'john@johnson.com'})
+      ).to have_been_made
+    end
+  end
 end
