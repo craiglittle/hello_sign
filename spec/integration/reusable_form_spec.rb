@@ -35,4 +35,17 @@ describe HelloSign do
       ).to have_been_made
     end
   end
+
+  context "when taking away a user's access to a reusable form" do
+    before do
+      stub_post_with_auth('/reusable_form/remove_user/form_id')
+      HelloSign.reusable_form.revoke_access('form_id', :email => 'john@johnson.com')
+    end
+
+    it "sends a request to grant form access to the HelloSign API" do
+      expect(a_post_with_auth('/reusable_form/remove_user/form_id')
+        .with(:body => {:email_address => 'john@johnson.com'})
+      ).to have_been_made
+    end
+  end
 end

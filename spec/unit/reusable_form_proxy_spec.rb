@@ -73,4 +73,39 @@ describe HelloSign::ReusableFormProxy do
       end
     end
   end
+
+  describe "#revoke_access" do
+    let(:email)      { 'john@johnson.com' }
+    let(:account_id) { '15' }
+
+    before { client.stub(:post).and_return(api_response) }
+
+    context "when called with an email address" do
+      it "revokes access to account tied to the email address" do
+        client.should_receive(:post).with('/reusable_form/remove_user/form_id', :body => {:email_address => email})
+        rf_proxy.revoke_access(form_id, :email => email)
+      end
+
+      it "returns the API response" do
+        expect(rf_proxy.revoke_access(form_id, :email => email)).to eq api_response
+      end
+    end
+
+    context "when called with an account ID" do
+      it "revokes access to account tied to the account ID" do
+        client.should_receive(:post).with('/reusable_form/remove_user/form_id', :body => {:account_id => account_id})
+        rf_proxy.revoke_access(form_id, :account_id => account_id)
+      end
+
+      it "returns the API response" do
+        expect(rf_proxy.revoke_access(form_id, :account_id => account_id)).to eq api_response
+      end
+    end
+
+    context "when called without proper parameters" do
+      it "raises an argument error exception" do
+        expect { rf_proxy.revoke_access(form_id) }.to raise_error ArgumentError
+      end
+    end
+  end
 end

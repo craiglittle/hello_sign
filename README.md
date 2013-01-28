@@ -26,7 +26,7 @@ A Ruby interface to the HelloSign API.
 - [x] list
 - [x] show
 - [x] grant access
-- [ ] revoke access
+- [x] revoke access
 
 #### Team
 
@@ -63,7 +63,7 @@ HelloSign.configure do |hs|
 end
 ```
 
-Your credentials will be passed with each request requiring authentication.
+Those credentials will be passed with each request requiring authentication.
 
 ### Account settings
 
@@ -142,16 +142,15 @@ HelloSign.reusable_form.show('34343kdf')
 ## grant access to a reusable form
 HelloSign.reusable_form.grant_access('34343kdf', :email => 'john@david.com')
 HelloSign.reusable_form.grant_access('34343kdf', :account_id => '1543')
+
+## revoke access to a reusable form
+HelloSign.reusable_form.revoke_access('34343kdf', :email => 'john@david.com')
+HelloSign.reusable_form.revoke_access('34343kdf', :account_id => '1543')
 ```
 
 ## Planned API Design
 
 ```ruby
-## Reusable forms
-
-HelloSign.reusable_form.remove_user('34343kdf', :email => 'john@david.com')
-
-
 ## Teams
 
 HelloSign.team.show
