@@ -17,20 +17,4 @@ describe HelloSign::Client do
       expect(client.password).to eq 'space'
     end
   end
-
-  describe "#get" do
-    before { subject.should_receive(:request).with(:get, 'path', {:options => {}}) }
-
-    it "makes a GET request" do
-      subject.get('path', :options => {})
-    end
-  end
-
-  describe "#post" do
-    before { subject.should_receive(:request).with(:post, 'path', {:options => {}}) }
-
-    it "makes a POST request" do
-      subject.post('path', :options => {})
-    end
-  end
 end
