@@ -33,7 +33,7 @@ A Ruby interface to the HelloSign API.
 - [x] create
 - [x] show
 - [ ] list
-- [ ] update
+- [x] update
 - [ ] destroy
 - [ ] add member
 - [ ] remove member
@@ -155,14 +155,15 @@ HelloSign.team.create(:name => 'The Browncoats')
 
 ## fetch details on a team
 HelloSign.team.show
+
+## update team details (only name right now)
+HelloSign.team.update(:name => 'The Other Guys')
 ```
 
 ## Planned API Design
 
 ```ruby
 ## Teams
-
-HelloSign.team.update(:name => 'The Other Guys')
 
 HelloSign.team.destroy
 

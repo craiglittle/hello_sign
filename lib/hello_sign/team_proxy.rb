@@ -15,5 +15,9 @@ module HelloSign
       client.get('/team')
     end
 
+    def update(attributes)
+      client.post('/team', :body => attributes)
+    end
+
   end
 end

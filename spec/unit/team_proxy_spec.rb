@@ -47,4 +47,19 @@ describe HelloSign::TeamProxy do
       expect(team_proxy.show).to eq api_response
     end
   end
+
+  describe "#update" do
+    let(:new_name) { 'The Bluecoats' }
+
+    before { client.stub(:post).and_return(api_response) }
+
+    it "sends a team update request" do
+      client.should_receive(:post).with('/team', :body => {:name => new_name})
+      team_proxy.update(:name => new_name)
+    end
+
+    it "returns the API response" do
+      expect(team_proxy.update(:name => new_name)).to eq api_response
+    end
+  end
 end
