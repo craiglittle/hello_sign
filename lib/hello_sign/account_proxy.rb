@@ -15,7 +15,7 @@ module HelloSign
 
       client.post('/account/create',
         :body => {:email_address => email, :password => password},
-        :unauthenticated => true
+        :auth_not_required => true
       )
     end
 

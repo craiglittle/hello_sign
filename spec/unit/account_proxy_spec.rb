@@ -22,7 +22,7 @@ describe HelloSign::AccountProxy do
           .with(
             '/account/create',
             :body => {:email_address => 'david@bowman.com', :password => 'space'},
-            :unauthenticated => true
+            :auth_not_required => true
           )
         account_proxy.create(:email => 'david@bowman.com', :password => 'space')
       end

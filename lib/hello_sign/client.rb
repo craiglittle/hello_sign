@@ -25,29 +25,22 @@ module HelloSign
     private
 
     def request(method, path, options)
-      connection = options[:unauthenticated] ? unauth_connection : auth_connection
-      request = connection.send(method) do |request|
-        request.path   = "#{API_VERSION}#{path}"
-        request.params = options[:params] if options[:params]
-        request.body   = options[:body]
-      end
-
-      request.body
+      base_connection do |connection|
+        connection.request :basic_auth, email, password unless options[:auth_not_required]
+      end.send(method) do |request|
+        request.url  "#{API_VERSION}#{path}", options[:params]
+        request.body = options[:body]
+      end.body
     end
 
-    def unauth_connection(&auth)
-      Faraday.new(:url => API_ENDPOINT) do |faraday|
-        auth.call(faraday) if block_given?
-        faraday.request :multipart
-        faraday.request :url_encoded
-        faraday.response :multi_json, :symbolize_keys => true
-        faraday.adapter Faraday.default_adapter
-      end
-    end
+    def base_connection
+      Faraday.new(:url => API_ENDPOINT) do |connection|
+        yield connection
 
-    def auth_connection
-      unauth_connection do |faraday|
-        faraday.request :basic_auth, email, password
+        connection.request  :multipart
+        connection.request  :url_encoded
+        connection.response :multi_json, :symbolize_keys => true
+        connection.adapter  :net_http
       end
     end
 
