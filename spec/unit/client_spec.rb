@@ -6,8 +6,6 @@ describe HelloSign::Client do
   let(:connection) { double('connection') }
   subject(:client) { HelloSign::Client.new('david@bowman.com', 'space') }
 
-  before { client.connection = connection }
-
   describe "#email" do
     it "returns the email address" do
       expect(client.email).to eq 'david@bowman.com'

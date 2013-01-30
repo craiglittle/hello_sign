@@ -7,7 +7,6 @@ module HelloSign
     API_VERSION  = '/v3'
 
     attr_reader :email, :password
-    attr_writer :connection
 
     def initialize(email, password)
       @email    = email
