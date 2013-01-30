@@ -6,7 +6,7 @@ module HelloSign
       @client = client
     end
 
-    def create(params = {})
+    def create(params)
       name = params.fetch(:name)
       client.post('/team/create', :body => {:name => name})
     end
@@ -23,16 +23,24 @@ module HelloSign
       client.post('/team/destroy')
     end
 
-    def add_member(params = {})
-      body = if email = params[:email]
+    def add_member(params)
+      client.post("/team/add_member", :body => body_by_identifier(params))
+    end
+
+    def remove_member(params)
+      client.post("/team/remove_member", :body => body_by_identifier(params))
+    end
+
+    private
+
+    def body_by_identifier(params)
+      if email = params[:email]
         {:email_address => email}
       elsif account_id = params[:account_id]
         {:account_id => account_id}
       else
         raise ArgumentError, 'An email address or account ID must be provided.'
       end
-
-      client.post("/team/add_member", :body => body)
     end
 
   end

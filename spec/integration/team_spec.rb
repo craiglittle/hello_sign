@@ -1,64 +1,73 @@
 require 'integration/helper'
 
 describe HelloSign do
-  context "when creating a team" do
-    before do
-      stub_post_with_auth('/team/create')
+  context "creating a team" do
+    before { stub_post_with_auth('/team/create') }
+
+    example do
       HelloSign.team.create(:name => 'The Browncoats')
-    end
 
-    it "sends a team creation request to the HelloSign API" do
       expect(a_post_with_auth('/team/create')
-        .with(:body => {:name => 'The Browncoats'})
-      ).to have_been_made
+        .with(:body => {:name => 'The Browncoats'}))
+        .to have_been_made
     end
   end
 
-  context "when fetching information about a team" do
-    before do
-      stub_get_with_auth('/team')
+  context "fetching team information" do
+    before { stub_get_with_auth('/team') }
+
+    example do
       HelloSign.team.show
-    end
 
-    it "fetches the team information from the HelloSign API" do
-      expect(a_get_with_auth('/team')).to have_been_made
+      expect(a_get_with_auth('/team'))
+        .to have_been_made
     end
   end
 
-  context "when updating the information about a team" do
-    before do
-      stub_post_with_auth('/team')
+  context "updating team information" do
+    before { stub_post_with_auth('/team') }
+
+    example do
       HelloSign.team.update(:name => 'The Bluecoats')
-    end
 
-    it "sends a team update request to the HelloSign API" do
       expect(a_post_with_auth('/team')
-        .with(:name => 'The Bluecoats')
-      ).to have_been_made
+        .with(:name => 'The Bluecoats'))
+        .to have_been_made
     end
   end
 
-  context "when destroying a team" do
-    before do
-      stub_post_with_auth('/team/destroy')
+  context "destroying a team" do
+    before { stub_post_with_auth('/team/destroy') }
+
+    example do
       HelloSign.team.destroy
-    end
 
-    it "sends a team destroy request to the HelloSign API" do
-      expect(a_post_with_auth('/team/destroy')).to have_been_made
+      expect(a_post_with_auth('/team/destroy'))
+        .to have_been_made
     end
   end
 
-  context "when adding a member to a team" do
-    before do
-      stub_post_with_auth('/team/add_member')
-      HelloSign.team.add_member(:email => 'bob@smith.com')
-    end
+  context "adding a member to a team" do
+    before { stub_post_with_auth('/team/add_member') }
 
-    it "sends a add member to team request to the HelloSign API" do
+    example do
+      HelloSign.team.add_member(:email => 'bob@smith.com')
+
       expect(a_post_with_auth('/team/add_member')
-        .with(:email => 'bob@smith.com')
-      ).to have_been_made
+        .with(:email => 'bob@smith.com'))
+        .to have_been_made
+    end
+  end
+
+  context "removing a member from a team" do
+    before { stub_post_with_auth('/team/remove_member') }
+
+    example do
+      HelloSign.team.remove_member(:email => 'bob@smith.com')
+
+      expect(a_post_with_auth('/team/remove_member')
+        .with(:email => 'bob@smith.com'))
+        .to have_been_made
     end
   end
 end

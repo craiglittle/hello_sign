@@ -34,8 +34,8 @@ A Ruby interface to the HelloSign API.
 - [x] show
 - [x] update
 - [x] destroy
-- [ ] add member
-- [ ] remove member
+- [x] add member
+- [x] remove member
 
 #### Unclaimed drafts
 
@@ -164,15 +164,15 @@ HelloSign.team.destroy
 ## add a member to the team
 HelloSign.team.add_member(:email => 'new@guy.com')
 HelloSign.team.add_member(:account_id => '3432')
+
+## remove a member from the team
+HelloSign.team.remove_member(:email => 'old@guy.com')
+HelloSign.team.remove_member(:account_id => '3323')
 ```
 
 ## Planned API Design
 
 ```ruby
-## Teams
-
-HelloSign.team.remove_member(:email => 'old@guy.com')
-
 ## Unclaimed drafts
 
 HelloSign.unclaimed_draft.create(:files => ['Account.pdf', 'Details.doc'])

@@ -105,4 +105,37 @@ describe HelloSign::TeamProxy do
       end
     end
   end
+
+  describe "#remove_member" do
+    let(:email)      { 'john@johnson.com' }
+    let(:account_id) { '15' }
+
+    context "when called with an email address" do
+      it "removes the user with the email address from the team" do
+        client.should_receive(:post).with('/team/remove_member', :body => {:email_address => email})
+        team_proxy.remove_member(:email => email)
+      end
+
+      it "returns the API response" do
+        expect(team_proxy.remove_member(:email => email)).to eq api_response
+      end
+    end
+
+    context "when called with an account ID" do
+      it "removes the user with the account ID from the team" do
+        client.should_receive(:post).with('/team/remove_member', :body => {:account_id => account_id})
+        team_proxy.remove_member(:account_id => account_id)
+      end
+
+      it "returns the API response" do
+        expect(team_proxy.remove_member(:account_id => account_id)).to eq api_response
+      end
+    end
+
+    context "when called without proper parameters" do
+      it "raises an argument error exception" do
+        expect { team_proxy.remove_member }.to raise_error ArgumentError
+      end
+    end
+  end
 end
