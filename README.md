@@ -158,16 +158,18 @@ HelloSign.team.show
 ## update team details (only name right now)
 HelloSign.team.update(:name => 'The Other Guys')
 
-## get rid of a team
+## delete a team
 HelloSign.team.destroy
+
+## add a member to the team
+HelloSign.team.add_member(:email => 'new@guy.com')
+HelloSign.team.add_member(:account_id => '3432')
 ```
 
 ## Planned API Design
 
 ```ruby
 ## Teams
-
-HelloSign.team.add_member(:email => 'new@guy.com')
 
 HelloSign.team.remove_member(:email => 'old@guy.com')
 

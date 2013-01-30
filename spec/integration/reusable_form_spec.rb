@@ -31,7 +31,7 @@ describe HelloSign do
 
     it "sends a request to grant form access to the HelloSign API" do
       expect(a_post_with_auth('/reusable_form/add_user/form_id')
-        .with(:body => {:email_address => 'john@johnson.com'})
+        .with(:email_address => 'john@johnson.com')
       ).to have_been_made
     end
   end
@@ -44,7 +44,7 @@ describe HelloSign do
 
     it "sends a request to grant form access to the HelloSign API" do
       expect(a_post_with_auth('/reusable_form/remove_user/form_id')
-        .with(:body => {:email_address => 'john@johnson.com'})
+        .with(:email_address => 'john@johnson.com')
       ).to have_been_made
     end
   end

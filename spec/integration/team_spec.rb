@@ -48,4 +48,17 @@ describe HelloSign do
       expect(a_post_with_auth('/team/destroy')).to have_been_made
     end
   end
+
+  context "when adding a member to a team" do
+    before do
+      stub_post_with_auth('/team/add_member')
+      HelloSign.team.add_member(:email => 'bob@smith.com')
+    end
+
+    it "sends a add member to team request to the HelloSign API" do
+      expect(a_post_with_auth('/team/add_member')
+        .with(:email => 'bob@smith.com')
+      ).to have_been_made
+    end
+  end
 end

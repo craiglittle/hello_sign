@@ -72,4 +72,37 @@ describe HelloSign::TeamProxy do
       expect(team_proxy.destroy).to eq api_response
     end
   end
+
+  describe "#add_member" do
+    let(:email)      { 'john@johnson.com' }
+    let(:account_id) { '15' }
+
+    context "when called with an email address" do
+      it "adds the user with the email address to the team" do
+        client.should_receive(:post).with('/team/add_member', :body => {:email_address => email})
+        team_proxy.add_member(:email => email)
+      end
+
+      it "returns the API response" do
+        expect(team_proxy.add_member(:email => email)).to eq api_response
+      end
+    end
+
+    context "when called with an account ID" do
+      it "adds the user with the account ID to the team" do
+        client.should_receive(:post).with('/team/add_member', :body => {:account_id => account_id})
+        team_proxy.add_member(:account_id => account_id)
+      end
+
+      it "returns the API response" do
+        expect(team_proxy.add_member(:account_id => account_id)).to eq api_response
+      end
+    end
+
+    context "when called without proper parameters" do
+      it "raises an argument error exception" do
+        expect { team_proxy.add_member }.to raise_error ArgumentError
+      end
+    end
+  end
 end
