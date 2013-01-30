@@ -20,6 +20,12 @@ describe HelloSign do
     end
   end
 
+  describe "::team" do
+    it "returns a team proxy" do
+      expect(HelloSign.team).to be_a HelloSign::TeamProxy
+    end
+  end
+
   describe "::client" do
     context "when it has not previously been called" do
       it "returns a new client" do

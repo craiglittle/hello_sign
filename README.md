@@ -30,7 +30,7 @@ A Ruby interface to the HelloSign API.
 
 #### Team
 
-- [ ] create
+- [x] create
 - [ ] show
 - [ ] list
 - [ ] update
@@ -148,14 +148,18 @@ HelloSign.reusable_form.revoke_access('34343kdf', :email => 'john@david.com')
 HelloSign.reusable_form.revoke_access('34343kdf', :account_id => '1543')
 ```
 
+### Teams
+```ruby
+## create a team
+HelloSign.team.create(:name => 'The Browncoats')
+```
+
 ## Planned API Design
 
 ```ruby
 ## Teams
 
 HelloSign.team.show
-
-HelloSign.team.create(:name => 'The Browncoats')
 
 HelloSign.team.update(:name => 'The Other Guys')
 
