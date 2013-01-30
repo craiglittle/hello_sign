@@ -37,4 +37,15 @@ describe HelloSign do
       ).to have_been_made
     end
   end
+
+  context "when destroying a team" do
+    before do
+      stub_post_with_auth('/team/destroy')
+      HelloSign.team.destroy
+    end
+
+    it "sends a team destroy request to the HelloSign API" do
+      expect(a_post_with_auth('/team/destroy')).to have_been_made
+    end
+  end
 end

@@ -19,5 +19,9 @@ module HelloSign
       client.post('/team', :body => attributes)
     end
 
+    def destroy
+      client.post('/team/destroy')
+    end
+
   end
 end
