@@ -34,4 +34,17 @@ describe HelloSign::TeamProxy do
       end
     end
   end
+
+  describe "#show" do
+    before { client.stub(:get).and_return(api_response) }
+
+    it "fetches the team information" do
+      client.should_receive(:get).with('/team')
+      team_proxy.show
+    end
+
+    it "returns the API response" do
+      expect(team_proxy.show).to eq api_response
+    end
+  end
 end

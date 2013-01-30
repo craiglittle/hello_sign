@@ -11,5 +11,9 @@ module HelloSign
       client.post('/team/create', :body => {:name => name})
     end
 
+    def show
+      client.get('/team')
+    end
+
   end
 end
