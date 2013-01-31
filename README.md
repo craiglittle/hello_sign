@@ -1,20 +1,21 @@
-# HelloSign
+# HelloSign [![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)](https://gemnasium.com/craiglittle/hello_sign) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/craiglittle/hello_sign)
 
 A Ruby interface to the HelloSign API.
 
+## Installation
+```ruby
+gem install hello_sign
+```
+
 ## Usage
 
-### Account creation
-
-```ruby
-HelloSign.account.create(:email => 'david@bowman.com', :password => 'space')
-```
+All responses are returned as JSON.
 
 ### Configuration
 
-HelloSign uses HTTP basic authentication to authenticate API calls.
+HelloSign uses HTTP basic authentication to authenticate users.
 
-Configure the client like this:
+Configure the client with credentials like this:
 
 ```ruby
 HelloSign.configure do |hs|
@@ -23,22 +24,38 @@ HelloSign.configure do |hs|
 end
 ```
 
-Those credentials will be passed with each request requiring authentication.
+Those credentials then will be used for each request that requires authentication.
 
-### Account settings
+### Account
+
+##### Create an account
+
+Authentication is not required.
 
 ```ruby
-## fetch account settings
-HelloSign.account.settings.show
+HelloSign.account.create(:email => 'david@bowman.com', :password => 'space')
+```
 
-## update account settings (callback URL as of right now)
+##### Fetch account settings
+```ruby
+HelloSign.account.settings.show
+```
+
+##### Update account settings
+
+Only callback URL is configurable as of right now.
+
+```ruby
 HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
 ```
 
 ### Signature requests
 
+##### Send a request
+
+Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
+
 ```ruby
-## send a new request
 HelloSign.signature_request.send do |request|
   request.title   = 'Lease'
   request.subject = 'Sign this'
@@ -53,8 +70,13 @@ HelloSign.signature_request.send do |request|
     {:name => 'test.jpg', :io => image_io,     :mime => 'image/jpeg'}
   ]
 end
+```
 
-## send a new request using a reusable form
+##### Send a request using a reusable form
+
+Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
+
+```ruby
 HelloSign.signature_request.send(:form => 'form_id') do |request|
   request.title         = 'Lease'
   request.subject       = 'Sign this'
@@ -72,68 +94,106 @@ HelloSign.signature_request.send(:form => 'form_id') do |request|
     {:name => 'time', :value => 'two weeks'}
   ]
 end
+```
 
-## fetch the status of a signature request
+##### Fetch the status on a request
+```ruby
 HelloSign.signature_request.status('33sdf3')
+```
 
-## fetch a list of signature requests
-HelloSign.signature_request.list # defaults to page 1
+##### Fetch a list of all requests
+
+Defaults to page 1 when no page number is provided.
+
+```ruby
+HelloSign.signature_request.list # :page => 1
 HelloSign.signature_request.list(:page => 5)
+```
 
-## send a signature request reminder
+##### Send a reminder
+```ruby
 HelloSign.signature_request.remind('34k2j4', :email => 'bob@smith.com')
+```
 
-## cancel a signature request
+##### Cancel a request
+```ruby
 HelloSign.signature_request.cancel('233rwer')
+```
 
-## fetch a final copy of a signature request
+##### Fetch a final copy
+```ruby
 HelloSign.signature_request.final_copy('233rwer')
 ```
 
 ### Reusable forms
+
+##### Fetch a list of all forms
+
+Defaults to page 1 when no page number is provided.
+
 ```ruby
-## fetch a list of reusable forms
-HelloSign.reusable_form.list # defaults to page 1
+HelloSign.reusable_form.list # :page => 1
 HelloSign.reusable_form.list(:page => 5)
+```
 
-## fetch details on a reusable form
+##### Fetch details on a form
+```ruby
 HelloSign.reusable_form.show('34343kdf')
+```
 
-## grant access to a reusable form
+##### Grant access to a form
+```ruby
 HelloSign.reusable_form.grant_access('34343kdf', :email => 'john@david.com')
 HelloSign.reusable_form.grant_access('34343kdf', :account_id => '1543')
+```
 
-## revoke access to a reusable form
+##### Revoke access to a form
+```ruby
 HelloSign.reusable_form.revoke_access('34343kdf', :email => 'john@david.com')
 HelloSign.reusable_form.revoke_access('34343kdf', :account_id => '1543')
 ```
 
 ### Teams
+
+##### Create a team
 ```ruby
-## create a team
 HelloSign.team.create(:name => 'The Browncoats')
+```
 
-## fetch details on a team
+##### Fetch team details
+```ruby
 HelloSign.team.show
+```
 
-## update team details (only name right now)
+##### Update team details
+
+Only name is configurable as of right now.
+
+```ruby
 HelloSign.team.update(:name => 'The Other Guys')
+```
 
-## delete a team
+##### Delete a team
+```ruby
 HelloSign.team.destroy
+```
 
-## add a member to the team
+##### Add a member to the team
+```ruby
 HelloSign.team.add_member(:email => 'new@guy.com')
 HelloSign.team.add_member(:account_id => '3432')
+```
 
-## remove a member from the team
+##### Remove a member from the team
+```ruby
 HelloSign.team.remove_member(:email => 'old@guy.com')
 HelloSign.team.remove_member(:account_id => '3323')
 ```
 
 ### Unclaimed drafts
+
+##### Create a draft
 ```ruby
-## create an unclaimed draft
 HelloSign.unclaimed_draft.create do |draft|
   draft.files = [
     {:name => 'test.txt', :io => text_io,  :mime => 'text/plain'},
@@ -141,3 +201,6 @@ HelloSign.unclaimed_draft.create do |draft|
   ]
 end
 ```
+
+## Contributing
+Pull requests welcome. Please squash sloppy commits aggressively and follow [Tim Pope's guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) on commit messages.
