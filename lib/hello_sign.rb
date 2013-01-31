@@ -4,6 +4,7 @@ require 'hello_sign/account_proxy'
 require 'hello_sign/signature_request_proxy'
 require 'hello_sign/reusable_form_proxy'
 require 'hello_sign/team_proxy'
+require 'hello_sign/unclaimed_draft_proxy'
 
 module HelloSign
   class << self
@@ -23,6 +24,10 @@ module HelloSign
 
     def team
       TeamProxy.new(client)
+    end
+
+    def unclaimed_draft
+      UnclaimedDraftProxy.new(client)
     end
 
     def client

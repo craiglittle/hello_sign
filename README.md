@@ -2,45 +2,6 @@
 
 A Ruby interface to the HelloSign API.
 
-## Features
-
-#### Account
-- [x] create
-
-#### Account settings
-- [x] show
-- [x] update
-
-#### Signature request
-
-- [x] list
-- [x] show
-- [x] send
-- [x] send with a reusable form
-- [x] remind
-- [x] cancel
-- [x] final copy
-
-#### Reusable form
-
-- [x] list
-- [x] show
-- [x] grant access
-- [x] revoke access
-
-#### Team
-
-- [x] create
-- [x] show
-- [x] update
-- [x] destroy
-- [x] add member
-- [x] remove member
-
-#### Unclaimed drafts
-
-- [ ] create
-
 ## Usage
 
 ### Account creation
@@ -170,10 +131,13 @@ HelloSign.team.remove_member(:email => 'old@guy.com')
 HelloSign.team.remove_member(:account_id => '3323')
 ```
 
-## Planned API Design
-
+### Unclaimed drafts
 ```ruby
-## Unclaimed drafts
-
-HelloSign.unclaimed_draft.create(:files => ['Account.pdf', 'Details.doc'])
+## create an unclaimed draft
+HelloSign.unclaimed_draft.create do |draft|
+  draft.files = [
+    {:name => 'test.txt', :io => text_io,  :mime => 'text/plain'},
+    {:name => 'test.jpg', :io => image_io, :mime => 'image/jpeg'}
+  ]
+end
 ```

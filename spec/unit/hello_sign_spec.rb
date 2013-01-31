@@ -26,6 +26,12 @@ describe HelloSign do
     end
   end
 
+  describe "::unclaimed_draft" do
+    it "returns a unclaimed draft proxy" do
+      expect(HelloSign.unclaimed_draft).to be_a HelloSign::UnclaimedDraftProxy
+    end
+  end
+
   describe "::client" do
     context "when it has not previously been called" do
       it "returns a new client" do
