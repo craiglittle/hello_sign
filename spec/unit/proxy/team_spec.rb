@@ -1,10 +1,10 @@
 require 'helper'
-require 'hello_sign/team_proxy'
+require 'hello_sign/proxy/team'
 
-describe HelloSign::TeamProxy do
+describe HelloSign::Proxy::Team do
   let(:client)         { double('client') }
   let(:api_response)   { double('API response') }
-  subject(:team_proxy) { HelloSign::TeamProxy.new(client) }
+  subject(:team_proxy) { HelloSign::Proxy::Team.new(client) }
 
   before do
     client.stub(:get).and_return(api_response)

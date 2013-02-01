@@ -1,9 +1,9 @@
 require 'helper'
-require 'hello_sign/settings_proxy'
+require 'hello_sign/proxy/settings'
 
-describe HelloSign::SettingsProxy do
+describe HelloSign::Proxy::Settings do
   let(:client)       { double('client') }
-  subject(:settings) { HelloSign::SettingsProxy.new(client) }
+  subject(:settings) { HelloSign::Proxy::Settings.new(client) }
 
   describe "#client" do
     it "returns the client" do

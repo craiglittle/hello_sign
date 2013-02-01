@@ -1,33 +1,29 @@
 require 'hello_sign/version'
 require 'hello_sign/client'
-require 'hello_sign/account_proxy'
-require 'hello_sign/signature_request_proxy'
-require 'hello_sign/reusable_form_proxy'
-require 'hello_sign/team_proxy'
-require 'hello_sign/unclaimed_draft_proxy'
+require 'hello_sign/proxy'
 
 module HelloSign
   class << self
     attr_accessor :email, :password
 
     def account
-      AccountProxy.new(client)
+      HelloSign::Proxy::Account.new(client)
     end
 
     def signature_request
-      SignatureRequestProxy.new(client)
+      HelloSign::Proxy::SignatureRequest.new(client)
     end
 
     def reusable_form
-      ReusableFormProxy.new(client)
+      HelloSign::Proxy::ReusableForm.new(client)
     end
 
     def team
-      TeamProxy.new(client)
+      HelloSign::Proxy::Team.new(client)
     end
 
     def unclaimed_draft
-      UnclaimedDraftProxy.new(client)
+      HelloSign::Proxy::UnclaimedDraft.new(client)
     end
 
     def client

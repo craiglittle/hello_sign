@@ -1,6 +1,5 @@
 require 'integration/helper'
 
-
 describe HelloSign do
   context "when creating an account" do
     before do

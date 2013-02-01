@@ -1,10 +1,10 @@
 require 'helper'
-require 'hello_sign/unclaimed_draft_proxy'
+require 'hello_sign/proxy/unclaimed_draft'
 
-describe HelloSign::UnclaimedDraftProxy do
+describe HelloSign::Proxy::UnclaimedDraft do
   let(:client)       { double('client') }
   let(:api_response) { double('API response') }
-  subject(:ud_proxy) { HelloSign::UnclaimedDraftProxy.new(client) }
+  subject(:ud_proxy) { HelloSign::Proxy::UnclaimedDraft.new(client) }
 
   describe "#client" do
     it "returns the client" do

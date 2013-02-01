@@ -4,31 +4,31 @@ require 'hello_sign'
 describe HelloSign do
   describe "::account" do
     it "returns an account proxy" do
-      expect(HelloSign.account).to be_a HelloSign::AccountProxy
+      expect(HelloSign.account).to be_a HelloSign::Proxy::Account
     end
   end
 
   describe "::signature_request" do
     it "returns a signature request proxy" do
-      expect(HelloSign.signature_request).to be_a HelloSign::SignatureRequestProxy
+      expect(HelloSign.signature_request).to be_a HelloSign::Proxy::SignatureRequest
     end
   end
 
   describe "::reusable_form" do
     it "returns a reusable form proxy" do
-      expect(HelloSign.reusable_form).to be_a HelloSign::ReusableFormProxy
+      expect(HelloSign.reusable_form).to be_a HelloSign::Proxy::ReusableForm
     end
   end
 
   describe "::team" do
     it "returns a team proxy" do
-      expect(HelloSign.team).to be_a HelloSign::TeamProxy
+      expect(HelloSign.team).to be_a HelloSign::Proxy::Team
     end
   end
 
   describe "::unclaimed_draft" do
     it "returns a unclaimed draft proxy" do
-      expect(HelloSign.unclaimed_draft).to be_a HelloSign::UnclaimedDraftProxy
+      expect(HelloSign.unclaimed_draft).to be_a HelloSign::Proxy::UnclaimedDraft
     end
   end
 

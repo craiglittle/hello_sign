@@ -1,9 +1,9 @@
 require 'helper'
-require 'hello_sign/account_proxy'
+require 'hello_sign/proxy/account'
 
-describe HelloSign::AccountProxy do
+describe HelloSign::Proxy::Account do
   let(:client)            { double('client') }
-  subject(:account_proxy) { HelloSign::AccountProxy.new(client) }
+  subject(:account_proxy) { HelloSign::Proxy::Account.new(client) }
 
   describe "#client" do
     it "returns the client" do

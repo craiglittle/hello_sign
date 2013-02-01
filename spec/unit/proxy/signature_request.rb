@@ -1,11 +1,11 @@
 require 'helper'
-require 'hello_sign/signature_request_proxy'
+require 'hello_sign/proxy/signature_request'
 
-describe HelloSign::SignatureRequestProxy do
+describe HelloSign::Proxy::SignatureRequest do
   let(:client)       { double('client') }
   let(:request_id)   { 'request_id' }
   let(:api_response) { double('API response') }
-  subject(:sr_proxy) { HelloSign::SignatureRequestProxy.new(client) }
+  subject(:sr_proxy) { HelloSign::Proxy::SignatureRequest.new(client) }
 
   describe "#client" do
     it "returns the client" do
