@@ -1,8 +1,12 @@
+require 'hello_sign/proxy'
+
 require 'faraday'
 require 'faraday_middleware-multi_json'
 
 module HelloSign
   class Client
+    include HelloSign::Proxy
+
     API_ENDPOINT = 'https://api.hellosign.com'
     API_VERSION  = '/v3'
 

@@ -1,30 +1,17 @@
-require 'hello_sign/version'
 require 'hello_sign/client'
 require 'hello_sign/proxy'
+require 'hello_sign/version'
+
+require 'forwardable'
 
 module HelloSign
   class << self
+    extend Forwardable
+
     attr_accessor :email, :password
 
-    def account
-      HelloSign::Proxy::Account.new(client)
-    end
-
-    def signature_request
-      HelloSign::Proxy::SignatureRequest.new(client)
-    end
-
-    def reusable_form
-      HelloSign::Proxy::ReusableForm.new(client)
-    end
-
-    def team
-      HelloSign::Proxy::Team.new(client)
-    end
-
-    def unclaimed_draft
-      HelloSign::Proxy::UnclaimedDraft.new(client)
-    end
+    def_delegators :client, :account, :signature_request, :reusable_form,
+      :team, :unclaimed_draft
 
     def client
       @client ||= Client.new(email, password)

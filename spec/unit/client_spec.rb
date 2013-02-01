@@ -1,20 +1,14 @@
 require 'helper'
-require 'json'
 require 'hello_sign/client'
+require 'shared_examples/proxy'
 
 describe HelloSign::Client do
-  let(:connection) { double('connection') }
-  subject(:client) { HelloSign::Client.new('david@bowman.com', 'space') }
+  subject(:hs_client) { HelloSign::Client.new('david@bowman.com', 'space') }
 
-  describe "#email" do
-    it "returns the email address" do
-      expect(client.email).to eq 'david@bowman.com'
-    end
-  end
+  its(:email)    { should eq 'david@bowman.com' }
+  its(:password) { should eq 'space' }
 
-  describe "#password" do
-    it "returns the password" do
-      expect(client.password).to eq 'space'
-    end
+  it_behaves_like 'a proxy' do
+    let(:client) { hs_client }
   end
 end
