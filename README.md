@@ -203,4 +203,11 @@ end
 ```
 
 ## Contributing
-Pull requests welcome. Please squash sloppy commits aggressively and follow [Tim Pope's guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) on commit messages.
+Pull requests welcome. Please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] on commit messages.
+
+[tim_pope_guidelines]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+
+## Copyright
+Copyright (c) 2013 Craig Little. See [LICENSE][license] for details.
+
+[license]: https://github.com/craiglittle/hello_sign/blob/master/LICENSE.md
