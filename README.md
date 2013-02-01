@@ -1,6 +1,9 @@
-# HelloSign [![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)](https://gemnasium.com/craiglittle/hello_sign) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/craiglittle/hello_sign)
+# HelloSign [![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium] [![Code Climate](https://codeclimate.com/badge.png)][code_climate]
 
 A Ruby interface to the HelloSign API.
+
+[gemnasium]: https://gemnasium.com/craiglittle/hello_sign
+[code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
 
 ## Installation
 ```ruby
@@ -28,7 +31,7 @@ Those credentials then will be used for each request that requires authenticatio
 
 ### Account
 
-##### Create an account
+#### Create an account
 
 Authentication is not required.
 
@@ -36,12 +39,12 @@ Authentication is not required.
 HelloSign.account.create(:email => 'david@bowman.com', :password => 'space')
 ```
 
-##### Fetch account settings
+#### Fetch account settings
 ```ruby
 HelloSign.account.settings.show
 ```
 
-##### Update account settings
+#### Update account settings
 
 Only callback URL is configurable as of right now.
 
@@ -51,7 +54,7 @@ HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
 
 ### Signature requests
 
-##### Send a request
+#### Send a request
 
 Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
 
@@ -72,7 +75,7 @@ HelloSign.signature_request.send do |request|
 end
 ```
 
-##### Send a request using a reusable form
+#### Send a request using a reusable form
 
 Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
 
@@ -96,12 +99,12 @@ HelloSign.signature_request.send(:form => 'form_id') do |request|
 end
 ```
 
-##### Fetch the status on a request
+#### Fetch the status on a request
 ```ruby
 HelloSign.signature_request.status('33sdf3')
 ```
 
-##### Fetch a list of all requests
+#### Fetch a list of all requests
 
 Defaults to page 1 when no page number is provided.
 
@@ -110,24 +113,24 @@ HelloSign.signature_request.list # :page => 1
 HelloSign.signature_request.list(:page => 5)
 ```
 
-##### Send a reminder
+#### Send a reminder
 ```ruby
 HelloSign.signature_request.remind('34k2j4', :email => 'bob@smith.com')
 ```
 
-##### Cancel a request
+#### Cancel a request
 ```ruby
 HelloSign.signature_request.cancel('233rwer')
 ```
 
-##### Fetch a final copy
+#### Fetch a final copy
 ```ruby
 HelloSign.signature_request.final_copy('233rwer')
 ```
 
 ### Reusable forms
 
-##### Fetch a list of all forms
+#### Fetch a list of all forms
 
 Defaults to page 1 when no page number is provided.
 
@@ -136,18 +139,18 @@ HelloSign.reusable_form.list # :page => 1
 HelloSign.reusable_form.list(:page => 5)
 ```
 
-##### Fetch details on a form
+#### Fetch details on a form
 ```ruby
 HelloSign.reusable_form.show('34343kdf')
 ```
 
-##### Grant access to a form
+#### Grant access to a form
 ```ruby
 HelloSign.reusable_form.grant_access('34343kdf', :email => 'john@david.com')
 HelloSign.reusable_form.grant_access('34343kdf', :account_id => '1543')
 ```
 
-##### Revoke access to a form
+#### Revoke access to a form
 ```ruby
 HelloSign.reusable_form.revoke_access('34343kdf', :email => 'john@david.com')
 HelloSign.reusable_form.revoke_access('34343kdf', :account_id => '1543')
@@ -155,17 +158,17 @@ HelloSign.reusable_form.revoke_access('34343kdf', :account_id => '1543')
 
 ### Teams
 
-##### Create a team
+#### Create a team
 ```ruby
 HelloSign.team.create(:name => 'The Browncoats')
 ```
 
-##### Fetch team details
+#### Fetch team details
 ```ruby
 HelloSign.team.show
 ```
 
-##### Update team details
+#### Update team details
 
 Only name is configurable as of right now.
 
@@ -173,18 +176,18 @@ Only name is configurable as of right now.
 HelloSign.team.update(:name => 'The Other Guys')
 ```
 
-##### Delete a team
+#### Delete a team
 ```ruby
 HelloSign.team.destroy
 ```
 
-##### Add a member to the team
+#### Add a member to the team
 ```ruby
 HelloSign.team.add_member(:email => 'new@guy.com')
 HelloSign.team.add_member(:account_id => '3432')
 ```
 
-##### Remove a member from the team
+#### Remove a member from the team
 ```ruby
 HelloSign.team.remove_member(:email => 'old@guy.com')
 HelloSign.team.remove_member(:account_id => '3323')
@@ -192,7 +195,7 @@ HelloSign.team.remove_member(:account_id => '3323')
 
 ### Unclaimed drafts
 
-##### Create a draft
+#### Create a draft
 ```ruby
 HelloSign.unclaimed_draft.create do |draft|
   draft.files = [
