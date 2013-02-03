@@ -1,6 +1,9 @@
-# HelloSign [![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium] [![Code Climate](https://codeclimate.com/badge.png)][code_climate]
+# HelloSign
 
 A Ruby interface to the HelloSign API.
+
+[![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/craiglittle/hello_sign.png)][code_climate]
 
 [gemnasium]: https://gemnasium.com/craiglittle/hello_sign
 [code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
