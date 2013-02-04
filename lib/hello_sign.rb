@@ -14,11 +14,18 @@ module HelloSign
       :unclaimed_draft] => :client
 
     def client
-      @client ||= Client.new(email, password)
+      @client = Client.new(email, password) unless credentials_match?
+      @client
     end
 
     def configure
       yield(self)
+    end
+
+    private
+
+    def credentials_match?
+      @client && [@client.email, @client.password].hash == [email, password].hash
     end
 
   end
