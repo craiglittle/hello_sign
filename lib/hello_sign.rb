@@ -1,5 +1,4 @@
 require 'hello_sign/client'
-require 'hello_sign/proxy'
 require 'hello_sign/version'
 
 require 'forwardable'
