@@ -7,7 +7,8 @@ require 'hello_sign/proxy/unclaimed_draft'
 module HelloSign
   module Proxy
     attr_writer :account_proxy_source, :signature_request_proxy_source,
-      :reusable_form_proxy_source, :team_proxy_source, :unclaimed_draft_proxy_source
+      :reusable_form_proxy_source, :team_proxy_source,
+      :unclaimed_draft_proxy_source
 
     def account
       account_proxy_source.new(self)

@@ -5,11 +5,7 @@ describe HelloSign::Proxy::Account do
   let(:client)            { double('client') }
   subject(:account_proxy) { HelloSign::Proxy::Account.new(client) }
 
-  describe "#client" do
-    it "returns the client" do
-      expect(account_proxy.client).to be client
-    end
-  end
+  its(:client) { should eq client }
 
   describe "#create" do
     context "when passed the proper parameters" do

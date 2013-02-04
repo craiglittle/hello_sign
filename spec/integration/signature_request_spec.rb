@@ -8,7 +8,7 @@ describe HelloSign do
 
       before do
         stub_post_with_auth('/signature_request/send')
-        HelloSign.signature_request.send do |request|
+        HelloSign.signature_request.deliver do |request|
           request.title   = 'Lease'
           request.subject = 'Sign this'
           request.message = 'You must sign this.'
@@ -34,7 +34,7 @@ describe HelloSign do
     context "when using a reusable form" do
       before do
         stub_post_with_auth('/signature_request/send_with_reusable_form')
-        HelloSign.signature_request.send(:form => 'form_id') do |request|
+        HelloSign.signature_request.deliver(:form => 'form_id') do |request|
           request.title         = 'Lease'
           request.subject       = 'Sign this'
           request.message       = 'You must sign this.'
