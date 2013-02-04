@@ -10,8 +10,8 @@ module HelloSign
 
     attr_accessor :email, :password
 
-    def_delegators :client, :account, :signature_request, :reusable_form,
-      :team, :unclaimed_draft
+    delegate [:account, :signature_request, :reusable_form, :team,
+      :unclaimed_draft] => :client
 
     def client
       @client ||= Client.new(email, password)
