@@ -13,11 +13,7 @@ A Ruby interface to the HelloSign API.
 gem install hello_sign
 ```
 
-## Usage
-
-All responses are returned as JSON.
-
-### Configuration
+## Configuration
 
 HelloSign uses HTTP basic authentication to authenticate users.
 
@@ -31,6 +27,22 @@ end
 ```
 
 Those credentials then will be used for each request that requires authentication.
+
+### Thread safety
+
+Applications that make requests on behalf of multiple HelloSign users should
+avoid global configuration. Instead, instantiate a client directly.
+
+```ruby
+  hs_client = HelloSign::Client.new('username@example.com', 'password')
+```
+
+A client instantiated in this way responds to the same methods as the
+`HelloSign` constant.
+
+## Usage
+
+All responses are returned as JSON.
 
 ### Account
 
