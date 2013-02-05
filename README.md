@@ -237,7 +237,7 @@ This gem officially supports and is tested against the following Ruby interprete
 It should also work on Ruby 1.8.7 interpreters. However, since Ruby 1.8.7 will [no longer be supported](http://www.ruby-lang.org/en/news/2011/10/06/plans-for-1-8-7/) after June 2013, this gem will not be developed with 1.8.7 compatabiliy as a goal.
 
 ## Contributing
-Pull requests welcome. Please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] on commit messages.
+Pull requests are welcome, though consider asking for a feature or bug fix first through the issue tracker. When contributing code, please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] for commit messages.
 
 [tim_pope_guidelines]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 
