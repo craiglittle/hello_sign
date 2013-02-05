@@ -76,7 +76,7 @@ HelloSign.account.settings.update(callback_url: 'http://callmemaybe.com')
 Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
 
 ```ruby
-HelloSign.signature_request.send do |request|
+HelloSign.signature_request.deliver do |request|
   request.title   = 'Lease'
   request.subject = 'Sign this'
   request.message = 'You must sign this.'
@@ -97,7 +97,7 @@ end
 Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
 
 ```ruby
-HelloSign.signature_request.send(:form => 'form_id') do |request|
+HelloSign.signature_request.deliver(:form => 'form_id') do |request|
   request.title         = 'Lease'
   request.subject       = 'Sign this'
   request.message       = 'You must sign this.'
