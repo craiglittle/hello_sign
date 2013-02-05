@@ -186,9 +186,6 @@ HelloSign.team.show
 ```
 
 #### Update team details
-
-Only name is configurable as of right now.
-
 ```ruby
 HelloSign.team.update(name: 'The Other Guys')
 ```
