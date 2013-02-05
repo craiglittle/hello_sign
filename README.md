@@ -224,6 +224,18 @@ HelloSign.unclaimed_draft.create do |draft|
 end
 ```
 
+## Supported Ruby interpreters
+
+This gem officially supports and is tested against the following Ruby interpreters:
+
+* MRI 1.9.2
+* MRI 1.9.3
+* MRI 2.0.0
+* JRuby in 1.9 mode
+* Rubinius in 1.9 mode
+
+It should also work on Ruby 1.8.7 interpreters. However, since Ruby 1.8.7 will [no longer be supported](http://www.ruby-lang.org/en/news/2011/10/06/plans-for-1-8-7/) after June 2013, this gem will not be developed with 1.8.7 compatabiliy as a goal.
+
 ## Contributing
 Pull requests welcome. Please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] on commit messages.
 
