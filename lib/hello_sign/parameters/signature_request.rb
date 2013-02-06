@@ -7,7 +7,7 @@ module HelloSign
       attr_writer :signers, :files
 
       def signers
-        @signers.each_with_index.inject({}) do |parameter, (signer, index)|
+        (@signers || {}).each_with_index.inject({}) do |parameter, (signer, index)|
           signer = {
             :name          => signer[:name],
             :email_address => signer[:email],
@@ -19,7 +19,7 @@ module HelloSign
       end
 
       def files
-        @files.each_with_index.inject({}) do |parameter, (file, index)|
+        (@files || {}).each_with_index.inject({}) do |parameter, (file, index)|
           parameter[index + 1] = upload_io.new(file[:io], file[:mime], file[:name])
           parameter
         end
