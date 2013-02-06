@@ -31,12 +31,12 @@ describe HelloSign::Parameters::ReusableFormSignatureRequest do
       request_parameters.subject = 'Sign this'
       request_parameters.message = 'You must sign this.'
       request_parameters.ccs     = [
-        {:email => 'lawyer@lawfirm.com', :role => 'lawyer'},
-        {:email => 'accountant@llc.com', :role => 'accountant'}
+        {:email_address => 'lawyer@lawfirm.com', :role => 'lawyer'},
+        {:email_address => 'accountant@llc.com', :role => 'accountant'}
       ]
       request_parameters.signers = [
-        {:name => 'Jack', :email => 'jack@hill.com', :role => 'consultant'},
-        {:name => 'Jill', :email => 'jill@hill.com', :role => 'client'}
+        {:name => 'Jack', :email_address => 'jack@hill.com', :role => 'consultant'},
+        {:name => 'Jill', :email_address => 'jill@hill.com', :role => 'client'}
       ]
       request_parameters.custom_fields = [
         {:name => 'cost', :value => '$20,000'},

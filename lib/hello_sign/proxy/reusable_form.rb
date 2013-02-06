@@ -8,7 +8,6 @@ module HelloSign
       end
 
       def list(params = {})
-        params = {:page => 1}.merge(params)
         client.get('/reusable_form/list', :params => params)
       end
 
@@ -17,23 +16,11 @@ module HelloSign
       end
 
       def grant_access(form_id, params = {})
-        client.post("/reusable_form/add_user/#{form_id}", :body => body(params))
+        client.post("/reusable_form/add_user/#{form_id}", :body => params)
       end
 
       def revoke_access(form_id, params = {})
-        client.post("/reusable_form/remove_user/#{form_id}", :body => body(params))
-      end
-
-      private
-
-      def body(params)
-        if email = params[:email]
-          {:email_address => email}
-        elsif account_id = params[:account_id]
-          {:account_id => account_id}
-        else
-          raise ArgumentError, 'An email address or account ID must be provided.'
-        end
+        client.post("/reusable_form/remove_user/#{form_id}", :body => params)
       end
 
     end

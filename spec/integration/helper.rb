@@ -4,8 +4,8 @@ require 'webmock/rspec'
 require 'json'
 
 HelloSign.configure do |hs|
-  hs.email    = 'david@bowman.com'
-  hs.password = 'foobar'
+  hs.email_address = 'david@bowman.com'
+  hs.password      = 'foobar'
 end
 
 def stub_get(path)

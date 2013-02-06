@@ -27,8 +27,8 @@ describe HelloSign::Parameters::SignatureRequest do
         request_parameters.message = 'You must sign this.'
         request_parameters.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
         request_parameters.signers = [
-          {:name => 'Jack', :email => 'jack@hill.com'},
-          {:name => 'Jill', :email => 'jill@hill.com'}
+          {:name => 'Jack', :email_address => 'jack@hill.com'},
+          {:name => 'Jill', :email_address => 'jill@hill.com'}
         ]
         request_parameters.files   = [
           {:name => 'test.txt', :io => 'text file IO object', :mime => 'text/plain'},

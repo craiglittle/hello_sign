@@ -23,10 +23,7 @@ module HelloSign
         else
           yield request_parameters
 
-          client.post(
-            '/signature_request/send',
-            :body => request_parameters.formatted
-          )
+          client.post('/signature_request/send', :body => request_parameters.formatted)
         end
       end
 
@@ -41,12 +38,9 @@ module HelloSign
       end
 
       def remind(request_id, params = {})
-        email = params.fetch(:email) { raise ArgumentError, 'An email address must be provided.' }
+        params = {:email_address => params.delete(:email)}.merge(params)
 
-        client.post(
-          "/signature_request/remind/#{request_id}",
-          :body => {:email_address => email}
-        )
+        client.post("/signature_request/remind/#{request_id}", :body => params)
       end
 
       def cancel(request_id)

@@ -113,12 +113,6 @@ describe HelloSign::Proxy::SignatureRequest do
       client.stub(:post).and_return(api_response)
       expect(sr_proxy.remind(request_id, :email => email)).to eq api_response
     end
-
-    context "when called without an email address" do
-      it "raises an exception" do
-        expect { sr_proxy.remind(request_id) }.to raise_error ArgumentError
-      end
-    end
   end
 
   describe "#cancel" do

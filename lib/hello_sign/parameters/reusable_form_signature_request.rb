@@ -6,14 +6,14 @@ module HelloSign
 
       def ccs
         @ccs.inject({}) do |parameter, cc|
-          parameter[cc[:role]] = {:email_address => cc[:email]}
+          parameter[cc[:role]] = {:email_address => cc[:email_address]}
           parameter
         end
       end
 
       def signers
         @signers.inject({}) do |parameter, signer|
-          parameter[signer[:role]] = {:name => signer[:name], :email_address => signer[:email]}
+          parameter[signer[:role]] = {:name => signer[:name], :email_address => signer[:email_address]}
           parameter
         end
       end

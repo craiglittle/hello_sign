@@ -2,110 +2,60 @@ require 'helper'
 require 'hello_sign/proxy/reusable_form'
 
 describe HelloSign::Proxy::ReusableForm do
-  let(:client)       { double('client') }
-  let(:api_response) { double('API response') }
-  let(:form_id)      { 'form_id' }
-  subject(:rf_proxy) { HelloSign::Proxy::ReusableForm.new(client) }
+  let(:client)        { double('client') }
+  let(:api_response)  { double('API response') }
+  let(:form_id)       { 'form_id' }
+  let(:email_address) { 'bob@example.com' }
+  subject(:rf_proxy)  { HelloSign::Proxy::ReusableForm.new(client) }
 
-  describe "#client" do
-    it "returns the client" do
-      expect(rf_proxy.client).to be client
-    end
+  before do
+    client.stub(:get).and_return(api_response)
+    client.stub(:post).and_return(api_response)
   end
 
-  describe "#list" do
-    context "when called without options" do
-      before { client.should_receive(:get).with('/reusable_form/list', :params => {:page => 1}).and_return(api_response) }
+  its(:client) { should eq client }
 
-      it "fetches the first page of reusable forms and returns the result" do
-        expect(rf_proxy.list).to eq api_response
-      end
+  describe "#list" do
+    it "sends a request to fetch the list of reusable forms" do
+      client.should_receive(:get).with('/reusable_form/list', :params => {:page => 10})
+      rf_proxy.list(:page => 10)
     end
 
-    context "when called with a page number" do
-      before { client.should_receive(:get).with('/reusable_form/list', :params => {:page => 10}).and_return(api_response) }
-
-      it "fetches a list of reusable forms for the passed page number and returns the result" do
-        expect(rf_proxy.list(:page => 10)).to eq api_response
-      end
+    it "returns the API response" do
+      expect(rf_proxy.list).to eq api_response
     end
   end
 
   describe "#show" do
-    before { client.should_receive(:get).with('/reusable_form/form_id').and_return(api_response) }
+    it "sends a request to fetch the details of a reusable form" do
+      client.should_receive(:get).with("/reusable_form/#{form_id}")
+      rf_proxy.show(form_id)
+    end
 
-    it "fetches the reusable form details and returns the result" do
+    it "returns the API response" do
       expect(rf_proxy.show(form_id)).to eq api_response
     end
   end
 
   describe "#grant_access" do
-    let(:email)      { 'john@johnson.com' }
-    let(:account_id) { '15' }
-
-    before { client.stub(:post).and_return(api_response) }
-
-    context "when called with an email address" do
-      it "grants access to account tied to the email address" do
-        client.should_receive(:post).with('/reusable_form/add_user/form_id', :body => {:email_address => email})
-        rf_proxy.grant_access(form_id, :email => email)
-      end
-
-      it "returns the API response" do
-        expect(rf_proxy.grant_access(form_id, :email => email)).to eq api_response
-      end
+    it "sends a request to grant access" do
+      client.should_receive(:post).with("/reusable_form/add_user/#{form_id}", :body => {:email_address => email_address})
+      rf_proxy.grant_access(form_id, :email_address => email_address)
     end
 
-    context "when called with an account ID" do
-      it "grants access to account tied to the account ID" do
-        client.should_receive(:post).with('/reusable_form/add_user/form_id', :body => {:account_id => account_id})
-        rf_proxy.grant_access(form_id, :account_id => account_id)
-      end
-
-      it "returns the API response" do
-        expect(rf_proxy.grant_access(form_id, :account_id => account_id)).to eq api_response
-      end
-    end
-
-    context "when called without proper parameters" do
-      it "raises an argument error exception" do
-        expect { rf_proxy.grant_access(form_id) }.to raise_error ArgumentError
-      end
+    it "returns the API response" do
+      expect(rf_proxy.grant_access(form_id, :email => email_address)).to eq api_response
     end
   end
 
   describe "#revoke_access" do
-    let(:email)      { 'john@johnson.com' }
-    let(:account_id) { '15' }
-
-    before { client.stub(:post).and_return(api_response) }
-
-    context "when called with an email address" do
-      it "revokes access to account tied to the email address" do
-        client.should_receive(:post).with('/reusable_form/remove_user/form_id', :body => {:email_address => email})
-        rf_proxy.revoke_access(form_id, :email => email)
-      end
-
-      it "returns the API response" do
-        expect(rf_proxy.revoke_access(form_id, :email => email)).to eq api_response
-      end
+    it "sends a request to revoke access" do
+      client.should_receive(:post).with("/reusable_form/remove_user/#{form_id}", :body => {:email_address => email_address})
+      rf_proxy.revoke_access(form_id, :email_address => email_address)
     end
 
-    context "when called with an account ID" do
-      it "revokes access to account tied to the account ID" do
-        client.should_receive(:post).with('/reusable_form/remove_user/form_id', :body => {:account_id => account_id})
-        rf_proxy.revoke_access(form_id, :account_id => account_id)
-      end
-
-      it "returns the API response" do
-        expect(rf_proxy.revoke_access(form_id, :account_id => account_id)).to eq api_response
-      end
-    end
-
-    context "when called without proper parameters" do
-      it "raises an argument error exception" do
-        expect { rf_proxy.revoke_access(form_id) }.to raise_error ArgumentError
-      end
+    it "returns the API response" do
+      expect(rf_proxy.revoke_access(form_id, :email_address => email_address)).to eq api_response
     end
   end
 end

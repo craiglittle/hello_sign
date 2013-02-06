@@ -25,8 +25,8 @@ Configure the client with credentials like this:
 
 ```ruby
 HelloSign.configure do |hs|
-  hs.email    = 'david@bowman.com'
-  hs.password = 'space'
+  hs.email_address = 'david@bowman.com'
+  hs.password      = 'space'
 end
 ```
 
@@ -55,7 +55,7 @@ All responses are returned as JSON.
 Authentication is not required.
 
 ```ruby
-HelloSign.account.create(email: 'david@bowman.com', password: 'space')
+HelloSign.account.create(email_address: 'david@bowman.com', password: 'space')
 ```
 
 #### Fetch account settings
@@ -82,8 +82,8 @@ HelloSign.signature_request.deliver do |request|
   request.message = 'You must sign this.'
   request.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
   request.signers = [
-    {name: 'Jack', email: 'jack@hill.com'},
-    {name: 'Jill', email: 'jill@hill.com'}
+    {name: 'Jack', email_address: 'jack@hill.com'},
+    {name: 'Jill', email_address: 'jill@hill.com'}
   ]
   request.files   = [
     {name: 'test.txt', io: text_file_io, mime: 'text/plain'},
@@ -102,12 +102,12 @@ HelloSign.signature_request.deliver(:form => 'form_id') do |request|
   request.subject       = 'Sign this'
   request.message       = 'You must sign this.'
   request.ccs           = [
-    {email: 'lawyer@lawfirm.com', role: 'lawyer'},
-    {email: 'accountant@llc.com', role: 'accountant'}
+    {email_address: 'lawyer@lawfirm.com', role: 'lawyer'},
+    {email_address: 'accountant@llc.com', role: 'accountant'}
   ]
   request.signers       = [
-    {name: 'Jack', email: 'jack@hill.com', role: 'consultant'},
-    {name: 'Jill', email: 'jill@hill.com', role: 'client'}
+    {name: 'Jack', email_address: 'jack@hill.com', role: 'consultant'},
+    {name: 'Jill', email_address: 'jill@hill.com', role: 'client'}
   ]
   request.custom_fields = [
     {name: 'cost', value: '$20,000'},
@@ -132,7 +132,7 @@ HelloSign.signature_request.list(page: 5)
 
 #### Send a reminder
 ```ruby
-HelloSign.signature_request.remind('34k2j4', email: 'bob@smith.com')
+HelloSign.signature_request.remind('34k2j4', email_address: 'bob@smith.com')
 ```
 
 #### Cancel a request
@@ -163,13 +163,13 @@ HelloSign.reusable_form.show('34343kdf')
 
 #### Grant access to a form
 ```ruby
-HelloSign.reusable_form.grant_access('34343kdf', email: 'john@david.com')
+HelloSign.reusable_form.grant_access('34343kdf', email_address: 'john@david.com')
 HelloSign.reusable_form.grant_access('34343kdf', account_id: '1543')
 ```
 
 #### Revoke access to a form
 ```ruby
-HelloSign.reusable_form.revoke_access('34343kdf', email: 'john@david.com')
+HelloSign.reusable_form.revoke_access('34343kdf', email_address: 'john@david.com')
 HelloSign.reusable_form.revoke_access('34343kdf', account_id: '1543')
 ```
 
@@ -197,13 +197,13 @@ HelloSign.team.destroy
 
 #### Add a member to the team
 ```ruby
-HelloSign.team.add_member(email: 'new@guy.com')
+HelloSign.team.add_member(email_address: 'new@guy.com')
 HelloSign.team.add_member(account_id: '3432')
 ```
 
 #### Remove a member from the team
 ```ruby
-HelloSign.team.remove_member(email: 'old@guy.com')
+HelloSign.team.remove_member(email_address: 'old@guy.com')
 HelloSign.team.remove_member(account_id: '3323')
 ```
 

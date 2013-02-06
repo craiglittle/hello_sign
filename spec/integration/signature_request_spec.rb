@@ -14,8 +14,8 @@ describe HelloSign do
           request.message = 'You must sign this.'
           request.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
           request.signers = [
-            {:name => 'Jack', :email => 'jack@hill.com'},
-            {:name => 'Jill', :email => 'jill@hill.com'}
+            {:name => 'Jack', :email_address => 'jack@hill.com'},
+            {:name => 'Jill', :email_address => 'jill@hill.com'}
           ]
           request.files   = [
             {:name => 'test.txt', :io => text_file_io, :mime => 'text/plain'},
@@ -39,12 +39,12 @@ describe HelloSign do
           request.subject       = 'Sign this'
           request.message       = 'You must sign this.'
           request.ccs           = [
-            {:email => 'lawyer@lawfirm.com', :role => 'lawyer'},
-            {:email => 'accountant@llc.com', :role => 'accountant'}
+            {:email_address => 'lawyer@lawfirm.com', :role => 'lawyer'},
+            {:email_address => 'accountant@llc.com', :role => 'accountant'}
           ]
           request.signers       = [
-            {:name => 'Jack', :email => 'jack@hill.com', :role => 'consultant'},
-            {:name => 'Jill', :email => 'jill@hill.com', :role => 'client'}
+            {:name => 'Jack', :email_address => 'jack@hill.com', :role => 'consultant'},
+            {:name => 'Jill', :email_address => 'jill@hill.com', :role => 'client'}
           ]
           request.custom_fields = [
             {:name => 'cost', :value => '$20,000'},

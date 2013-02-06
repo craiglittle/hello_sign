@@ -10,11 +10,11 @@ module HelloSign
     API_ENDPOINT = 'https://api.hellosign.com'
     API_VERSION  = '/v3'
 
-    attr_reader :email, :password
+    attr_reader :email_address, :password
 
-    def initialize(email, password)
-      @email    = email
-      @password = password
+    def initialize(email_address, password)
+      @email_address = email_address
+      @password      = password
     end
 
     def get(path, options = {})
@@ -29,7 +29,7 @@ module HelloSign
 
     def request(method, path, options)
       base_connection do |connection|
-        connection.request :basic_auth, email, password unless options[:auth_not_required]
+        connection.request :basic_auth, email_address, password unless options[:auth_not_required]
       end.send(method) do |request|
         request.url  "#{API_VERSION}#{path}", options[:params]
         request.body = options[:body]

@@ -10,7 +10,7 @@ module HelloSign
         (@signers || {}).each_with_index.inject({}) do |parameter, (signer, index)|
           signer = {
             :name          => signer[:name],
-            :email_address => signer[:email],
+            :email_address => signer[:email_address],
             :order         => index
           }
           parameter[index] = signer
