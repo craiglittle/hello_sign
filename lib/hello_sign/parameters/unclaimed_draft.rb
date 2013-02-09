@@ -5,18 +5,18 @@ module HelloSign
     class UnclaimedDraft
       attr_writer :files
 
+      def formatted
+        {:file => files}
+      end
+
+      private
+
       def files
         @files.each_with_index.inject({}) do |parameter, (file, index)|
           parameter[index] = upload_io.new(file[:io], file[:mime], file[:name])
           parameter
         end
       end
-
-      def formatted
-        {:file => files}
-      end
-
-      private
 
       def upload_io
         Faraday::UploadIO
