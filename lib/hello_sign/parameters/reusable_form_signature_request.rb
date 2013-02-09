@@ -1,8 +1,23 @@
 module HelloSign
   module Parameters
     class ReusableFormSignatureRequest
-      attr_accessor :reusable_form_id, :title, :subject, :message
-      attr_writer :ccs, :signers, :custom_fields
+      attr_writer :reusable_form_id, :title, :subject, :message, :ccs, :signers, :custom_fields
+
+      def formatted
+        {
+          :reusable_form_id => reusable_form_id,
+          :title            => title,
+          :subject          => subject,
+          :message          => message,
+          :ccs              => ccs,
+          :signers          => signers,
+          :custom_fields    => custom_fields
+        }
+      end
+
+      private
+
+      attr_reader :reusable_form_id, :title, :subject, :message
 
       def ccs
         @ccs.inject({}) do |parameter, cc|
@@ -25,17 +40,6 @@ module HelloSign
         end
       end
 
-      def formatted
-        {
-          :reusable_form_id => reusable_form_id,
-          :title            => title,
-          :subject          => subject,
-          :message          => message,
-          :ccs              => ccs,
-          :signers          => signers,
-          :custom_fields    => custom_fields
-        }
-      end
     end
   end
 end
