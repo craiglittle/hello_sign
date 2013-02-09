@@ -9,8 +9,7 @@ module HelloSign
 
     attr_accessor :email_address, :password
 
-    delegate [:account, :signature_request, :reusable_form, :team,
-      :unclaimed_draft] => :client
+    delegate [:account, :signature_request, :reusable_form, :team, :unclaimed_draft] => :client
 
     def client
       @client = Client.new(email_address, password) unless credentials_match?
@@ -18,7 +17,7 @@ module HelloSign
     end
 
     def configure
-      yield(self)
+      yield self
     end
 
     private
