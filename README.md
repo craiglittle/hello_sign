@@ -38,7 +38,7 @@ Applications that make requests on behalf of multiple HelloSign users should
 avoid global configuration. Instead, instantiate a client directly.
 
 ```ruby
-hs_client = HelloSign::Client.new('username@example.com', 'password')
+hs_client = HelloSign::Client.new(email_address: 'username@example.com', password: 'password')
 ```
 
 A client instantiated in this way responds to the same methods as the

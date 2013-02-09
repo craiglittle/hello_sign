@@ -12,9 +12,14 @@ module HelloSign
 
     attr_reader :email_address, :password
 
-    def initialize(email_address, password)
-      @email_address = email_address
-      @password      = password
+    def initialize(email_address_or_hash, password = nil)
+      if email_address_or_hash.is_a? Hash
+        @email_address = email_address_or_hash.fetch(:email_address)
+        @password      = email_address_or_hash.fetch(:password)
+      else
+        @email_address = email_address_or_hash
+        @password      = password
+      end
     end
 
     def get(path, options = {})
