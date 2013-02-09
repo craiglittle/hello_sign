@@ -14,8 +14,8 @@ module HelloSign
 
     def initialize(email_address_or_hash, password = nil)
       if email_address_or_hash.is_a? Hash
-        @email_address = email_address_or_hash.fetch(:email_address)
-        @password      = email_address_or_hash.fetch(:password)
+        @email_address = email_address_or_hash.fetch(:email_address) { raise ArgumentError }
+        @password      = email_address_or_hash.fetch(:password) { raise ArgumentError }
       else
         @email_address = email_address_or_hash
         @password      = password
