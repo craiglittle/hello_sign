@@ -234,7 +234,7 @@ It should also work on Ruby 1.8.7 interpreters. However, since Ruby 1.8.7 will [
 [code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
 
 ## Contributing
-Pull requests are welcome, though consider asking for a feature or bug fix first through the issue tracker. When contributing code, please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] for commit messages.
+Pull requests are welcome, but consider asking for a feature or bug fix first through the issue tracker. When contributing code, please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] for commit messages.
 
 [tim_pope_guidelines]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 
