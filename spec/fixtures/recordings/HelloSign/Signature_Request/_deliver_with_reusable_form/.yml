@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.hellosign.com/v3/signature_request/send_with_reusable_form
+    body:
+      encoding: US-ASCII
+      string: reusable_form_id=0c2e3eb4b996fa6478dee4b1ce11f1013c2370f9&title=Contract+from+form&subject&message&ccs%5BLawyer%5D%5Bemail_address%5D=lawyer%40firm.com&ccs%5BAccountant%5D%5Bemail_address%5D=accoutant%40llc.com&signers%5BClient%5D%5Bname%5D=Jack&signers%5BClient%5D%5Bemail_address%5D=jack%40hill.com&signers%5BConsultant%5D%5Bname%5D=Jill&signers%5BConsultant%5D%5Bemail_address%5D=jill%40hill.com&custom_fields%5BNumber%5D=50&custom_fields%5BCost%5D=%24100.00
+    headers:
+      Authorization:
+      - Basic aGVsbG9zaWduLnRlc3RAZ21haWwuY29tOmhlbGxvc2lnbnRlc3Q=
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept
+      access-control-allow-methods:
+      - GET, POST, OPTIONS
+      access-control-allow-origin:
+      - ! '*'
+      content-type:
+      - application/json
+      date:
+      - Wed, 13 Feb 2013 09:33:46 GMT
+      p3p:
+      - CP="NOP3PPOLICY"
+      server:
+      - Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8k PHP/5.3.10
+      x-powered-by:
+      - PHP/5.3.10
+      content-length:
+      - '1024'
+      connection:
+      - Close
+    body:
+      encoding: US-ASCII
+      string: ! ' {"signature_request":{"signature_request_id":"d5b69a9a5a03904abb1b170410914c213110c409","title":"Contract
+        from form","original_title":"test","subject":null,"message":null,"is_complete":false,"has_error":false,"custom_fields":[{"name":"Number","value":"50","type":"text"},{"name":"Cost","value":"$100.00","type":"text"}],"response_data":[],"signing_url":"https:\/\/www.hellosign.com\/editor\/sign?guid=d5b69a9a5a03904abb1b170410914c213110c409","details_url":"https:\/\/www.hellosign.com\/home\/manage?guid=d5b69a9a5a03904abb1b170410914c213110c409","requester_email_address":"<EMAIL_ADDRESS>","signatures":[{"signer_email_address":"jack@hill.com","signer_name":"Jack","order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null},{"signer_email_address":"jill@hill.com","signer_name":"Jill","order":null,"status_code":"awaiting_signature","signed_at":null,"last_viewed_at":null,"last_reminded_at":null}],"cc_email_addresses":["accoutant@llc.com","lawyer@firm.com"]}}'
+    http_version: 
+  recorded_at: Wed, 13 Feb 2013 09:33:51 GMT
+recorded_with: VCR 2.4.0

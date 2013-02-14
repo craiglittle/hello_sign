@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.hellosign.com/v3/account/create
+    body:
+      encoding: US-ASCII
+      string: email_address=hello_sign_test%40gmail.com&password=password123
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 400
+      message: 
+    headers:
+      access-control-allow-headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept
+      access-control-allow-methods:
+      - GET, POST, OPTIONS
+      access-control-allow-origin:
+      - ! '*'
+      content-type:
+      - application/json
+      date:
+      - Thu, 14 Feb 2013 08:31:53 GMT
+      p3p:
+      - CP="NOP3PPOLICY"
+      server:
+      - Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8k PHP/5.3.10
+      x-powered-by:
+      - PHP/5.3.10
+      content-length:
+      - '146'
+      connection:
+      - Close
+    body:
+      encoding: US-ASCII
+      string: ! '{"error":{"error_msg":"This email address is too similar to an existing
+        one in our system: hello_sign_test@gmail.com","error_name":"bad_request"}}'
+    http_version: 
+  recorded_at: Thu, 14 Feb 2013 08:31:54 GMT
+recorded_with: VCR 2.4.0

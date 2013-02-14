@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.hellosign.com/v3/signature_request/cancel/d5b69a9a5a03904abb1b170410914c213110c409
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Basic aGVsbG9zaWduLnRlc3RAZ21haWwuY29tOmhlbGxvc2lnbnRlc3Q=
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept
+      access-control-allow-methods:
+      - GET, POST, OPTIONS
+      access-control-allow-origin:
+      - ! '*'
+      content-type:
+      - text/html; charset=utf-8
+      date:
+      - Thu, 14 Feb 2013 08:17:50 GMT
+      p3p:
+      - CP="NOP3PPOLICY"
+      server:
+      - Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8k PHP/5.3.10
+      vary:
+      - Accept-Encoding
+      x-powered-by:
+      - PHP/5.3.10
+      content-length:
+      - '0'
+      connection:
+      - Close
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Thu, 14 Feb 2013 08:17:54 GMT
+recorded_with: VCR 2.4.0

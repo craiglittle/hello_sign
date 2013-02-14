@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.hellosign.com/v3/reusable_form/0c2e3eb4b996fa6478dee4b1ce11f1013c2370f9
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Basic aGVsbG9zaWduLnRlc3RAZ21haWwuY29tOmhlbGxvc2lnbnRlc3Q=
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      access-control-allow-headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept
+      access-control-allow-methods:
+      - GET, POST, OPTIONS
+      access-control-allow-origin:
+      - ! '*'
+      content-type:
+      - application/json
+      date:
+      - Thu, 14 Feb 2013 08:35:07 GMT
+      p3p:
+      - CP="NOP3PPOLICY"
+      server:
+      - Apache/2.2.22 (Unix) mod_ssl/2.2.22 OpenSSL/0.9.8k PHP/5.3.10
+      x-powered-by:
+      - PHP/5.3.10
+      content-length:
+      - '1746'
+      connection:
+      - Close
+    body:
+      encoding: US-ASCII
+      string: ! '{"reusable_form":{"reusable_form_id":"0c2e3eb4b996fa6478dee4b1ce11f1013c2370f9","title":"Contract","message":"This
+        is a contract.","is_creator":true,"can_edit":true,"signer_roles":[{"name":"Client","order":null},{"name":"Consultant","order":null}],"cc_roles":[{"name":"Accountant"},{"name":"Lawyer"}],"documents":[{"index":"0","name":"test.txt","custom_fields":[{"name":"Number","type":"text","signer":null,"x":85,"y":346,"width":160,"height":16,"required":false},{"name":"Cost","type":"text","signer":null,"x":147,"y":382,"width":160,"height":16,"required":false}],"form_fields":[{"name":"","type":"signature","signer":"1","x":50,"y":188,"width":120,"height":30,"required":true},{"name":"","type":"date_signed","signer":"1","x":320,"y":200,"width":105,"height":16,"required":true},{"name":"","type":"signature","signer":"2","x":54,"y":269,"width":120,"height":30,"required":true},{"name":"","type":"date_signed","signer":"2","x":322,"y":286,"width":105,"height":16,"required":true}]}],"custom_fields":[{"name":"Number","type":"text","signer":null,"x":85,"y":346,"width":160,"height":16,"required":false},{"name":"Cost","type":"text","signer":null,"x":147,"y":382,"width":160,"height":16,"required":false}],"named_form_fields":[{"name":"","type":"signature","signer":"1","x":50,"y":188,"width":120,"height":30,"required":true},{"name":"","type":"date_signed","signer":"1","x":320,"y":200,"width":105,"height":16,"required":true},{"name":"","type":"signature","signer":"2","x":54,"y":269,"width":120,"height":30,"required":true},{"name":"","type":"date_signed","signer":"2","x":322,"y":286,"width":105,"height":16,"required":true}],"accounts":[{"account_id":"2893e15485cc0983c2c805734fdd2475e6b90725","email_address":"<EMAIL_ADDRESS>"}]}}'
+    http_version: 
+  recorded_at: Thu, 14 Feb 2013 08:35:09 GMT
+recorded_with: VCR 2.4.0
