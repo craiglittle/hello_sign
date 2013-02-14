@@ -2,16 +2,6 @@
 
 A Ruby interface to the HelloSign API.
 
-[![Gem Version](https://badge.fury.io/rb/hello_sign.png)][gem_version]
-[![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]
-[![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium]
-[![Code Climate](https://codeclimate.com/github/craiglittle/hello_sign.png)][code_climate]
-
-[gem_version]: http://badge.fury.io/rb/hello_sign
-[build_status]: https://travis-ci.org/craiglittle/hello_sign
-[gemnasium]: https://gemnasium.com/craiglittle/hello_sign
-[code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
-
 ## Installation
 ```ruby
 gem install hello_sign
@@ -230,6 +220,18 @@ This gem officially supports and is tested against the following Ruby interprete
 * Rubinius in 1.9 mode
 
 It should also work on Ruby 1.8.7 interpreters. However, since Ruby 1.8.7 will [no longer be supported](http://www.ruby-lang.org/en/news/2011/10/06/plans-for-1-8-7/) after June 2013, this gem will not be developed with 1.8.7 compatability as a goal.
+
+## Project Status
+
+[![Gem Version](https://badge.fury.io/rb/hello_sign.png)][gem_version]
+[![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]
+[![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/craiglittle/hello_sign.png)][code_climate]
+
+[gem_version]: http://badge.fury.io/rb/hello_sign
+[build_status]: https://travis-ci.org/craiglittle/hello_sign
+[gemnasium]: https://gemnasium.com/craiglittle/hello_sign
+[code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
 
 ## Contributing
 Pull requests are welcome, though consider asking for a feature or bug fix first through the issue tracker. When contributing code, please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] for commit messages.
