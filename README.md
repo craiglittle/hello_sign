@@ -36,8 +36,6 @@ A client instantiated in this way responds to the same methods as the
 
 ## Usage
 
-All responses are returned as JSON.
-
 ### Account
 
 #### Create an account
