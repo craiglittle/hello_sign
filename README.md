@@ -36,7 +36,7 @@ A client instantiated in this way responds to the same methods as the
 
 ## Usage
 
-### Account
+### [Account](http://www.hellosign.com/api/reference#Account)
 
 #### Create an account
 
@@ -57,7 +57,7 @@ HelloSign.account.settings.show
 HelloSign.account.settings.update(callback_url: 'http://callmemaybe.com')
 ```
 
-### Signature requests
+### [Signature requests](http://www.hellosign.com/api/reference#SignatureRequest)
 
 #### Send a request
 
@@ -133,7 +133,7 @@ HelloSign.signature_request.cancel('233rwer')
 HelloSign.signature_request.final_copy('233rwer')
 ```
 
-### Reusable forms
+### [Reusable forms](http://www.hellosign.com/api/reference#ReusableForm)
 
 #### Fetch a list of all forms
 
@@ -161,7 +161,7 @@ HelloSign.reusable_form.revoke_access('34343kdf', email_address: 'john@david.com
 HelloSign.reusable_form.revoke_access('34343kdf', account_id: '1543')
 ```
 
-### Teams
+### [Teams](http://www.hellosign.com/api/reference#Team)
 
 #### Create a team
 ```ruby
@@ -195,7 +195,7 @@ HelloSign.team.remove_member(email_address: 'old@guy.com')
 HelloSign.team.remove_member(account_id: '3323')
 ```
 
-### Unclaimed drafts
+### [Unclaimed drafts](http://www.hellosign.com/api/reference#UnclaimedDraft)
 
 #### Create a draft
 ```ruby
@@ -207,7 +207,7 @@ HelloSign.unclaimed_draft.create do |draft|
 end
 ```
 
-### [Errors](http://www.hellosign.com/api/reference#Errors)
+## [Errors](http://www.hellosign.com/api/reference#Errors)
 
 When an error is returned from the HelloSign API, an associated exception is raised.
 
