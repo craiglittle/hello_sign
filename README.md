@@ -207,6 +207,10 @@ HelloSign.unclaimed_draft.create do |draft|
 end
 ```
 
+### [Errors](http://www.hellosign.com/api/reference#Errors)
+
+When an error is returned from the HelloSign API, an associated exception is raised.
+
 ## Supported Ruby interpreters
 
 This gem officially supports and is tested against the following Ruby interpreters:
@@ -219,7 +223,7 @@ This gem officially supports and is tested against the following Ruby interprete
 
 It should also work on Ruby 1.8.7 interpreters. However, since Ruby 1.8.7 will [no longer be supported](http://www.ruby-lang.org/en/news/2011/10/06/plans-for-1-8-7/) after June 2013, this gem will not be developed with 1.8.7 compatability as a goal.
 
-## Project Status
+## Status
 
 [![Gem Version](https://badge.fury.io/rb/hello_sign.png)][gem_version]
 [![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]

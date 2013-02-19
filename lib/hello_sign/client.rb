@@ -47,6 +47,7 @@ module HelloSign
 
         connection.request  :multipart
         connection.request  :url_encoded
+        connection.response :raise_error
         connection.response :multi_json, :symbolize_keys => true
         connection.adapter  :net_http
       end

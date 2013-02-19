@@ -24,6 +24,10 @@ def stub_post_with_auth(path)
   stub_request(:post, "https://david@bowman.com:foobar@api.hellosign.com/v3#{path}")
 end
 
+def stub_request_with_error(error)
+  stub_request(:any, /api\.hellosign\.com/).to_return(:body => {:error => {:error_name => error}})
+end
+
 def a_get(path)
   a_request(:get, "https://api.hellosign.com/v3#{path}")
 end
