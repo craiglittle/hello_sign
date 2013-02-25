@@ -19,10 +19,10 @@ Gem::Specification.new do |gem|
   gem.files         += Dir.glob('spec/**/*')
   gem.test_files    += Dir.glob('spec/**/*')
 
-  gem.add_dependency 'faraday', '~> 0.8.4'
+  gem.add_dependency 'faraday', '~> 0.8'
   gem.add_dependency 'faraday_middleware-multi_json', '~> 0.0.5'
 
-  gem.add_development_dependency 'rspec', '~> 2.12.0'
-  gem.add_development_dependency 'webmock', '~> 1.9.0'
-  gem.add_development_dependency 'rake', '~> 10.0.3'
+  gem.add_development_dependency 'rspec', '~> 2.12'
+  gem.add_development_dependency 'webmock', '~> 1.9'
+  gem.add_development_dependency 'rake', '~> 10.0'
 end
