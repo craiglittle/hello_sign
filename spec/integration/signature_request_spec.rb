@@ -6,8 +6,9 @@ describe HelloSign do
       let(:text_file_io)  { File.new('spec/fixtures/test.txt') }
       let(:image_io)      { File.new('spec/fixtures/test.jpg') }
 
-      before do
-        stub_post_with_auth('/signature_request/send')
+      before { stub_post_with_auth('/signature_request/send') }
+
+      example do
         HelloSign.signature_request.deliver do |request|
           request.title   = 'Lease'
           request.subject = 'Sign this'
@@ -22,9 +23,7 @@ describe HelloSign do
             {:name => 'test.jpg', :io => image_io,     :mime => 'image/jpeg'}
           ]
         end
-      end
 
-      it "sends a signature request to the HelloSign API" do
         expect(a_post_with_auth('/signature_request/send')
           .with(:headers => {'Content-Type' => /multipart\/form-data/}, :body => /This is a test upload file\./)
         ).to have_been_made
@@ -32,8 +31,9 @@ describe HelloSign do
     end
 
     context "when using a reusable form" do
-      before do
-        stub_post_with_auth('/signature_request/send_with_reusable_form')
+      before { stub_post_with_auth('/signature_request/send_with_reusable_form') }
+
+      example do
         HelloSign.signature_request.deliver(:form => 'form_id') do |request|
           request.title         = 'Lease'
           request.subject       = 'Sign this'
@@ -51,9 +51,7 @@ describe HelloSign do
             {:name => 'time', :value => 'two weeks'}
           ]
         end
-      end
 
-      it "sends a signature request using a reusable form to the HelloSign API" do
         expect(a_post_with_auth('/signature_request/send_with_reusable_form')
           .with(:body => {
             :reusable_form_id => 'form_id',
@@ -79,34 +77,31 @@ describe HelloSign do
   end
 
   context "when fetching a signature request" do
-    before do
-      stub_get_with_auth('/signature_request/request_id')
-      HelloSign.signature_request.status('request_id')
-    end
+    before { stub_get_with_auth('/signature_request/request_id') }
 
-    it "fetches the signature request information from the HelloSign API" do
+    example do
+      HelloSign.signature_request.status('request_id')
+
       expect(a_get_with_auth('/signature_request/request_id')).to have_been_made
     end
   end
 
   context "when getting a list of signature requests" do
-    before do
-      stub_get_with_auth('/signature_request/list?page=1')
-      HelloSign.signature_request.list
-    end
+    before { stub_get_with_auth('/signature_request/list?page=1') }
 
-    it "fetches a list of signature requests from the HelloSign API" do
+    example do
+      HelloSign.signature_request.list
+
       expect(a_get_with_auth('/signature_request/list?page=1')).to have_been_made
     end
   end
 
   context "when sending a signature request reminder" do
-    before do
-      stub_post_with_auth('/signature_request/remind/request_id')
-      HelloSign.signature_request.remind('request_id', :email => 'john@johnson.com')
-    end
+    before { stub_post_with_auth('/signature_request/remind/request_id') }
 
-    it "sends a reminder request to the HelloSign API" do
+    example do
+      HelloSign.signature_request.remind('request_id', :email => 'john@johnson.com')
+
       expect(a_post_with_auth('/signature_request/remind/request_id')
         .with(:body => {:email_address => 'john@johnson.com'})
       ).to have_been_made
@@ -114,23 +109,21 @@ describe HelloSign do
   end
 
   context "when canceling a signature request" do
-    before do
-      stub_post_with_auth('/signature_request/cancel/request_id')
-      HelloSign.signature_request.cancel('request_id')
-    end
+    before { stub_post_with_auth('/signature_request/cancel/request_id') }
 
-    it "sends a signature request cancellation to the HelloSign API" do
+    example do
+      HelloSign.signature_request.cancel('request_id')
+
       expect(a_post_with_auth('/signature_request/cancel/request_id')).to have_been_made
     end
   end
 
   context "when fetching a final copy of a signature request" do
-    before do
-      stub_get_with_auth('/signature_request/final_copy/request_id')
-      HelloSign.signature_request.final_copy('request_id')
-    end
+    before { stub_get_with_auth('/signature_request/final_copy/request_id') }
 
-    it "fetches a final copy of the signature request from the HelloSign API" do
+    example do
+      HelloSign.signature_request.final_copy('request_id')
+
       expect(a_get_with_auth('/signature_request/final_copy/request_id')).to have_been_made
     end
   end
