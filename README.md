@@ -229,11 +229,13 @@ It should also work on Ruby 1.8.7 interpreters. However, since Ruby 1.8.7 will [
 [![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]
 [![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium]
 [![Code Climate](https://codeclimate.com/github/craiglittle/hello_sign.png)][code_climate]
+[![Coverage Status](https://coveralls.io/repos/craiglittle/hello_sign/badge.png?branch=master)][coveralls]
 
 [gem_version]: http://badge.fury.io/rb/hello_sign
 [build_status]: https://travis-ci.org/craiglittle/hello_sign
 [gemnasium]: https://gemnasium.com/craiglittle/hello_sign
 [code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
+[coveralls]: https://coveralls.io/r/craiglittle/hello_sign
 
 ## Contributing
 Pull requests are welcome, but consider asking for a feature or bug fix first through the issue tracker. When contributing code, please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] for commit messages.
