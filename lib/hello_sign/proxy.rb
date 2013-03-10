@@ -14,12 +14,12 @@ module HelloSign
       account_proxy_source.new(self)
     end
 
-    def signature_request
-      signature_request_proxy_source.new(self)
+    def signature_request(request_id = nil)
+      signature_request_proxy_source.new(self, request_id)
     end
 
-    def reusable_form
-      reusable_form_proxy_source.new(self)
+    def reusable_form(form_id = nil)
+      reusable_form_proxy_source.new(self, form_id)
     end
 
     def team

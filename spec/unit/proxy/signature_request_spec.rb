@@ -5,9 +5,15 @@ describe HelloSign::Proxy::SignatureRequest do
   let(:client)       { double('client') }
   let(:request_id)   { 'request_id' }
   let(:api_response) { double('API response') }
-  subject(:sr_proxy) { HelloSign::Proxy::SignatureRequest.new(client) }
+  subject(:sr_proxy) { HelloSign::Proxy::SignatureRequest.new(client, request_id) }
 
-  its(:client) { should eq client }
+  before do
+    client.stub(:get).and_return(api_response)
+    client.stub(:post).and_return(api_response)
+  end
+
+  its(:client)     { should eq client }
+  its(:request_id) { should eq request_id }
 
   describe "#deliver" do
     let(:formatted_request_body) { double('formatted request body') }
@@ -17,8 +23,6 @@ describe HelloSign::Proxy::SignatureRequest do
       request_parameters.stub(:foo=)
       request_parameters.stub(:formatted).and_return(formatted_request_body)
       sr_proxy.request_parameters = request_parameters
-
-      client.stub(:post).and_return(api_response)
     end
 
     it "yields the request parameters to the block" do
@@ -61,14 +65,12 @@ describe HelloSign::Proxy::SignatureRequest do
 
   describe "#status" do
     it "fetches the signature request status" do
-      client.should_receive(:get)
-        .with('/signature_request/request_id')
-      sr_proxy.status(request_id)
+      client.should_receive(:get).with("/signature_request/#{request_id}")
+      sr_proxy.status
     end
 
     it "returns the response" do
-      client.stub(:get).and_return(api_response)
-      expect(sr_proxy.status(request_id)).to eq api_response
+      expect(sr_proxy.status).to eq api_response
     end
   end
 
@@ -105,39 +107,34 @@ describe HelloSign::Proxy::SignatureRequest do
 
     it "sends a signature request reminder" do
       client.should_receive(:post)
-        .with('/signature_request/remind/request_id', :body => {:email_address => email})
-      sr_proxy.remind(request_id, :email => email)
+        .with("/signature_request/remind/#{request_id}", :body => {:email_address => email})
+      sr_proxy.remind(:email => email)
     end
 
     it "returns the response" do
-      client.stub(:post).and_return(api_response)
-      expect(sr_proxy.remind(request_id, :email => email)).to eq api_response
+      expect(sr_proxy.remind(:email => email)).to eq api_response
     end
   end
 
   describe "#cancel" do
     it "cancels a signature request" do
-      client.should_receive(:post)
-        .with('/signature_request/cancel/request_id')
-      sr_proxy.cancel(request_id)
+      client.should_receive(:post).with("/signature_request/cancel/#{request_id}")
+      sr_proxy.cancel
     end
 
     it "returns the response" do
-      client.stub(:post).and_return(api_response)
-      expect(sr_proxy.cancel(request_id)).to eq api_response
+      expect(sr_proxy.cancel).to eq api_response
     end
   end
 
   describe "#final_copy" do
     it "fetches a final copy of the signature request" do
-      client.should_receive(:get)
-        .with('/signature_request/final_copy/request_id')
-      sr_proxy.final_copy(request_id)
+      client.should_receive(:get).with("/signature_request/final_copy/#{request_id}")
+      sr_proxy.final_copy
     end
 
     it "returns the response" do
-      client.stub(:get).and_return(api_response)
-      expect(sr_proxy.final_copy(request_id)).to eq api_response
+      expect(sr_proxy.final_copy).to eq api_response
     end
   end
 end

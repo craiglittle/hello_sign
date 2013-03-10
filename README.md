@@ -106,7 +106,7 @@ end
 
 #### Fetch the status on a request
 ```ruby
-HelloSign.signature_request.status('33sdf3')
+HelloSign.signature_request('33sdf3').status
 ```
 
 #### Fetch a list of all requests
@@ -120,17 +120,17 @@ HelloSign.signature_request.list(page: 5)
 
 #### Send a reminder
 ```ruby
-HelloSign.signature_request.remind('34k2j4', email_address: 'bob@smith.com')
+HelloSign.signature_request('34k2j4').remind(email_address: 'bob@smith.com')
 ```
 
 #### Cancel a request
 ```ruby
-HelloSign.signature_request.cancel('233rwer')
+HelloSign.signature_request('233rwer').cancel
 ```
 
 #### Fetch a final copy
 ```ruby
-HelloSign.signature_request.final_copy('233rwer')
+HelloSign.signature_request('3sdkj39').final_copy
 ```
 
 ### [Reusable forms](http://www.hellosign.com/api/reference#ReusableForm)
@@ -146,19 +146,19 @@ HelloSign.reusable_form.list(page: 5)
 
 #### Fetch details on a form
 ```ruby
-HelloSign.reusable_form.show('34343kdf')
+HelloSign.reusable_form('34343kdf').show
 ```
 
 #### Grant access to a form
 ```ruby
-HelloSign.reusable_form.grant_access('34343kdf', email_address: 'john@david.com')
-HelloSign.reusable_form.grant_access('34343kdf', account_id: '1543')
+HelloSign.reusable_form('34343kdf').grant_access(email_address: 'john@david.com')
+HelloSign.reusable_form('34343kdf').grant_access(account_id: '1543')
 ```
 
 #### Revoke access to a form
 ```ruby
-HelloSign.reusable_form.revoke_access('34343kdf', email_address: 'john@david.com')
-HelloSign.reusable_form.revoke_access('34343kdf', account_id: '1543')
+HelloSign.reusable_form('34343kdf').revoke_access(email_address: 'john@david.com')
+HelloSign.reusable_form('34343kdf').revoke_access(account_id: '1543')
 ```
 
 ### [Teams](http://www.hellosign.com/api/reference#Team)

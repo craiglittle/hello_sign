@@ -15,7 +15,7 @@ describe HelloSign do
     before { stub_get_with_auth('/reusable_form/form_id') }
 
     it "fetches the reusable form information from the HelloSign API" do
-      HelloSign.reusable_form.show('form_id')
+      HelloSign.reusable_form('form_id').show
 
       expect(a_get_with_auth('/reusable_form/form_id')).to have_been_made
     end
@@ -25,7 +25,7 @@ describe HelloSign do
     before { stub_post_with_auth('/reusable_form/add_user/form_id') }
 
     it "sends a request to grant form access to the HelloSign API" do
-      HelloSign.reusable_form.grant_access('form_id', :email_address => 'john@johnson.com')
+      HelloSign.reusable_form('form_id').grant_access(:email_address => 'john@johnson.com')
 
       expect(a_post_with_auth('/reusable_form/add_user/form_id')
         .with(:email_address => 'john@johnson.com')
@@ -37,7 +37,7 @@ describe HelloSign do
     before { stub_post_with_auth('/reusable_form/remove_user/form_id') }
 
     it "sends a request to grant form access to the HelloSign API" do
-      HelloSign.reusable_form.revoke_access('form_id', :email_address => 'john@johnson.com')
+      HelloSign.reusable_form('form_id').revoke_access(:email_address => 'john@johnson.com')
 
       expect(a_post_with_auth('/reusable_form/remove_user/form_id')
         .with(:email_address => 'john@johnson.com')

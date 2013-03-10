@@ -80,7 +80,7 @@ describe HelloSign do
     before { stub_get_with_auth('/signature_request/request_id') }
 
     example do
-      HelloSign.signature_request.status('request_id')
+      HelloSign.signature_request('request_id').status
 
       expect(a_get_with_auth('/signature_request/request_id')).to have_been_made
     end
@@ -100,7 +100,7 @@ describe HelloSign do
     before { stub_post_with_auth('/signature_request/remind/request_id') }
 
     example do
-      HelloSign.signature_request.remind('request_id', :email => 'john@johnson.com')
+      HelloSign.signature_request('request_id').remind(:email => 'john@johnson.com')
 
       expect(a_post_with_auth('/signature_request/remind/request_id')
         .with(:body => {:email_address => 'john@johnson.com'})
@@ -112,7 +112,7 @@ describe HelloSign do
     before { stub_post_with_auth('/signature_request/cancel/request_id') }
 
     example do
-      HelloSign.signature_request.cancel('request_id')
+      HelloSign.signature_request('request_id').cancel
 
       expect(a_post_with_auth('/signature_request/cancel/request_id')).to have_been_made
     end
@@ -122,7 +122,7 @@ describe HelloSign do
     before { stub_get_with_auth('/signature_request/final_copy/request_id') }
 
     example do
-      HelloSign.signature_request.final_copy('request_id')
+      HelloSign.signature_request('request_id').final_copy
 
       expect(a_get_with_auth('/signature_request/final_copy/request_id')).to have_been_made
     end
