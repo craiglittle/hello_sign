@@ -14,7 +14,7 @@ shared_examples_for 'a proxy' do
   describe "#signature_request" do
     before { client.signature_request_proxy_source = proxy_source }
 
-    it "returns an signature request proxy" do
+    it "returns a signature request proxy" do
       proxy_source.should_receive(:new).with(client).and_return(proxy)
       expect(client.signature_request).to eq proxy
     end
@@ -23,7 +23,7 @@ shared_examples_for 'a proxy' do
   describe "#reusable_form" do
     before { client.reusable_form_proxy_source = proxy_source }
 
-    it "returns an reusable form proxy" do
+    it "returns a reusable form proxy" do
       proxy_source.should_receive(:new).with(client).and_return(proxy)
       expect(client.reusable_form).to eq proxy
     end
@@ -32,7 +32,7 @@ shared_examples_for 'a proxy' do
   describe "#team" do
     before { client.team_proxy_source = proxy_source }
 
-    it "returns an team proxy" do
+    it "returns a team proxy" do
       proxy_source.should_receive(:new).with(client).and_return(proxy)
       expect(client.team).to eq proxy
     end
