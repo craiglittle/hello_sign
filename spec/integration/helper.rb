@@ -1,10 +1,12 @@
 require 'helper'
 require 'hello_sign'
 require 'webmock/rspec'
-require 'coveralls'
 require 'json'
 
-Coveralls.wear!
+if ENV['CI']
+  require 'coveralls'
+  Coveralls.wear!
+end
 
 HelloSign.configure do |hs|
   hs.email_address = 'david@bowman.com'
