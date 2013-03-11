@@ -13,6 +13,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{A Ruby interface to the HelloSign API.}
   gem.summary       = gem.description
   gem.homepage      = 'http://www.github.com/craiglittle/hello_sign'
+  gem.license       = 'MIT'
 
   gem.require_paths = ['lib']
   gem.files         += Dir.glob('lib/**/*.rb')
