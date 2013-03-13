@@ -45,17 +45,17 @@ describe HelloSign::Client do
   end
 
   context "when a hash is passed to the constructor" do
-    subject(:hs_client) { HelloSign::Client.new(:email_address => email_address, :password => password) }
+    subject(:hs_client) { HelloSign::Client.new(email_address: email_address, password: password) }
 
     its(:email_address) { should eq email_address }
     its(:password)      { should eq password }
 
     it "raises an exception if an email address is not provided" do
-      expect { HelloSign::Client.new(:password => 'space') }.to raise_error ArgumentError
+      expect { HelloSign::Client.new(password: 'space') }.to raise_error ArgumentError
     end
 
     it "raises an exception if a password is not provided" do
-      expect { HelloSign::Client.new(:email_address => 'david@bowman.com') }.to raise_error ArgumentError
+      expect { HelloSign::Client.new(email_address: 'david@bowman.com') }.to raise_error ArgumentError
     end
   end
 end

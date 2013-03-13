@@ -11,34 +11,34 @@ describe HelloSign::Parameters::ReusableFormSignatureRequest do
       request_parameters.subject = 'Sign this'
       request_parameters.message = 'You must sign this.'
       request_parameters.ccs     = [
-        {:email_address => 'lawyer@lawfirm.com', :role => 'lawyer'},
-        {:email_address => 'accountant@llc.com', :role => 'accountant'}
+        {email_address: 'lawyer@lawfirm.com', role: 'lawyer'},
+        {email_address: 'accountant@llc.com', role: 'accountant'}
       ]
       request_parameters.signers = [
-        {:name => 'Jack', :email_address => 'jack@hill.com', :role => 'consultant'},
-        {:name => 'Jill', :email_address => 'jill@hill.com', :role => 'client'}
+        {name: 'Jack', email_address: 'jack@hill.com', role: 'consultant'},
+        {name: 'Jill', email_address: 'jill@hill.com', role: 'client'}
       ]
       request_parameters.custom_fields = [
-        {:name => 'cost', :value => '$20,000'},
-        {:name => 'time', :value => 'two weeks'}
+        {name: 'cost', value: '$20,000'},
+        {name: 'time', value: 'two weeks'}
       ]
     end
 
     it "returns formatted parameters" do
       expected = {
-        :reusable_form_id => 'form_id',
-        :title            => 'Lease',
-        :subject          => 'Sign this',
-        :message          => 'You must sign this.',
-        :ccs              => {
-          'lawyer'     => {:email_address => 'lawyer@lawfirm.com'},
-          'accountant' => {:email_address => 'accountant@llc.com'}
+        reusable_form_id: 'form_id',
+        title:            'Lease',
+        subject:          'Sign this',
+        message:          'You must sign this.',
+        ccs:              {
+          'lawyer'     => {email_address: 'lawyer@lawfirm.com'},
+          'accountant' => {email_address: 'accountant@llc.com'}
         },
-        :signers          => {
-          'consultant' => {:name => 'Jack', :email_address => 'jack@hill.com'}, 
-          'client'     => {:name => 'Jill', :email_address => 'jill@hill.com'}
+        signers:          {
+          'consultant' => {name: 'Jack', email_address: 'jack@hill.com'}, 
+          'client'     => {name: 'Jill', email_address: 'jill@hill.com'}
         },
-        :custom_fields    => {
+        custom_fields:    {
           'cost' => '$20,000',
           'time' => 'two weeks'
         }

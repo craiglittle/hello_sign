@@ -42,13 +42,13 @@ module HelloSign
     end
 
     def base_connection
-      Faraday.new(:url => API_ENDPOINT) do |connection|
+      Faraday.new(url: API_ENDPOINT) do |connection|
         yield connection
 
         connection.request  :multipart
         connection.request  :url_encoded
         connection.response :raise_error
-        connection.response :multi_json, :symbolize_keys => true
+        connection.response :multi_json, symbolize_keys: true
         connection.adapter  :net_http
       end
     end

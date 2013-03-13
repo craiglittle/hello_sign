@@ -5,10 +5,10 @@ describe HelloSign do
     before { stub_post('/account/create') }
 
     it "sends an account creation request to the HelloSign API" do
-      HelloSign.account.create(:email_address => 'david@bowman.com', :password => 'foobar')
+      HelloSign.account.create(email_address: 'david@bowman.com', password: 'foobar')
 
       expect(a_post('/account/create')
-        .with(:body => {:email_address => 'david@bowman.com', :password => 'foobar'}))
+        .with(body: {email_address: 'david@bowman.com', password: 'foobar'}))
         .to have_been_made
     end
   end
@@ -27,10 +27,10 @@ describe HelloSign do
     before { stub_post_with_auth('/account') }
 
     it "sends an update account request to the HelloSign API" do
-      HelloSign.account.settings.update(:callback_url => 'http://callmemaybe.com')
+      HelloSign.account.settings.update(callback_url: 'http://callmemaybe.com')
 
       expect(a_post_with_auth('/account')
-        .with(:body => {:callback_url => 'http://callmemaybe.com'}))
+        .with(body: {callback_url: 'http://callmemaybe.com'}))
         .to have_been_made
     end
   end

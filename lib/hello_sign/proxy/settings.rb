@@ -14,7 +14,7 @@ module HelloSign
       end
 
       def update(params = {})
-        client.post('/account', :body => params)
+        client.post('/account', body: params)
       end
 
     end

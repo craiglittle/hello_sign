@@ -18,12 +18,12 @@ describe HelloSign::Proxy::Settings do
     before { client.stub(:post).and_return(api_response) }
 
     it "sends a request to update the account's settings" do
-      client.should_receive(:post).with('/account', :body => {:callback_url => callback_url})
-      settings.update(:callback_url => callback_url)
+      client.should_receive(:post).with('/account', body: {callback_url: callback_url})
+      settings.update(callback_url: callback_url)
     end
 
     it "returns the API response" do
-      expect(settings.update(:callback_url => callback_url)).to be api_response
+      expect(settings.update(callback_url: callback_url)).to be api_response
     end
   end
 end

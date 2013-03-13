@@ -8,7 +8,7 @@ module HelloSign
       end
 
       def create(params = {})
-        client.post('/team/create', :body => params)
+        client.post('/team/create', body: params)
       end
 
       def show
@@ -16,7 +16,7 @@ module HelloSign
       end
 
       def update(params = {})
-        client.post('/team', :body => params)
+        client.post('/team', body: params)
       end
 
       def destroy
@@ -24,11 +24,11 @@ module HelloSign
       end
 
       def add_member(params = {})
-        client.post("/team/add_member", :body => params)
+        client.post("/team/add_member", body: params)
       end
 
       def remove_member(params = {})
-        client.post("/team/remove_member", :body => params)
+        client.post("/team/remove_member", body: params)
       end
 
     end

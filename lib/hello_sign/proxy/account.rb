@@ -11,7 +11,7 @@ module HelloSign
       end
 
       def create(params = {})
-        client.post('/account/create', :body => params, :auth_not_required => true)
+        client.post('/account/create', body: params, auth_not_required: true)
       end
 
       def settings

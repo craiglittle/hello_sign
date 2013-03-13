@@ -17,7 +17,7 @@ describe HelloSign::Proxy::UnclaimedDraft do
       draft_parameters.stub(:formatted).and_return(formatted_request_body)
       draft_parameters.should_receive(:foo=).with('bar')
       client.should_receive(:post)
-        .with('/unclaimed_draft/create', :body => formatted_request_body)
+        .with('/unclaimed_draft/create', body: formatted_request_body)
         .and_return(api_response)
     end
 

@@ -85,7 +85,7 @@ end
 Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
 
 ```ruby
-HelloSign.signature_request.deliver(:form => 'form_id') do |request|
+HelloSign.signature_request.deliver(form: 'form_id') do |request|
   request.title         = 'Lease'
   request.subject       = 'Sign this'
   request.message       = 'You must sign this.'
@@ -220,8 +220,6 @@ This gem officially supports and is tested against the following Ruby interprete
 * MRI 2.0.0
 * JRuby in 1.9 mode
 * Rubinius in 1.9 mode
-
-It should also work on Ruby 1.8.7 interpreters. However, since Ruby 1.8.7 will [no longer be supported](http://www.ruby-lang.org/en/news/2011/10/06/plans-for-1-8-7/) after June 2013, this gem will not be developed with 1.8.7 compatability as a goal.
 
 ## Status
 

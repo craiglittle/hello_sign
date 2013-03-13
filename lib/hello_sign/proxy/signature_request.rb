@@ -19,12 +19,12 @@ module HelloSign
 
           client.post(
             '/signature_request/send_with_reusable_form',
-            :body => reusable_form_request_parameters.formatted
+            body: reusable_form_request_parameters.formatted
           )
         else
           yield request_parameters
 
-          client.post('/signature_request/send', :body => request_parameters.formatted)
+          client.post('/signature_request/send', body: request_parameters.formatted)
         end
       end
 
@@ -33,15 +33,15 @@ module HelloSign
       end
 
       def list(params = {})
-        params = {:page => 1}.merge(params)
+        params = {page: 1}.merge(params)
 
-        client.get('/signature_request/list', :params => params)
+        client.get('/signature_request/list', params: params)
       end
 
       def remind(params = {})
-        params = {:email_address => params.delete(:email)}.merge(params)
+        params = {email_address: params.delete(:email)}.merge(params)
 
-        client.post("/signature_request/remind/#{request_id}", :body => params)
+        client.post("/signature_request/remind/#{request_id}", body: params)
       end
 
       def cancel

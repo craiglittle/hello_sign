@@ -31,7 +31,7 @@ module HelloSign
       @client_source || HelloSign::Client
     end
 
-    Faraday.register_middleware :response, :raise_error => HelloSign::Middleware::RaiseError
+    Faraday.register_middleware :response, raise_error: HelloSign::Middleware::RaiseError
 
   end
 end

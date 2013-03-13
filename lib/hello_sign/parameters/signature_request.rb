@@ -9,9 +9,9 @@ module HelloSign
       def signers
         (@signers || {}).each_with_index.inject({}) do |parameter, (signer, index)|
           signer = {
-            :name          => signer[:name],
-            :email_address => signer[:email_address],
-            :order         => index
+            name:          signer[:name],
+            email_address: signer[:email_address],
+            order:         index
           }
           parameter[index] = signer
           parameter
@@ -27,12 +27,12 @@ module HelloSign
 
       def formatted
         {
-          :title              => title,
-          :subject            => subject,
-          :message            => message,
-          :cc_email_addresses => ccs,
-          :signers            => signers,
-          :file               => files
+          title:              title,
+          subject:            subject,
+          message:            message,
+          cc_email_addresses: ccs,
+          signers:            signers,
+          file:               files
         }
       end
 

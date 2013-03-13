@@ -21,7 +21,7 @@ describe HelloSign::Middleware::RaiseError do
   private
 
   def call_with_error(error)
-    env = {:body => {:error => {:error_name => error}}}
+    env = {body: {error: {error_name: error}}}
     middleware.call(env)
   end
 

@@ -9,7 +9,7 @@ module HelloSign
       end
 
       def list(params = {})
-        client.get('/reusable_form/list', :params => params)
+        client.get('/reusable_form/list', params: params)
       end
 
       def show
@@ -17,11 +17,11 @@ module HelloSign
       end
 
       def grant_access(params = {})
-        client.post("/reusable_form/add_user/#{form_id}", :body => params)
+        client.post("/reusable_form/add_user/#{form_id}", body: params)
       end
 
       def revoke_access(params = {})
-        client.post("/reusable_form/remove_user/#{form_id}", :body => params)
+        client.post("/reusable_form/remove_user/#{form_id}", body: params)
       end
 
     end

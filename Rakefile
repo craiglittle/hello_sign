@@ -5,4 +5,4 @@ RSpec::Core::RakeTask.new(:spec) do |task|
   task.pattern = 'spec/{unit,integration}/**/*_spec.rb'
 end
 
-task :default => :spec
+task default: :spec

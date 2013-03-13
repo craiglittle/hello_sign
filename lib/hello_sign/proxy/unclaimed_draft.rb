@@ -14,7 +14,7 @@ module HelloSign
         yield draft_parameters
         client.post(
           '/unclaimed_draft/create',
-          :body => draft_parameters.formatted
+          body: draft_parameters.formatted
         )
       end
 

@@ -18,8 +18,8 @@ describe HelloSign::Proxy::ReusableForm do
 
   describe "#list" do
     it "sends a request to fetch the list of reusable forms" do
-      client.should_receive(:get).with('/reusable_form/list', :params => {:page => 10})
-      rf_proxy.list(:page => 10)
+      client.should_receive(:get).with('/reusable_form/list', params: {page: 10})
+      rf_proxy.list(page: 10)
     end
 
     it "returns the API response" do
@@ -40,8 +40,8 @@ describe HelloSign::Proxy::ReusableForm do
 
   describe "#grant_access" do
     it "sends a request to grant access" do
-      client.should_receive(:post).with("/reusable_form/add_user/#{form_id}", :body => {:email_address => email_address})
-      rf_proxy.grant_access(:email_address => email_address)
+      client.should_receive(:post).with("/reusable_form/add_user/#{form_id}", body: {email_address: email_address})
+      rf_proxy.grant_access(email_address: email_address)
     end
 
     it "returns the API response" do
@@ -51,12 +51,12 @@ describe HelloSign::Proxy::ReusableForm do
 
   describe "#revoke_access" do
     it "sends a request to revoke access" do
-      client.should_receive(:post).with("/reusable_form/remove_user/#{form_id}", :body => {:email_address => email_address})
-      rf_proxy.revoke_access(:email_address => email_address)
+      client.should_receive(:post).with("/reusable_form/remove_user/#{form_id}", body: {email_address: email_address})
+      rf_proxy.revoke_access(email_address: email_address)
     end
 
     it "returns the API response" do
-      expect(rf_proxy.revoke_access(:email_address => email_address)).to eq api_response
+      expect(rf_proxy.revoke_access(email_address: email_address)).to eq api_response
     end
   end
 end

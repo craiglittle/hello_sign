@@ -3,10 +3,10 @@ require 'json'
 
 describe HelloSign do
   context "when returning a response with a body" do
-    before { stub_get_with_auth('/json').to_return(:body => {:account_id => 1}.to_json) }
+    before { stub_get_with_auth('/json').to_return(body: {account_id: 1}.to_json) }
 
     it "parses the body into a hash with symbols as keys" do
-      expect(HelloSign.client.get('/json')).to eq({:account_id => 1})
+      expect(HelloSign.client.get('/json')).to eq({account_id: 1})
     end
   end
 

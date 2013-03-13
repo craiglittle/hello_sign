@@ -6,7 +6,7 @@ module HelloSign
       attr_writer :files
 
       def formatted
-        {:file => files}
+        {file: files}
       end
 
       private

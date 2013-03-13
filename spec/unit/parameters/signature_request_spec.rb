@@ -9,15 +9,15 @@ describe HelloSign::Parameters::SignatureRequest do
     context "when all required arguments are set" do
       let(:expected) do
         {
-          :title => 'Lease',
-          :subject => 'Sign this',
-          :message => 'You must sign this.',
-          :cc_email_addresses => ['lawyer@lawfirm.com', 'spouse@family.com'], # BUGBUG: should have explicit indexes
-          :signers => {
-            0 => {:name => 'Jack', :email_address => 'jack@hill.com', :order => 0}, 
-            1 => {:name => 'Jill', :email_address => 'jill@hill.com', :order => 1}
+          title: 'Lease',
+          subject: 'Sign this',
+          message: 'You must sign this.',
+          cc_email_addresses: ['lawyer@lawfirm.com', 'spouse@family.com'], # BUGBUG: should have explicit indexes
+          signers: {
+            0 => {name: 'Jack', email_address: 'jack@hill.com', order: 0}, 
+            1 => {name: 'Jill', email_address: 'jill@hill.com', order: 1}
           },
-          :file => {1 => text_file, 2 => image_file}
+          file: {1 => text_file, 2 => image_file}
         }
       end
 
@@ -27,12 +27,12 @@ describe HelloSign::Parameters::SignatureRequest do
         request_parameters.message = 'You must sign this.'
         request_parameters.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
         request_parameters.signers = [
-          {:name => 'Jack', :email_address => 'jack@hill.com'},
-          {:name => 'Jill', :email_address => 'jill@hill.com'}
+          {name: 'Jack', email_address: 'jack@hill.com'},
+          {name: 'Jill', email_address: 'jill@hill.com'}
         ]
         request_parameters.files   = [
-          {:name => 'test.txt', :io => 'text file IO object', :mime => 'text/plain'},
-          {:name => 'test.jpg', :io => 'image file IO object', :mime => 'image/jpeg'}
+          {name: 'test.txt', io: 'text file IO object', mime: 'text/plain'},
+          {name: 'test.jpg', io: 'image file IO object', mime: 'image/jpeg'}
         ]
       end
 
@@ -47,12 +47,12 @@ describe HelloSign::Parameters::SignatureRequest do
     context "when required parameters are omitted" do
       let(:expected) do
         {
-          :title              => nil,
-          :subject            => nil,
-          :message            => nil,
-          :cc_email_addresses => nil,
-          :signers            => {},
-          :file               => {}
+          title:              nil,
+          subject:            nil,
+          message:            nil,
+          cc_email_addresses: nil,
+          signers:            {},
+          file:               {}
         }
       end
 

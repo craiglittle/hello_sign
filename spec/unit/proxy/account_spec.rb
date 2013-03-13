@@ -18,20 +18,20 @@ describe HelloSign::Proxy::Account do
     it "sends a request to create an account" do
       client.should_receive(:post).with(
         '/account/create',
-        :body => {:email_address => 'david@bowman.com', :password => 'space'},
-        :auth_not_required => true
+        body: {email_address: 'david@bowman.com', password: 'space'},
+        auth_not_required: true
       )
       account_proxy.create(
-        :email_address => 'david@bowman.com',
-        :password      => 'space'
+        email_address: 'david@bowman.com',
+        password:      'space'
       )
     end
 
     it "returns the API response" do
       expect(
         account_proxy.create(
-          :email_address => 'david@bowman.com',
-          :password      => 'space'
+          email_address: 'david@bowman.com',
+          password:      'space'
         )
       ). to eq api_response
     end
