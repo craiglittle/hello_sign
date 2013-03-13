@@ -36,6 +36,8 @@ A client instantiated in this way responds to the same methods as the
 
 ## Usage
 
+*Note: The JSON-encoded responses from the HelloSign API are converted to a hash equivalent with symbols for keys.*
+
 ### [Account](http://www.hellosign.com/api/reference#Account)
 
 #### Create an account
