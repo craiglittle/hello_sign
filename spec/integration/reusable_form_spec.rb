@@ -21,7 +21,7 @@ describe HelloSign do
     end
   end
 
-  context "when giving a user access to a reusable form" do
+  context "when granting user access to a reusable form" do
     before { stub_post_with_auth('/reusable_form/add_user/form_id') }
 
     it "sends a request to grant form access to the HelloSign API" do
@@ -33,7 +33,7 @@ describe HelloSign do
     end
   end
 
-  context "when taking away a user's access to a reusable form" do
+  context "when revoking user access to a reusable form" do
     before { stub_post_with_auth('/reusable_form/remove_user/form_id') }
 
     it "sends a request to grant form access to the HelloSign API" do
