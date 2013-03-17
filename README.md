@@ -63,7 +63,7 @@ HelloSign.account.settings.update(callback_url: 'http://callmemaybe.com')
 
 #### Send a request
 
-Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
+Values for `:io` must be Ruby IO objects (e.g. `text_file` and `image` below).
 
 ```ruby
 HelloSign.signature_request.deliver do |request|
@@ -76,8 +76,9 @@ HelloSign.signature_request.deliver do |request|
     {name: 'Jill', email_address: 'jill@hill.com'}
   ]
   request.files   = [
-    {name: 'test.txt', io: text_file_io, mime: 'text/plain'},
-    {name: 'test.jpg', io: image_io,     mime: 'image/jpeg'}
+    {filename: 'test.jpg'},
+    {filename: 'test.txt', io: text_file},
+    {filename: 'test.txt', mime: 'text/xml'}
   ]
 end
 ```
@@ -203,8 +204,8 @@ HelloSign.team.remove_member(account_id: '3323')
 ```ruby
 HelloSign.unclaimed_draft.create do |draft|
   draft.files = [
-    {name: 'test.txt', io: text_io,  mime: 'text/plain'},
-    {name: 'test.jpg', io: image_io, mime: 'image/jpeg'}
+    {name: 'test.txt', io: text_file},
+    {name: 'test.jpg', io: image}
   ]
 end
 ```

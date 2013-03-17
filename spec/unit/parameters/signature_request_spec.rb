@@ -4,8 +4,12 @@ require 'hello_sign/parameters/signature_request'
 describe HelloSign::Parameters::SignatureRequest do
   describe "#formatted" do
     let(:request_parameters) { HelloSign::Parameters::SignatureRequest.new }
+    let(:upload_io_source)   { double('upload IO source') }
     let(:text_file)          { double('text file') }
     let(:image_file)         { double('image file') }
+
+    before { request_parameters.upload_io_source = upload_io_source }
+
     context "when all required arguments are set" do
       let(:expected) do
         {
@@ -31,14 +35,15 @@ describe HelloSign::Parameters::SignatureRequest do
           {name: 'Jill', email_address: 'jill@hill.com'}
         ]
         request_parameters.files   = [
-          {name: 'test.txt', io: 'text file IO object', mime: 'text/plain'},
-          {name: 'test.jpg', io: 'image file IO object', mime: 'image/jpeg'}
+          @file_data_1 = {filename: 'test.txt', io: 'text file IO object', mime: 'text/plain'},
+          @file_data_2 = {filename: 'test.jpg', io: 'image file IO object', mime: 'image/jpeg'}
         ]
       end
 
       it "returns formatted parameters" do
-        Faraday::UploadIO.should_receive(:new).with('text file IO object', 'text/plain', 'test.txt').and_return(text_file)
-        Faraday::UploadIO.should_receive(:new).with('image file IO object', 'image/jpeg', 'test.jpg').and_return(image_file)
+        upload_io_source.should_receive(:new).with(@file_data_1).and_return(text_file)
+        upload_io_source.should_receive(:new).with(@file_data_2).and_return(image_file)
+        [text_file, image_file].each { |file| file.should_receive(:upload).and_return(file) }
 
         expect(request_parameters.formatted).to eq expected
       end

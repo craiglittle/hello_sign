@@ -19,8 +19,10 @@ describe HelloSign do
             {name: 'Jill', email_address: 'jill@hill.com'}
           ]
           request.files   = [
-            {name: 'test.txt', io: text_file_io, mime: 'text/plain'},
-            {name: 'test.jpg', io: image_io,     mime: 'image/jpeg'}
+            {filename: 'test.txt', io: text_file_io, mime: 'text/plain'},
+            {filename: 'spec/fixtures/test.txt', mime: 'text/xml'},
+            {filename: 'spec/fixtures/test.jpg'},
+            {io: image_io, mime: 'image/jpeg'}
           ]
         end
 

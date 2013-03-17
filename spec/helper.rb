@@ -8,9 +8,7 @@ RSpec.configure do |config|
 end
 
 class Module
-
   def _set_internal_collaborator(role, collaborator)
     instance_variable_set("@#{role.to_s}", collaborator)
   end
-
 end

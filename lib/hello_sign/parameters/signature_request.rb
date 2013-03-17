@@ -1,10 +1,10 @@
-require 'faraday/upload_io'
+require 'hello_sign/upload_io'
 
 module HelloSign
   module Parameters
     class SignatureRequest
       attr_accessor :title, :subject, :message, :ccs
-      attr_writer :signers, :files
+      attr_writer :signers, :files, :upload_io_source
 
       def signers
         (@signers || {}).each_with_index.inject({}) do |parameter, (signer, index)|
@@ -19,8 +19,8 @@ module HelloSign
       end
 
       def files
-        (@files || {}).each_with_index.inject({}) do |parameter, (file, index)|
-          parameter[index + 1] = upload_io.new(file[:io], file[:mime], file[:name])
+        (@files || {}).each_with_index.inject({}) do |parameter, (file_data, index)|
+          parameter[index + 1] = upload_io_source.new(file_data).upload
           parameter
         end
       end
@@ -38,8 +38,8 @@ module HelloSign
 
       private
 
-      def upload_io
-        Faraday::UploadIO
+      def upload_io_source
+        @upload_io_source || HelloSign::UploadIO
       end
 
     end
