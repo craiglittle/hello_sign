@@ -76,9 +76,10 @@ HelloSign.signature_request.deliver do |request|
     {name: 'Jill', email_address: 'jill@hill.com'}
   ]
   request.files   = [
-    {filename: 'test.jpg'},
+    {filename: 'path/to/test.jpg'},
     {filename: 'test.txt', io: text_file},
-    {filename: 'test.txt', mime: 'text/xml'}
+    {filename: 'path/to/test.txt', mime: 'text/xml'},
+    {io: image, mime: 'image/jpeg'}
   ]
 end
 ```
@@ -204,8 +205,8 @@ HelloSign.team.remove_member(account_id: '3323')
 ```ruby
 HelloSign.unclaimed_draft.create do |draft|
   draft.files = [
-    {name: 'test.txt', io: text_file},
-    {name: 'test.jpg', io: image}
+    {filename: 'path/to/test.txt'},
+    {filename: 'test.jpg', io: image}
   ]
 end
 ```

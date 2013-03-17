@@ -4,27 +4,28 @@ require 'hello_sign/parameters/unclaimed_draft'
 require 'stringio'
 
 describe HelloSign::Parameters::UnclaimedDraft do
-  let(:draft_parameters) { HelloSign::Parameters::UnclaimedDraft.new }
+  let(:upload_io_source)     { double('upload IO source') }
+  subject(:draft_parameters) { HelloSign::Parameters::UnclaimedDraft.new }
 
-  it "interfaces with Faraday::UploadIO properly" do
-    draft_parameters.files = [{name: 'test.txt', io: StringIO.new('foobar'),  mime: 'text/plain'}]
-    expect(draft_parameters.formatted).to be_a Hash
-  end
+  before { draft_parameters.upload_io_source = upload_io_source }
 
   describe "#formatted" do
-    let(:text_file)        { double('text file') }
-    let(:image_file)       { double('image file') }
+    let(:text_file) { double('text file') }
+    let(:image)     { double('image') }
 
     before do
       draft_parameters.files = [
-        {name: 'test.txt', io: 'text file IO object',  mime: 'text/plain'},
-        {name: 'test.jpg', io: 'image file IO object', mime: 'image/jpeg'}
+        @file_data_1 = {filename: 'test.txt', io: text_file,  mime: 'text/plain'},
+        @file_data_2 = {filename: 'test.jpg', io: image, mime: 'image/jpeg'}
       ]
     end
 
     it "returns formatted parameters" do
-      Faraday::UploadIO.stub(:new).and_return(text_file, image_file)
-      expect(draft_parameters.formatted).to eq({file: {0 => text_file, 1 => image_file}})
+      upload_io_source.should_receive(:new).with(@file_data_1).and_return(text_file)
+      upload_io_source.should_receive(:new).with(@file_data_2).and_return(image)
+      [text_file, image].each { |file| file.should_receive(:upload).and_return(file) }
+
+      expect(draft_parameters.formatted).to eq({file: {0 => text_file, 1 => image}})
     end
   end
 end

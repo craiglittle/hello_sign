@@ -1,9 +1,9 @@
-require 'faraday/upload_io'
+require 'hello_sign/upload_io'
 
 module HelloSign
   module Parameters
     class UnclaimedDraft
-      attr_writer :files
+      attr_writer :files, :upload_io_source
 
       def formatted
         {file: files}
@@ -12,14 +12,14 @@ module HelloSign
       private
 
       def files
-        @files.each_with_index.inject({}) do |parameter, (file, index)|
-          parameter[index] = upload_io.new(file[:io], file[:mime], file[:name])
+        @files.each_with_index.inject({}) do |parameter, (file_data, index)|
+          parameter[index] = upload_io_source.new(file_data).upload
           parameter
         end
       end
 
-      def upload_io
-        Faraday::UploadIO
+      def upload_io_source
+        @upload_io_source || HelloSign::UploadIO
       end
 
     end
