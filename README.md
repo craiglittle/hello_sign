@@ -2,6 +2,19 @@
 
 A Ruby interface to the HelloSign API.
 
+[![Gem Version](https://badge.fury.io/rb/hello_sign.png)][gem_version]
+[![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]
+[![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/craiglittle/hello_sign.png)][code_climate]
+[![Coverage Status](https://coveralls.io/repos/craiglittle/hello_sign/badge.png?branch=master)][coveralls]
+
+[gem_version]: http://badge.fury.io/rb/hello_sign
+[build_status]: https://travis-ci.org/craiglittle/hello_sign
+[gemnasium]: https://gemnasium.com/craiglittle/hello_sign
+[code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
+[coveralls]: https://coveralls.io/r/craiglittle/hello_sign
+
+
 ## Installation
 ```ruby
 gem install hello_sign
@@ -223,24 +236,12 @@ This gem officially supports and is tested against the following Ruby interprete
 * JRuby in 1.9 mode
 * Rubinius in 1.9 mode
 
-## Status
-
-[![Gem Version](https://badge.fury.io/rb/hello_sign.png)][gem_version]
-[![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]
-[![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium]
-[![Code Climate](https://codeclimate.com/github/craiglittle/hello_sign.png)][code_climate]
-[![Coverage Status](https://coveralls.io/repos/craiglittle/hello_sign/badge.png?branch=master)][coveralls]
-
-[gem_version]: http://badge.fury.io/rb/hello_sign
-[build_status]: https://travis-ci.org/craiglittle/hello_sign
-[gemnasium]: https://gemnasium.com/craiglittle/hello_sign
-[code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
-[coveralls]: https://coveralls.io/r/craiglittle/hello_sign
 
 ## Contributing
 Pull requests are welcome, but consider asking for a feature or bug fix first through the issue tracker. When contributing code, please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] for commit messages.
 
 [tim_pope_guidelines]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+
 
 ## Copyright
 Copyright (c) 2013 Craig Little. See [LICENSE][license] for details.
