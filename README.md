@@ -86,8 +86,6 @@ end
 
 #### Send a request using a reusable form
 
-Values for `:io` must be Ruby IO objects (e.g. `text_file_io` and `image_io` below).
-
 ```ruby
 HelloSign.signature_request.deliver(form: 'form_id') do |request|
   request.title         = 'Lease'
