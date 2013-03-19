@@ -17,7 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.require_paths = ['lib']
   gem.files         += Dir.glob('lib/**/*.rb')
-  gem.files         += Dir.glob('spec/**/*')
   gem.test_files    += Dir.glob('spec/**/*')
 
   gem.add_dependency 'faraday', '~> 0.8'
