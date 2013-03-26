@@ -3,6 +3,8 @@ require 'faraday/upload_io'
 
 module HelloSign
   class File
+    DEFAULT_MIME_TYPE = MIME_TYPES.fetch('txt')
+
     attr_reader :filename, :io_object, :mime_type
 
     def initialize(file_data)
@@ -26,7 +28,7 @@ module HelloSign
     def mime_type
       @mime_type or begin
         extension = (filename || '').split('.').last
-        MIME_TYPES.fetch(extension) { 'text/plain' }
+        MIME_TYPES.fetch(extension) { DEFAULT_MIME_TYPE }
       end
     end
 
