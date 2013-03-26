@@ -6,50 +6,25 @@ require 'hello_sign/proxy/unclaimed_draft'
 
 module HelloSign
   module Proxy
-    attr_writer :account_proxy_source, :signature_request_proxy_source,
-      :reusable_form_proxy_source, :team_proxy_source,
-      :unclaimed_draft_proxy_source
 
     def account
-      account_proxy_source.new(self)
+      HelloSign::Proxy::Account.new(self)
     end
 
     def signature_request(request_id = nil)
-      signature_request_proxy_source.new(self, request_id)
+      HelloSign::Proxy::SignatureRequest.new(self, request_id)
     end
 
     def reusable_form(form_id = nil)
-      reusable_form_proxy_source.new(self, form_id)
+      HelloSign::Proxy::ReusableForm.new(self, form_id)
     end
 
     def team
-      team_proxy_source.new(self)
+      HelloSign::Proxy::Team.new(self)
     end
 
     def unclaimed_draft
-      unclaimed_draft_proxy_source.new(self)
-    end
-
-    private
-
-    def account_proxy_source
-      @account_proxy_source || HelloSign::Proxy::Account
-    end
-
-    def signature_request_proxy_source
-      @signature_request_proxy_source || HelloSign::Proxy::SignatureRequest
-    end
-
-    def reusable_form_proxy_source
-      @reusable_form_proxy_source || HelloSign::Proxy::ReusableForm
-    end
-
-    def team_proxy_source
-      @team_proxy_source || HelloSign::Proxy::Team
-    end
-
-    def unclaimed_draft_proxy_source
-      @unclaimed_draft_proxy_source || HelloSign::Proxy::UnclaimedDraft
+      HelloSign::Proxy::UnclaimedDraft.new(self)
     end
 
   end
