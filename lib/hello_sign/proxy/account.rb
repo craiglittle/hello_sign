@@ -4,7 +4,6 @@ module HelloSign
   module Proxy
     class Account
       attr_reader :client
-      attr_writer :settings_proxy_source
 
       def initialize(client)
         @client = client

@@ -3,7 +3,7 @@ require 'hello_sign/file'
 module HelloSign
   module Parameters
     class UnclaimedDraft
-      attr_writer :files, :upload_io_source
+      attr_writer :files
 
       def formatted
         {file: files}
