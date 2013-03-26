@@ -42,7 +42,9 @@ module HelloSign
     end
 
     def base_connection
-      Faraday.new(url: API_ENDPOINT) do |connection|
+      options = {url: API_ENDPOINT, headers: {user_agent: "hello_sign gem v#{HelloSign::VERSION}"}}
+
+      Faraday.new(options) do |connection|
         yield connection
 
         connection.request  :multipart

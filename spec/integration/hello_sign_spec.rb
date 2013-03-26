@@ -17,6 +17,12 @@ describe HelloSign do
       HelloSign.client.get('/resource')
       expect(a_get_with_auth('/resource')).to have_been_made
     end
+
+    example do
+      HelloSign.client.get('/resource')
+      headers = {'User-Agent' => "hello_sign gem v#{HelloSign::VERSION}"}
+      expect(a_get_with_auth('/resource').with(headers: headers)).to have_been_made
+    end
   end
 
   describe "#post" do
