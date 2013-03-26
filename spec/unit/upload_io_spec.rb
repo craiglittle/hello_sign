@@ -1,57 +1,57 @@
 require 'helper'
-require 'hello_sign/upload_io'
+require 'hello_sign/file'
 
-describe HelloSign::UploadIO do
+describe HelloSign::File do
   let(:attachment) { double('attachment') }
   let(:io_object)  { double('IO object') }
 
   it "returns the attachment" do
     Faraday::UploadIO.stub(:new).and_return(attachment)
 
-    expect(HelloSign::UploadIO.new(filename: 'test.txt').upload).to eq attachment
+    expect(HelloSign::File.new(filename: 'test.txt').attachment).to eq attachment
   end
 
   context "#upload" do
     specify do
       Faraday::UploadIO.should_receive(:new).with('test.txt', 'text/plain')
 
-      HelloSign::UploadIO.new(filename: 'test.txt').upload
+      HelloSign::File.new(filename: 'test.txt').attachment
     end
 
     specify do
       Faraday::UploadIO.should_receive(:new).with('test.foo', 'text/plain')
 
-      HelloSign::UploadIO.new(filename: 'test.foo').upload
+      HelloSign::File.new(filename: 'test.foo').attachment
     end
 
     specify do
       Faraday::UploadIO.should_receive(:new).with('test.baz', 'fake/mime')
 
-      HelloSign::UploadIO.new(filename: 'test.baz', mime: 'fake/mime').upload
+      HelloSign::File.new(filename: 'test.baz', mime: 'fake/mime').attachment
     end
 
     specify do
       Faraday::UploadIO.should_receive(:new).with(io_object, 'text/plain')
 
-      HelloSign::UploadIO.new(io: io_object).upload
+      HelloSign::File.new(io: io_object).attachment
     end
 
     specify do
       Faraday::UploadIO.should_receive(:new).with(io_object, 'fake/mime')
 
-      HelloSign::UploadIO.new(io: io_object, mime: 'fake/mime').upload
+      HelloSign::File.new(io: io_object, mime: 'fake/mime').attachment
     end
 
     specify do
       Faraday::UploadIO.should_receive(:new).with(io_object, 'fake/mime', 'test.foo')
 
-      HelloSign::UploadIO.new(filename: 'test.foo', io: io_object, mime: 'fake/mime').upload
+      HelloSign::File.new(filename: 'test.foo', io: io_object, mime: 'fake/mime').attachment
     end
 
     specify do
       Faraday::UploadIO.should_receive(:new).with(io_object, 'text/plain', 'test.foo')
 
-      HelloSign::UploadIO.new(filename: 'test.foo', io: io_object).upload
+      HelloSign::File.new(filename: 'test.foo', io: io_object).attachment
     end
   end
 end

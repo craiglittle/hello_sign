@@ -1,10 +1,10 @@
-require 'hello_sign/upload_io'
+require 'hello_sign/file'
 
 module HelloSign
   module Parameters
     class SignatureRequest
       attr_accessor :title, :subject, :message, :ccs
-      attr_writer :signers, :files, :upload_io_source
+      attr_writer :signers, :files
 
       def signers
         (@signers || {}).each_with_index.inject({}) do |parameter, (signer, index)|
@@ -20,7 +20,7 @@ module HelloSign
 
       def files
         (@files || {}).each_with_index.inject({}) do |parameter, (file_data, index)|
-          parameter[index + 1] = upload_io_source.new(file_data).upload
+          parameter[index + 1] = HelloSign::File.new(file_data).attachment
           parameter
         end
       end
@@ -34,12 +34,6 @@ module HelloSign
           signers:            signers,
           file:               files
         }
-      end
-
-      private
-
-      def upload_io_source
-        @upload_io_source || HelloSign::UploadIO
       end
 
     end

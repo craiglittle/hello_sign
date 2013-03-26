@@ -1,4 +1,4 @@
-require 'hello_sign/upload_io'
+require 'hello_sign/file'
 
 module HelloSign
   module Parameters
@@ -13,13 +13,9 @@ module HelloSign
 
       def files
         @files.each_with_index.inject({}) do |parameter, (file_data, index)|
-          parameter[index] = upload_io_source.new(file_data).upload
+          parameter[index] = HelloSign::File.new(file_data).attachment
           parameter
         end
-      end
-
-      def upload_io_source
-        @upload_io_source || HelloSign::UploadIO
       end
 
     end

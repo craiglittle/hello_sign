@@ -1,8 +1,8 @@
-require 'hello_sign/upload_io/mime_types'
+require 'hello_sign/file/mime_types'
 require 'faraday/upload_io'
 
 module HelloSign
-  class UploadIO
+  class File
     attr_reader :filename, :io_object, :mime_type
 
     def initialize(file_data)
@@ -11,7 +11,7 @@ module HelloSign
       @mime_type = file_data[:mime]
     end
 
-    def upload
+    def attachment
       Faraday::UploadIO.new(*parameters)
     end
 

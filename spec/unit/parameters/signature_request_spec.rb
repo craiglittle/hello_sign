@@ -4,11 +4,8 @@ require 'hello_sign/parameters/signature_request'
 describe HelloSign::Parameters::SignatureRequest do
   describe "#formatted" do
     let(:request_parameters) { HelloSign::Parameters::SignatureRequest.new }
-    let(:upload_io_source)   { double('upload IO source') }
     let(:text_file)          { double('text file') }
     let(:image_file)         { double('image file') }
-
-    before { request_parameters.upload_io_source = upload_io_source }
 
     context "when all required arguments are set" do
       let(:expected) do
@@ -41,9 +38,9 @@ describe HelloSign::Parameters::SignatureRequest do
       end
 
       it "returns formatted parameters" do
-        upload_io_source.should_receive(:new).with(@file_data_1).and_return(text_file)
-        upload_io_source.should_receive(:new).with(@file_data_2).and_return(image_file)
-        [text_file, image_file].each { |file| file.should_receive(:upload).and_return(file) }
+        HelloSign::File.should_receive(:new).with(@file_data_1).and_return(text_file)
+        HelloSign::File.should_receive(:new).with(@file_data_2).and_return(image_file)
+        [text_file, image_file].each { |file| file.should_receive(:attachment).and_return(file) }
 
         expect(request_parameters.formatted).to eq expected
       end

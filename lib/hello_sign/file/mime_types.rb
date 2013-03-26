@@ -1,5 +1,5 @@
 module HelloSign
-  class UploadIO
+  class File
     MIME_TYPES = {
       'doc'  => 'application/msword',
       'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
