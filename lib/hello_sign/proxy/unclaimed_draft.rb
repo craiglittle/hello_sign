@@ -4,7 +4,6 @@ module HelloSign
   module Proxy
     class UnclaimedDraft
       attr_reader :client
-      attr_writer :draft_parameters
 
       def initialize(client)
         @client = client

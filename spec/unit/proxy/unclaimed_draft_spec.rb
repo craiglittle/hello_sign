@@ -11,12 +11,10 @@ describe HelloSign::Proxy::UnclaimedDraft do
     let(:draft_parameters)       { double('draft parameters') }
 
     before do
-      ud_proxy.draft_parameters = draft_parameters
+      HelloSign::Parameters::UnclaimedDraft.stub(:new).and_return(draft_parameters)
       draft_parameters.stub(:formatted).and_return(formatted_request_body)
       draft_parameters.should_receive(:foo=).with('bar')
-      client.should_receive(:post)
-        .with('/unclaimed_draft/create', body: formatted_request_body)
-        .and_return(api_response)
+      client.should_receive(:post).with('/unclaimed_draft/create', body: formatted_request_body).and_return(api_response)
     end
 
     it "sends a unclaimed draft creation request and returns the result" do

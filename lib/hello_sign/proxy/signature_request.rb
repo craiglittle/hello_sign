@@ -5,7 +5,6 @@ module HelloSign
   module Proxy
     class SignatureRequest
       attr_reader :client, :request_id
-      attr_writer :request_parameters, :reusable_form_request_parameters
 
       def initialize(client, request_id)
         @client = client

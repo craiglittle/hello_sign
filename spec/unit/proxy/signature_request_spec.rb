@@ -19,7 +19,7 @@ describe HelloSign::Proxy::SignatureRequest do
     before do
       request_parameters.stub(:foo=)
       request_parameters.stub(:formatted).and_return(formatted_request_body)
-      sr_proxy.request_parameters = request_parameters
+      HelloSign::Parameters::SignatureRequest.stub(:new).and_return(request_parameters)
     end
 
     it "yields the request parameters to the block" do
@@ -28,8 +28,7 @@ describe HelloSign::Proxy::SignatureRequest do
     end
 
     it "sends a signature request" do
-      client.should_receive(:post)
-        .with('/signature_request/send', body: formatted_request_body)
+      client.should_receive(:post).with('/signature_request/send', body: formatted_request_body)
       sr_proxy.deliver { |params| params.foo = 'bar' }
     end
 
@@ -40,7 +39,7 @@ describe HelloSign::Proxy::SignatureRequest do
     context "when a reusable form is specified" do
       before do
         request_parameters.stub(:reusable_form_id=)
-        sr_proxy.reusable_form_request_parameters = request_parameters
+        HelloSign::Parameters::ReusableFormSignatureRequest.stub(:new).and_return(request_parameters)
       end
 
       it "sets the reusable form ID in the request parameters" do
@@ -49,8 +48,7 @@ describe HelloSign::Proxy::SignatureRequest do
       end
 
       it "sends a reusable form signature request" do
-        client.should_receive(:post)
-          .with('/signature_request/send_with_reusable_form', body: formatted_request_body)
+        client.should_receive(:post).with('/signature_request/send_with_reusable_form', body: formatted_request_body)
         sr_proxy.deliver(form: 'form_id') {}
       end
 
@@ -74,8 +72,7 @@ describe HelloSign::Proxy::SignatureRequest do
   describe "#list" do
     context "when called without a page number" do
       it "fetches the first page of signature requests" do
-        client.should_receive(:get)
-          .with('/signature_request/list', params: {page: 1})
+        client.should_receive(:get).with('/signature_request/list', params: {page: 1})
         sr_proxy.list
       end
 
@@ -87,8 +84,7 @@ describe HelloSign::Proxy::SignatureRequest do
 
     context "when called with a page number" do
       it "fetches a list of signature requests from the specified page" do
-        client.should_receive(:get)
-          .with('/signature_request/list', params: {page: 10})
+        client.should_receive(:get).with('/signature_request/list', params: {page: 10})
         sr_proxy.list(page: 10)
       end
 
@@ -103,8 +99,7 @@ describe HelloSign::Proxy::SignatureRequest do
     let(:email) { 'john@johnson.com' }
 
     it "sends a signature request reminder" do
-      client.should_receive(:post)
-        .with("/signature_request/remind/#{request_id}", body: {email_address: email})
+      client.should_receive(:post).with("/signature_request/remind/#{request_id}", body: {email_address: email})
       sr_proxy.remind(email: email)
     end
 
