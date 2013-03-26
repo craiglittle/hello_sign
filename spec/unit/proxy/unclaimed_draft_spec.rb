@@ -6,8 +6,6 @@ describe HelloSign::Proxy::UnclaimedDraft do
   let(:api_response) { double('API response') }
   subject(:ud_proxy) { HelloSign::Proxy::UnclaimedDraft.new(client) }
 
-  its(:client) { should eq client }
-
   describe "#create" do
     let(:formatted_request_body) { double('formatted request body') }
     let(:draft_parameters)       { double('draft parameters') }

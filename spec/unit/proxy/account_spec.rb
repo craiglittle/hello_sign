@@ -6,10 +6,7 @@ describe HelloSign::Proxy::Account do
   let(:api_response)      { double('API response') }
   subject(:account_proxy) { HelloSign::Proxy::Account.new(client) }
 
-  its(:client) { should eq client }
-
   describe "#create" do
-
     let(:email_address) { 'david@bowman.com' }
     let(:password)      { 'password' }
 
@@ -35,7 +32,6 @@ describe HelloSign::Proxy::Account do
         )
       ). to eq api_response
     end
-
   end
 
   describe "#settings" do
@@ -45,6 +41,5 @@ describe HelloSign::Proxy::Account do
       HelloSign::Proxy::Settings.should_receive(:new).with(client).and_return(settings_proxy)
       expect(account_proxy.settings).to be settings_proxy
     end
-
   end
 end

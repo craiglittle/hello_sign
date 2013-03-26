@@ -10,11 +10,8 @@ describe HelloSign do
     HelloSign.password      = password
   end
 
-  its(:email_address) { should eq email_address }
-  its(:password)      { should eq password }
-
   describe "::client" do
-    let(:client)        { double('client') }
+    let(:client) { double('client') }
 
     it "passes the credentials when creating the client" do
       HelloSign::Client.should_receive(:new).with(email_address, password)

@@ -13,7 +13,7 @@ describe HelloSign::Parameters::SignatureRequest do
           title: 'Lease',
           subject: 'Sign this',
           message: 'You must sign this.',
-          cc_email_addresses: ['lawyer@lawfirm.com', 'spouse@family.com'], # BUGBUG: should have explicit indexes
+          cc_email_addresses: ['lawyer@lawfirm.com', 'spouse@family.com'],
           signers: {
             0 => {name: 'Jack', email_address: 'jack@hill.com', order: 0}, 
             1 => {name: 'Jill', email_address: 'jill@hill.com', order: 1}

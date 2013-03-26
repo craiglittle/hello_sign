@@ -12,9 +12,6 @@ describe HelloSign::Proxy::SignatureRequest do
     client.stub(:post).and_return(api_response)
   end
 
-  its(:client)     { should eq client }
-  its(:request_id) { should eq request_id }
-
   describe "#deliver" do
     let(:formatted_request_body) { double('formatted request body') }
     let(:request_parameters)     { double('request parameters') }

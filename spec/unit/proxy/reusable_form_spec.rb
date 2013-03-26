@@ -13,9 +13,6 @@ describe HelloSign::Proxy::ReusableForm do
     client.stub(:post).and_return(api_response)
   end
 
-  its(:client)  { should eq client }
-  its(:form_id) { should eq form_id }
-
   describe "#list" do
     it "sends a request to fetch the list of reusable forms" do
       client.should_receive(:get).with('/reusable_form/list', params: {page: 10})

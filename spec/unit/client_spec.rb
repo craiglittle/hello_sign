@@ -7,9 +7,6 @@ describe HelloSign::Client do
   let(:password)      { double('password') }
   subject(:hs_client) { HelloSign::Client.new(email_address, password) }
 
-  its(:email_address) { should eq email_address }
-  its(:password)      { should eq password }
-
   it_behaves_like 'a proxy' do
     let(:client) { hs_client }
   end
@@ -46,9 +43,6 @@ describe HelloSign::Client do
 
   context "when a hash is passed to the constructor" do
     subject(:hs_client) { HelloSign::Client.new(email_address: email_address, password: password) }
-
-    its(:email_address) { should eq email_address }
-    its(:password)      { should eq password }
 
     it "raises an exception if an email address is not provided" do
       expect { HelloSign::Client.new(password: 'space') }.to raise_error ArgumentError
