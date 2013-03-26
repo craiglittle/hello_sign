@@ -15,13 +15,7 @@ module HelloSign
       end
 
       def settings
-        settings_proxy_source.new(client)
-      end
-
-      private
-
-      def settings_proxy_source
-        @settings_proxy_source || HelloSign::Proxy::Settings
+        HelloSign::Proxy::Settings.new(client)
       end
 
     end

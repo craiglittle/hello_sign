@@ -39,18 +39,10 @@ describe HelloSign::Proxy::Account do
   end
 
   describe "#settings" do
-
-    let(:settings_proxy_source) { double('settings proxy source') }
     let(:settings_proxy)        { double('settings proxy') }
 
-    before do
-      account_proxy.settings_proxy_source = settings_proxy_source
-    end
-
     it "returns a signature request proxy" do
-      settings_proxy_source.should_receive(:new)
-        .with(client)
-        .and_return(settings_proxy)
+      HelloSign::Proxy::Settings.should_receive(:new).with(client).and_return(settings_proxy)
       expect(account_proxy.settings).to be settings_proxy
     end
 
