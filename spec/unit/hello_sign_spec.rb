@@ -14,20 +14,10 @@ describe HelloSign do
   its(:password)      { should eq password }
 
   describe "::client" do
-    let(:client_source) { double('client_source') }
     let(:client)        { double('client') }
 
-    before do
-      HelloSign._set_internal_collaborator(:client_source, client_source)
-      client_source.stub(:new).and_return(client)
-    end
-
-    after { HelloSign.instance_variable_set(:@client, nil) }
-
-    its(:client) { should be client }
-
     it "passes the credentials when creating the client" do
-      client_source.should_receive(:new).with(email_address, password)
+      HelloSign::Client.should_receive(:new).with(email_address, password)
       HelloSign.client
     end
 
@@ -35,11 +25,13 @@ describe HelloSign do
       let(:new_client) { double('new client') }
 
       before do
-        client_source.stub(:new).and_return(client, new_client)
+        HelloSign::Client.stub(:new).and_return(client, new_client)
         client.stub(:email_address).and_return(email_address)
         client.stub(:password).and_return(password)
         HelloSign.client
       end
+
+      after { HelloSign.instance_variable_set(:@client, nil) }
 
       its(:client) { should be client }
 
@@ -55,13 +47,9 @@ describe HelloSign do
   end
 
   context "when calling delegated methods" do
-    let(:client_source) { double('client_source') }
     let(:client)        { double('client') }
 
-    before do
-      HelloSign._set_internal_collaborator(:client_source, client_source)
-      client_source.stub(:new).and_return(client)
-    end
+    before { HelloSign::Client.stub(:new).and_return(client) }
 
     after { HelloSign.instance_variable_set(:@client, nil) }
 
