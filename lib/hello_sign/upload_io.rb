@@ -3,7 +3,7 @@ require 'faraday/upload_io'
 
 module HelloSign
   class UploadIO
-    attr_reader :filename, :io_object
+    attr_reader :filename, :io_object, :mime_type
 
     def initialize(file_data)
       @filename  = file_data[:filename]
@@ -12,7 +12,7 @@ module HelloSign
     end
 
     def upload
-      file_converter_source.new(*parameters)
+      Faraday::UploadIO.new(*parameters)
     end
 
     private
@@ -28,10 +28,6 @@ module HelloSign
         extension = (filename || '').split('.').last
         MIME_TYPES.fetch(extension) { 'text/plain' }
       end
-    end
-
-    def file_converter_source
-      @file_converter_source || Faraday::UploadIO
     end
 
   end
