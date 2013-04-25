@@ -18,10 +18,15 @@ describe HelloSign::Middleware::RaiseError do
     expect { middleware.call({}) }.to_not raise_error
   end
 
+  it 'passes the error message to the exception' do
+    error_message = "Some helpful information about what went wrong"
+    expect { call_with_error('bad_request', error_message) }.to raise_error(HelloSign::Error::BadRequest, error_message)
+  end
+
   private
 
-  def call_with_error(error)
-    env = {body: {error: {error_name: error}}}
+  def call_with_error(error, msg=nil)
+    env = {body: {error: {error_name: error, error_msg: msg}}}
     middleware.call(env)
   end
 
