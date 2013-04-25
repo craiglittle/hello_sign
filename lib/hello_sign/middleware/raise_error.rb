@@ -9,19 +9,36 @@ module HelloSign
       def on_complete(env)
         body = env[:body] or return
 
-        if error = body[:error]
-          message = error[:error_msg]
-          case error[:error_name]
-          when 'bad_request'                     then raise HelloSign::Error::BadRequest, message
-          when 'unauthorized'                    then raise HelloSign::Error::Unauthorized, message
-          when 'forbidden'                       then raise HelloSign::Error::Forbidden, message
-          when 'not_found'                       then raise HelloSign::Error::NotFound, message
-          when 'unknown'                         then raise HelloSign::Error::Unknown, message
-          when 'team_invite_failed'              then raise HelloSign::Error::TeamInviteFailed, message
-          when 'invalid_recipient'               then raise HelloSign::Error::InvalidRecipient, message
-          when 'convert_failed'                  then raise HelloSign::Error::ConvertFailed, message
-          when 'signature_request_cancel_failed' then raise HelloSign::Error::SignatureRequestCancelFailed, message
+        error = body[:error] and begin
+          exception = begin
+            case error[:error_name]
+            when 'bad_request'
+              HelloSign::Error::BadRequest
+            when 'unauthorized'
+              HelloSign::Error::Unauthorized
+            when 'forbidden'
+              HelloSign::Error::Forbidden
+            when 'not_found'
+              HelloSign::Error::NotFound
+            when 'unknown'
+              HelloSign::Error::Unknown
+            when 'team_invite_failed'
+              HelloSign::Error::TeamInviteFailed
+            when 'invalid_recipient'
+              HelloSign::Error::InvalidRecipient
+            when 'convert_failed'
+              HelloSign::Error::ConvertFailed
+            when 'signature_request_cancel_failed'
+              HelloSign::Error::SignatureRequestCancelFailed
+            else
+              HelloSign::Error
+            end
           end
+
+          message     = error[:error_msg]
+          status_code = env[:response][:status]
+
+          raise exception.new(message, status_code)
         end
       end
 
