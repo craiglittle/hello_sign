@@ -10,10 +10,19 @@ module HelloSign
 
     attr_accessor :email_address, :password
 
-    delegate [:account, :signature_request, :reusable_form, :team, :unclaimed_draft] => :client
+    delegate [
+      :account,
+      :signature_request,
+      :reusable_form,
+      :team,
+      :unclaimed_draft
+    ] => :client
 
     def client
-      @client = HelloSign::Client.new(email_address, password) unless credentials_match?
+      unless credentials_match?
+        @client = HelloSign::Client.new(email_address, password)
+      end
+
       @client
     end
 
@@ -24,10 +33,21 @@ module HelloSign
     private
 
     def credentials_match?
-      @client && [@client.email_address, @client.password].hash == [email_address, password].hash
+      @client && client_credentials.hash == provided_credentials.hash
     end
 
-    Faraday.register_middleware :response, raise_error: HelloSign::Middleware::RaiseError
+    def client_credentials
+      [@client.email_address, @client.password]
+    end
+
+    def provided_credentials
+      [email_address, password]
+    end
+
+    Faraday.register_middleware(
+      :response,
+      raise_error: HelloSign::Middleware::RaiseError
+    )
 
   end
 end
