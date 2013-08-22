@@ -16,14 +16,18 @@ module HelloSign
       "[Status code: #{status_code}] #{message}"
     end
 
-    class BadRequest                   < HelloSign::Error; end
-    class Unauthorized                 < HelloSign::Error; end
-    class Forbidden                    < HelloSign::Error; end
-    class NotFound                     < HelloSign::Error; end
-    class Unknown                      < HelloSign::Error; end
-    class TeamInviteFailed             < HelloSign::Error; end
-    class InvalidRecipient             < HelloSign::Error; end
-    class ConvertFailed                < HelloSign::Error; end
-    class SignatureRequestCancelFailed < HelloSign::Error; end
+    [
+      :BadRequest,
+      :Unauthorized,
+      :Forbidden,
+      :NotFound,
+      :Unknown,
+      :TeamInviteFailed,
+      :InvalidRecipient,
+      :ConvertFailed,
+      :SignatureRequestCancelFailed
+    ].each do |error_name|
+      const_set(error_name, Class.new(HelloSign::Error))
+    end
   end
 end
