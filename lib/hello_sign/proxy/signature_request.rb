@@ -7,23 +7,15 @@ module HelloSign
       attr_reader :client, :request_id
 
       def initialize(client, request_id)
-        @client = client
+        @client     = client
         @request_id = request_id
       end
 
-      def deliver(params = {})
+      def deliver(params = {}, &block)
         if form_id = params[:form]
-          reusable_form_request_parameters.reusable_form_id = form_id
-          yield reusable_form_request_parameters
-
-          client.post(
-            '/signature_request/send_with_reusable_form',
-            body: reusable_form_request_parameters.formatted
-          )
+          deliver_request_with_form(form_id, &block)
         else
-          yield request_parameters
-
-          client.post('/signature_request/send', body: request_parameters.formatted)
+          deliver_request(&block)
         end
       end
 
@@ -32,15 +24,15 @@ module HelloSign
       end
 
       def list(params = {})
-        params = {page: 1}.merge(params)
+        client.get('/signature_request/list', params: {page: 1}.merge(params))
 
-        client.get('/signature_request/list', params: params)
       end
 
       def remind(params = {})
-        params = {email_address: params.delete(:email)}.merge(params)
-
-        client.post("/signature_request/remind/#{request_id}", body: params)
+        client.post(
+          "/signature_request/remind/#{request_id}",
+          body: {email_address: params.delete(:email)}.merge(params)
+        )
       end
 
       def cancel
@@ -53,12 +45,32 @@ module HelloSign
 
       private
 
+      def deliver_request
+        yield request_parameters
+
+        client.post(
+          '/signature_request/send',
+          body: request_parameters.formatted
+        )
+      end
+
+      def deliver_request_with_form(form_id)
+        reusable_form_request_parameters.reusable_form_id = form_id
+        yield reusable_form_request_parameters
+
+        client.post(
+          '/signature_request/send_with_reusable_form',
+          body: reusable_form_request_parameters.formatted
+        )
+      end
+
       def request_parameters
         @request_parameters ||= Parameters::SignatureRequest.new
       end
 
       def reusable_form_request_parameters
-        @reusable_form_request_parameters ||= Parameters::ReusableFormSignatureRequest.new
+        @reusable_form_request_parameters ||=
+          Parameters::ReusableFormSignatureRequest.new
       end
 
     end
