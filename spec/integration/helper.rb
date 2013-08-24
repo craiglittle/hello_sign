@@ -30,7 +30,7 @@ def stub_post_with_auth(path)
 end
 
 def stub_request_with_error(error)
-  stub_request(:any, /api\.hellosign\.com/).to_return(body: {error: {error_name: error}})
+  stub_request(:any, /api\.hellosign\.com/).to_return(body: {error: {error_name: error}}.to_json)
 end
 
 def a_get(path)

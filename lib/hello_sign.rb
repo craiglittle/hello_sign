@@ -1,4 +1,5 @@
 require 'hello_sign/middleware/raise_error'
+require 'hello_sign/middleware/parse_json'
 require 'hello_sign/client'
 require 'hello_sign/version'
 
@@ -47,6 +48,10 @@ module HelloSign
     Faraday.register_middleware(
       :response,
       raise_error: HelloSign::Middleware::RaiseError
+    )
+    Faraday.register_middleware(
+      :response,
+      json: HelloSign::Middleware::ParseJson
     )
 
   end

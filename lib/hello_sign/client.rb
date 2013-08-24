@@ -1,7 +1,5 @@
 require 'hello_sign/proxy'
-
 require 'faraday'
-require 'faraday_middleware-multi_json'
 
 module HelloSign
   class Client
@@ -50,7 +48,7 @@ module HelloSign
         connection.request  :multipart
         connection.request  :url_encoded
         connection.response :raise_error
-        connection.response :multi_json, symbolize_keys: true
+        connection.response :json
         connection.adapter  :net_http
       end
     end
