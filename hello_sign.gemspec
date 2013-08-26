@@ -19,6 +19,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'faraday', '~> 0.8'
 
   gem.add_development_dependency 'rake',    '~> 10.0'
-  gem.add_development_dependency 'rspec',   '~> 2.12'
+  gem.add_development_dependency 'rspec',   '~> 2.14'
   gem.add_development_dependency 'webmock', '~> 1.9'
 end
