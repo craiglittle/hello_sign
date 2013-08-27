@@ -6,16 +6,16 @@ module HelloSign
     include HelloSign::Proxy
 
     API_ENDPOINT = 'https://api.hellosign.com'
-    API_VERSION  = '/v3'
+    API_VERSION  = '3'
 
     attr_reader :email_address, :password
 
-    def initialize(email_address_or_hash, password = nil)
-      if email_address_or_hash.is_a? Hash
-        @email_address = email_address_or_hash.fetch(:email_address) { raise ArgumentError }
-        @password      = email_address_or_hash.fetch(:password) { raise ArgumentError }
+    def initialize(email_or_hash, password = nil)
+      if email_or_hash.is_a?(Hash)
+        @email_address = email_or_hash.fetch(:email_address) { raise ArgumentError }
+        @password      = email_or_hash.fetch(:password) { raise ArgumentError }
       else
-        @email_address = email_address_or_hash
+        @email_address = email_or_hash
         @password      = password
       end
     end
@@ -34,7 +34,7 @@ module HelloSign
       base_connection do |connection|
         connection.request :basic_auth, email_address, password unless options[:auth_not_required]
       end.send(method) do |request|
-        request.url  "#{API_VERSION}#{path}", options[:params]
+        request.url  "/v#{API_VERSION}#{path}", options[:params]
         request.body = options[:body]
       end.body
     end
