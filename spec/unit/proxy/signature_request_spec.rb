@@ -5,11 +5,14 @@ describe HelloSign::Proxy::SignatureRequest do
   let(:client)       { double('client') }
   let(:request_id)   { 'request_id' }
   let(:api_response) { double('API response') }
-  subject(:sr_proxy) { HelloSign::Proxy::SignatureRequest.new(client, request_id) }
+
+  subject(:sr_proxy) do
+    HelloSign::Proxy::SignatureRequest.new(client, request_id)
+  end
 
   before do
-    client.stub(:get).and_return(api_response)
-    client.stub(:post).and_return(api_response)
+    allow(client).to receive(:get).and_return(api_response)
+    allow(client).to receive(:post).and_return(api_response)
   end
 
   describe "#deliver" do
@@ -17,80 +20,103 @@ describe HelloSign::Proxy::SignatureRequest do
     let(:request_parameters)     { double('request parameters') }
 
     before do
-      request_parameters.stub(:foo=)
-      request_parameters.stub(:formatted).and_return(formatted_request_body)
-      HelloSign::Parameters::SignatureRequest.stub(:new).and_return(request_parameters)
+      allow(request_parameters).to receive(:foo=)
+      allow(request_parameters).to(
+        receive(:formatted).and_return(formatted_request_body)
+      )
+      allow(HelloSign::Parameters::SignatureRequest).to(
+        receive(:new).and_return(request_parameters)
+      )
+
+      @response = sr_proxy.deliver { |params| params.foo = 'bar' }
     end
 
     it "yields the request parameters to the block" do
-      request_parameters.should_receive(:foo=).with('bar')
-      sr_proxy.deliver { |params| params.foo = 'bar' }
+      expect(request_parameters).to have_received(:foo=).with('bar')
     end
 
     it "sends a signature request" do
-      client.should_receive(:post).with('/signature_request/send', body: formatted_request_body)
-      sr_proxy.deliver { |params| params.foo = 'bar' }
+      expect(client).to have_received(:post).with(
+        '/signature_request/send',
+        body: formatted_request_body
+      )
     end
 
     it "returns the response" do
-      expect(sr_proxy.deliver {}).to eq api_response
+      expect(@response).to eq api_response
     end
 
     context "when a reusable form is specified" do
       before do
-        request_parameters.stub(:reusable_form_id=)
-        HelloSign::Parameters::ReusableFormSignatureRequest.stub(:new).and_return(request_parameters)
+        allow(request_parameters).to receive(:reusable_form_id=)
+        allow(HelloSign::Parameters::ReusableFormSignatureRequest).to(
+          receive(:new).and_return(request_parameters)
+        )
+
+        @response = sr_proxy.deliver(form: 'form_id') { }
       end
 
       it "sets the reusable form ID in the request parameters" do
-        request_parameters.should_receive(:reusable_form_id=).with('form_id')
-        sr_proxy.deliver(form: 'form_id') {}
+        expect(request_parameters).to(
+          have_received(:reusable_form_id=).with('form_id')
+        )
       end
 
       it "sends a reusable form signature request" do
-        client.should_receive(:post).with('/signature_request/send_with_reusable_form', body: formatted_request_body)
-        sr_proxy.deliver(form: 'form_id') {}
+        expect(client).to have_received(:post).with(
+          '/signature_request/send_with_reusable_form',
+          body: formatted_request_body
+        )
       end
 
       it "returns the response" do
-        expect(sr_proxy.deliver(form: 'form_id') {}).to eq api_response
+        expect(@response).to eq api_response
       end
     end
   end
 
   describe "#status" do
+    before { @response = sr_proxy.status }
+
     it "fetches the signature request status" do
-      client.should_receive(:get).with("/signature_request/#{request_id}")
-      sr_proxy.status
+      expect(client).to have_received(:get).with(
+        "/signature_request/#{request_id}"
+      )
     end
 
     it "returns the response" do
-      expect(sr_proxy.status).to eq api_response
+      expect(@response).to eq api_response
     end
   end
 
   describe "#list" do
     context "when called without a page number" do
+      before { @response = sr_proxy.list }
+
       it "fetches the first page of signature requests" do
-        client.should_receive(:get).with('/signature_request/list', params: {page: 1})
-        sr_proxy.list
+        expect(client).to have_received(:get).with(
+          '/signature_request/list',
+          params: {page: 1}
+        )
       end
 
       it "returns the response" do
-        client.stub(:get).and_return(api_response)
-        expect(sr_proxy.list).to eq api_response
+        expect(@response).to eq api_response
       end
     end
 
     context "when called with a page number" do
+      before { @response = sr_proxy.list(page: 10) }
+
       it "fetches a list of signature requests from the specified page" do
-        client.should_receive(:get).with('/signature_request/list', params: {page: 10})
-        sr_proxy.list(page: 10)
+        expect(client).to have_received(:get).with(
+          '/signature_request/list',
+          params: {page: 10}
+        )
       end
 
       it "returns the response" do
-        client.stub(:get).and_return(api_response)
-        expect(sr_proxy.list(page: 10)).to eq api_response
+        expect(@response).to eq api_response
       end
     end
   end
@@ -98,35 +124,45 @@ describe HelloSign::Proxy::SignatureRequest do
   describe "#remind" do
     let(:email) { 'john@johnson.com' }
 
+    before { @response = sr_proxy.remind(email: email) }
+
     it "sends a signature request reminder" do
-      client.should_receive(:post).with("/signature_request/remind/#{request_id}", body: {email_address: email})
-      sr_proxy.remind(email: email)
+      expect(client).to have_received(:post).with(
+        "/signature_request/remind/#{request_id}",
+        body: {email_address: email}
+      )
     end
 
     it "returns the response" do
-      expect(sr_proxy.remind(email: email)).to eq api_response
+      expect(@response).to eq api_response
     end
   end
 
   describe "#cancel" do
+    before { @response = sr_proxy.cancel }
+
     it "cancels a signature request" do
-      client.should_receive(:post).with("/signature_request/cancel/#{request_id}")
-      sr_proxy.cancel
+      expect(client).to have_received(:post).with(
+        "/signature_request/cancel/#{request_id}"
+      )
     end
 
     it "returns the response" do
-      expect(sr_proxy.cancel).to eq api_response
+      expect(@response).to eq api_response
     end
   end
 
   describe "#final_copy" do
+    before { @response = sr_proxy.final_copy }
+
     it "fetches a final copy of the signature request" do
-      client.should_receive(:get).with("/signature_request/final_copy/#{request_id}")
-      sr_proxy.final_copy
+      expect(client).to have_received(:get).with(
+        "/signature_request/final_copy/#{request_id}"
+      )
     end
 
     it "returns the response" do
-      expect(sr_proxy.final_copy).to eq api_response
+      expect(@response).to eq api_response
     end
   end
 end

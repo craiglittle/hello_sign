@@ -5,53 +5,95 @@ describe HelloSign::File do
   let(:attachment) { double('attachment') }
   let(:io_object)  { double('IO object') }
 
-  it "returns the attachment" do
-    Faraday::UploadIO.stub(:new).and_return(attachment)
+  context "#attachment" do
+    before { allow(Faraday::UploadIO).to receive(:new).and_return(attachment) }
 
-    expect(HelloSign::File.new(filename: 'test.txt').attachment).to eq attachment
-  end
-
-  context "#upload" do
-    specify do
-      Faraday::UploadIO.should_receive(:new).with('test.txt', 'text/plain')
-
-      HelloSign::File.new(filename: 'test.txt').attachment
+    it "returns the attachment" do
+      expect(HelloSign::File.new(filename: 'test.txt').attachment).to(
+        eq attachment
+      )
     end
 
-    specify do
-      Faraday::UploadIO.should_receive(:new).with('test.foo', 'text/plain')
+    context "when called with a file with a .txt extension" do
+      before { HelloSign::File.new(filename: 'test.txt').attachment }
 
-      HelloSign::File.new(filename: 'test.foo').attachment
+      it "creates an attachment with a text/plain MIME type" do
+        expect(Faraday::UploadIO).to(
+          have_received(:new).with('test.txt', 'text/plain')
+        )
+      end
     end
 
-    specify do
-      Faraday::UploadIO.should_receive(:new).with('test.baz', 'fake/mime')
+    context "when called with a file with an unknown extension" do
+      before { HelloSign::File.new(filename: 'test.foo').attachment }
 
-      HelloSign::File.new(filename: 'test.baz', mime: 'fake/mime').attachment
+      it "creates an attachment with a text/plain MIME type" do
+        expect(Faraday::UploadIO).to(
+          have_received(:new).with('test.foo', 'text/plain')
+        )
+      end
     end
 
-    specify do
-      Faraday::UploadIO.should_receive(:new).with(io_object, 'text/plain')
+    context "when called with a specified MIME type" do
+      before do
+        HelloSign::File.new(filename: 'test.baz', mime: 'fake/mime').attachment
+      end
 
-      HelloSign::File.new(io: io_object).attachment
+      it "creates an attachment with the specified MIME type" do
+        expect(Faraday::UploadIO).to(
+          have_received(:new).with('test.baz', 'fake/mime')
+        )
+      end
     end
 
-    specify do
-      Faraday::UploadIO.should_receive(:new).with(io_object, 'fake/mime')
+    context "when called with an IO object" do
+      before { HelloSign::File.new(io: io_object).attachment }
 
-      HelloSign::File.new(io: io_object, mime: 'fake/mime').attachment
+      it "creates an attachment with a text/plain MIME type" do
+        expect(Faraday::UploadIO).to(
+          have_received(:new).with(io_object, 'text/plain')
+        )
+      end
     end
 
-    specify do
-      Faraday::UploadIO.should_receive(:new).with(io_object, 'fake/mime', 'test.foo')
+    context "when called with an IO and a specified MIME type" do
+      before do
+        HelloSign::File.new(io: io_object, mime: 'fake/mime').attachment
+      end
 
-      HelloSign::File.new(filename: 'test.foo', io: io_object, mime: 'fake/mime').attachment
+      it "creates an attachment with the specified MIME type" do
+        expect(Faraday::UploadIO).to(
+          have_received(:new).with(io_object, 'fake/mime')
+        )
+      end
     end
 
-    specify do
-      Faraday::UploadIO.should_receive(:new).with(io_object, 'text/plain', 'test.foo')
+    context "when called with a filename, IO object, and MIME type" do
+      before do
+        HelloSign::File.new(
+          filename: 'test.foo',
+          io:       io_object,
+          mime:     'fake/mime'
+        ).attachment
+      end
 
-      HelloSign::File.new(filename: 'test.foo', io: io_object).attachment
+      it "creates an attachment with the specified information" do
+        expect(Faraday::UploadIO).to(
+          have_received(:new).with(io_object, 'fake/mime', 'test.foo')
+        )
+      end
+    end
+
+    context "when called with a filename and IO object" do
+      before do
+        HelloSign::File.new(filename: 'test.foo', io: io_object).attachment
+      end
+
+      it "creates an attachment with a text/plain MIME type" do
+        expect(Faraday::UploadIO).to(
+          have_received(:new).with(io_object, 'text/plain', 'test.foo')
+        )
+      end
     end
   end
 end

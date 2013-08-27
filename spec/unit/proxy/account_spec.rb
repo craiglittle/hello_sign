@@ -10,17 +10,20 @@ describe HelloSign::Proxy::Account do
     let(:email_address) { 'david@bowman.com' }
     let(:password)      { 'password' }
 
-    before { client.stub(:post).and_return(api_response) }
+    before do
+      allow(client).to receive(:post).and_return(api_response)
 
-    it "sends a request to create an account" do
-      client.should_receive(:post).with(
-        '/account/create',
-        body: {email_address: 'david@bowman.com', password: 'space'},
-        auth_not_required: true
-      )
       account_proxy.create(
         email_address: 'david@bowman.com',
         password:      'space'
+      )
+    end
+
+    it "sends a request to create an account" do
+      expect(client).to have_received(:post).with(
+        '/account/create',
+        body: {email_address: 'david@bowman.com', password: 'space'},
+        auth_not_required: true
       )
     end
 
@@ -30,15 +33,20 @@ describe HelloSign::Proxy::Account do
           email_address: 'david@bowman.com',
           password:      'space'
         )
-      ). to eq api_response
+      ).to eq api_response
     end
   end
 
   describe "#settings" do
-    let(:settings_proxy)        { double('settings proxy') }
+    let(:settings_proxy) { double('settings proxy') }
+
+    before do
+      allow(HelloSign::Proxy::Settings).to(
+        receive(:new).with(client).and_return(settings_proxy)
+      )
+    end
 
     it "returns a signature request proxy" do
-      HelloSign::Proxy::Settings.should_receive(:new).with(client).and_return(settings_proxy)
       expect(account_proxy.settings).to be settings_proxy
     end
   end

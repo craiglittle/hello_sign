@@ -15,7 +15,7 @@ describe HelloSign::Parameters::SignatureRequest do
           message: 'You must sign this.',
           cc_email_addresses: ['lawyer@lawfirm.com', 'spouse@family.com'],
           signers: {
-            0 => {name: 'Jack', email_address: 'jack@hill.com', order: 0}, 
+            0 => {name: 'Jack', email_address: 'jack@hill.com', order: 0},
             1 => {name: 'Jill', email_address: 'jill@hill.com', order: 1}
           },
           file: {1 => text_file, 2 => image_file}
@@ -35,13 +35,19 @@ describe HelloSign::Parameters::SignatureRequest do
           @file_data_1 = {filename: 'test.txt', io: 'text file IO object', mime: 'text/plain'},
           @file_data_2 = {filename: 'test.jpg', io: 'image file IO object', mime: 'image/jpeg'}
         ]
+
+        allow(HelloSign::File).to(
+          receive(:new).with(@file_data_1).and_return(text_file)
+        )
+        allow(HelloSign::File).to(
+          receive(:new).with(@file_data_2).and_return(image_file)
+        )
+        [text_file, image_file].each do |file|
+          allow(file).to receive(:attachment).and_return(file)
+        end
       end
 
       it "returns formatted parameters" do
-        HelloSign::File.should_receive(:new).with(@file_data_1).and_return(text_file)
-        HelloSign::File.should_receive(:new).with(@file_data_2).and_return(image_file)
-        [text_file, image_file].each { |file| file.should_receive(:attachment).and_return(file) }
-
         expect(request_parameters.formatted).to eq expected
       end
     end

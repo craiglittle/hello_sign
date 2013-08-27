@@ -16,40 +16,48 @@ describe HelloSign::Client do
     let(:options)  { double('options') }
     let(:response) { double('response') }
 
-    before { hs_client.stub(:request).and_return(response) }
+    before { allow(hs_client).to receive(:request).and_return(response) }
 
     describe "#get" do
+      before { @response = hs_client.get(path, options) }
+
       it "sends a request" do
-        hs_client.should_receive(:request).with(:get, path, options)
-        hs_client.get(path, options)
+        expect(hs_client).to have_received(:request).with(:get, path, options)
       end
 
       it "returns the response" do
-        expect(hs_client.get(path, options)).to eq response
+        expect(@response).to eq response
       end
     end
 
     describe "#post" do
+      before { @response = hs_client.post(path, options) }
+
       it "sends a request" do
-        hs_client.should_receive(:request).with(:post, path, options)
-        hs_client.post(path, options)
+        expect(hs_client).to have_received(:request).with(:post, path, options)
       end
 
       it "returns the response" do
-        expect(hs_client.post(path, options)).to eq response
+        expect(@response).to eq response
       end
     end
   end
 
   context "when a hash is passed to the constructor" do
-    subject(:hs_client) { HelloSign::Client.new(email_address: email_address, password: password) }
+    subject(:hs_client) do
+      HelloSign::Client.new(email_address: email_address, password: password)
+    end
 
     it "raises an exception if an email address is not provided" do
-      expect { HelloSign::Client.new(password: 'space') }.to raise_error ArgumentError
+      expect { HelloSign::Client.new(password: 'space') }.to(
+        raise_error ArgumentError
+      )
     end
 
     it "raises an exception if a password is not provided" do
-      expect { HelloSign::Client.new(email_address: 'david@bowman.com') }.to raise_error ArgumentError
+      expect { HelloSign::Client.new(email_address: 'david@bowman.com') }.to(
+        raise_error ArgumentError
+      )
     end
   end
 end
