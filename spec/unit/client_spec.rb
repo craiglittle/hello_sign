@@ -3,43 +3,50 @@ require 'hello_sign/client'
 require 'shared_examples/proxy'
 
 describe HelloSign::Client do
-  let(:email_address) { double('email_address') }
-  let(:password)      { double('password') }
-  subject(:hs_client) { HelloSign::Client.new(email_address, password) }
+  let(:connection) { double('connection') }
+  let(:response)   { double('response') }
+
+  subject(:hs_client) { HelloSign::Client.new('email address', 'password') }
 
   it_behaves_like 'a proxy' do
     let(:client) { hs_client }
   end
 
-  describe "request methods" do
-    let(:path)     { double('path') }
-    let(:options)  { double('options') }
-    let(:response) { double('response') }
+  before do
+    allow(HelloSign::Connection).to receive(:new).and_return(connection)
+  end
 
-    before { allow(hs_client).to receive(:request).and_return(response) }
+  describe "#get" do
+    before do
+      allow(connection).to receive(:get).and_return(response)
 
-    describe "#get" do
-      before { @response = hs_client.get(path, options) }
-
-      it "sends a request" do
-        expect(hs_client).to have_received(:request).with(:get, path, options)
-      end
-
-      it "returns the response" do
-        expect(@response).to eq response
-      end
+      @response = hs_client.get('/path', options: 'hash')
     end
 
-    describe "#post" do
-      before { @response = hs_client.post(path, options) }
+    it "delegates to the connection" do
+      expect(connection).to have_received(:get).with('/path', options: 'hash')
+    end
 
-      it "sends a request" do
-        expect(hs_client).to have_received(:request).with(:post, path, options)
-      end
+    it "returns the response" do
+      expect(@response).to eq response
+    end
+  end
 
-      it "returns the response" do
-        expect(@response).to eq response
-      end
+  describe "#post" do
+    before do
+      allow(connection).to receive(:post).and_return(response)
+
+      @response = hs_client.post('/path', options: 'hash')
+    end
+
+    it "delegates to the connection" do
+      expect(connection).to(
+        have_received(:post).with('/path', options: 'hash')
+      )
+    end
+
+    it "returns the response" do
+      expect(@response).to eq response
     end
   end
 

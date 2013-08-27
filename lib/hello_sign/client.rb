@@ -1,12 +1,12 @@
 require 'hello_sign/proxy'
-require 'faraday'
+require 'hello_sign/connection'
+require 'forwardable'
 
 module HelloSign
   class Client
-    include HelloSign::Proxy
+    extend Forwardable
 
-    API_ENDPOINT = 'https://api.hellosign.com'
-    API_VERSION  = '3'
+    include HelloSign::Proxy
 
     attr_reader :email_address, :password
 
@@ -20,36 +20,13 @@ module HelloSign
       end
     end
 
-    def get(path, options = {})
-      request(:get, path, options)
-    end
-
-    def post(path, options = {})
-      request(:post, path, options)
-    end
+    delegate [:get, :post] => :connection
 
     private
 
-    def request(method, path, options)
-      base_connection do |connection|
-        connection.request :basic_auth, email_address, password unless options[:auth_not_required]
-      end.send(method) do |request|
-        request.url  "/v#{API_VERSION}#{path}", options[:params]
-        request.body = options[:body]
-      end.body
-    end
-
-    def base_connection
-      options = {url: API_ENDPOINT, headers: {user_agent: "hello_sign gem v#{HelloSign::VERSION}"}}
-
-      Faraday.new(options) do |connection|
-        yield connection
-
-        connection.request  :multipart
-        connection.request  :url_encoded
-        connection.response :raise_error
-        connection.response :json
-        connection.adapter  :net_http
+    def connection
+      HelloSign::Connection.new do |connection|
+        connection.request :basic_auth, email_address, password
       end
     end
 
