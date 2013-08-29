@@ -1,7 +1,8 @@
 module HelloSign
   module Parameters
     class ReusableFormSignatureRequest
-      attr_writer :reusable_form_id, :title, :subject, :message, :ccs, :signers, :custom_fields
+      attr_writer :reusable_form_id, :title, :subject, :message, :ccs, :signers,
+        :custom_fields
 
       def formatted
         {
@@ -9,9 +10,9 @@ module HelloSign
           title:            title,
           subject:          subject,
           message:          message,
-          ccs:              ccs,
-          signers:          signers,
-          custom_fields:    custom_fields
+          ccs:              formatted_ccs,
+          signers:          formatted_signers,
+          custom_fields:    formatted_custom_fields
         }
       end
 
@@ -19,25 +20,37 @@ module HelloSign
 
       attr_reader :reusable_form_id, :title, :subject, :message
 
-      def ccs
-        @ccs.inject({}) do |parameter, cc|
+      def formatted_ccs
+        ccs.each_with_object({}) do |cc, parameter|
           parameter[cc[:role]] = {email_address: cc[:email_address]}
-          parameter
         end
+      end
+
+      def formatted_signers
+        signers.each_with_object({}) do |signer, parameter|
+          parameter[signer[:role]] = {
+            name: signer[:name],
+            email_address: signer[:email_address]
+          }
+        end
+      end
+
+      def formatted_custom_fields
+        custom_fields.each_with_object({}) do |custom_field, parameter|
+          parameter[custom_field[:name]] = custom_field[:value]
+        end
+      end
+
+      def ccs
+        @ccs || {}
       end
 
       def signers
-        @signers.inject({}) do |parameter, signer|
-          parameter[signer[:role]] = {name: signer[:name], email_address: signer[:email_address]}
-          parameter
-        end
+        @signers || {}
       end
 
       def custom_fields
-        @custom_fields.inject({}) do |parameter, custom_field|
-          parameter[custom_field[:name]] = custom_field[:value]
-          parameter
-        end
+        @custom_fields || {}
       end
 
     end
