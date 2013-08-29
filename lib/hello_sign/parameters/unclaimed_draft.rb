@@ -6,16 +6,19 @@ module HelloSign
       attr_writer :files
 
       def formatted
-        {file: files}
+        {file: formatted_files}
       end
 
       private
 
-      def files
-        @files.each_with_index.inject({}) do |parameter, (file_data, index)|
-          parameter[index] = HelloSign::File.new(file_data).attachment
-          parameter
+      def formatted_files
+        files.each_with_index.each_with_object({}) do |(file, i), parameter|
+          parameter[i] = HelloSign::File.new(file).attachment
         end
+      end
+
+      def files
+        @files || {}
       end
 
     end
