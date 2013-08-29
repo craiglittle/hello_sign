@@ -6,6 +6,19 @@ module HelloSign
       attr_accessor :title, :subject, :message, :ccs
       attr_writer :signers, :files
 
+      def formatted
+        {
+          title:              title,
+          subject:            subject,
+          message:            message,
+          cc_email_addresses: ccs,
+          signers:            signers,
+          file:               files
+        }
+      end
+
+      private
+
       def signers
         (@signers || {}).each_with_index.inject({}) do |parameter, (signer, index)|
           signer = {
@@ -23,17 +36,6 @@ module HelloSign
           parameter[index + 1] = HelloSign::File.new(file_data).attachment
           parameter
         end
-      end
-
-      def formatted
-        {
-          title:              title,
-          subject:            subject,
-          message:            message,
-          cc_email_addresses: ccs,
-          signers:            signers,
-          file:               files
-        }
       end
 
     end
