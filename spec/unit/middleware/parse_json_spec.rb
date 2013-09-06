@@ -11,15 +11,28 @@ describe HelloSign::Middleware::ParseJson do
     expect { middleware.call({}) }.not_to raise_error
   end
 
-  it "does not change a nil body" do
-    expect(middleware.call(body: nil).env[:body]).to eq nil
+  context "when the content type is application/json" do
+    let(:env) { {response_headers: {'Content-Type' => 'application/json'}} }
+
+    it "does not change a nil body" do
+      expect(middleware.call(env.merge(body: nil)).env[:body]).to eq nil
+    end
+
+    context "and the body is valid JSON" do
+      let(:body) { {first: 1, second: 2}.to_json }
+
+      it "parses the body into a hash with symbols as keys" do
+        expect(middleware.call(env.merge(body: body)).env[:body])
+          .to eq({first: 1, second: 2})
+      end
+    end
   end
 
-  context "when called with a JSON body" do
-    before { @env = {body: {first: 1, second: 2}.to_json} }
+  context "when the content type is not application/json" do
+    let(:env) { {response_headers: {'Content-Type' => 'application/pdf'}} }
 
-    it "parses the body into a hash with symbols as keys" do
-      expect(middleware.call(@env).env[:body]).to eq({first: 1, second: 2})
+    it "does not parse the body" do
+      expect(middleware.call(env.merge(body: 'dave')).env[:body]).to eq 'dave'
     end
   end
 end
