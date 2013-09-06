@@ -9,6 +9,8 @@ module HelloSign
       def on_complete(env)
         body = env[:body] or return
 
+        return unless body.is_a?(Hash)
+
         error = body[:error] and begin
           exception = begin
             case error[:error_name]
