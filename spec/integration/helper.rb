@@ -22,11 +22,17 @@ def stub_post(path)
 end
 
 def stub_get_with_auth(path)
-  stub_request(:get, "https://david@bowman.com:foobar@api.hellosign.com/v3#{path}")
+  stub_request(
+    :get,
+    "https://david@bowman.com:foobar@api.hellosign.com/v3#{path}"
+  )
 end
 
 def stub_post_with_auth(path)
-  stub_request(:post, "https://david@bowman.com:foobar@api.hellosign.com/v3#{path}")
+  stub_request(
+    :post,
+    "https://david@bowman.com:foobar@api.hellosign.com/v3#{path}"
+  )
 end
 
 def stub_request_with_error(error)
@@ -50,5 +56,8 @@ def a_get_with_auth(path)
 end
 
 def a_post_with_auth(path)
-  a_request(:post, "https://david@bowman.com:foobar@api.hellosign.com/v3#{path}")
+  a_request(
+    :post,
+    "https://david@bowman.com:foobar@api.hellosign.com/v3#{path}"
+  )
 end
