@@ -251,6 +251,7 @@ This gem officially supports and is tested against the following Ruby interprete
 * MRI 2.0.0
 * JRuby in 1.9 mode
 * Rubinius in 1.9 mode
+* Rubinius in 2.0 mode
 
 
 ## Contributing
