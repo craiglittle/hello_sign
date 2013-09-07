@@ -254,7 +254,25 @@ This gem officially supports and is tested against the following Ruby interprete
 
 
 ## Contributing
+
 Pull requests are welcome, but consider asking for a feature or bug fix first through the issue tracker. When contributing code, please squash sloppy commits aggressively and follow [Tim Pope's guidelines][tim_pope_guidelines] for commit messages.
+
+There are a number of ways to get started after cloning the repository.
+
+To set up your environment:
+```
+script/bootstrap
+```
+
+To run the test suite:
+```
+script/test
+```
+
+To open a console with the gem loaded:
+```
+script/console
+```
 
 [tim_pope_guidelines]: http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 
