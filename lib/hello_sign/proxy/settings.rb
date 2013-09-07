@@ -1,5 +1,3 @@
-require 'hello_sign/client'
-
 module HelloSign
   module Proxy
     class Settings
