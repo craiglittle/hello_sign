@@ -13,8 +13,8 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
 
   gem.require_paths = ['lib']
-  gem.files         += Dir.glob('lib/**/*.rb')
-  gem.test_files    += Dir.glob('spec/**/*')
+  gem.files         = Dir['lib/**/*.rb']
+  gem.test_files    = Dir['spec/**/*']
 
   gem.add_dependency 'faraday', '~> 0.8'
 
