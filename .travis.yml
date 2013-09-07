@@ -2,11 +2,18 @@ language: ruby
 
 rvm:
   - jruby-19mode
+  - jruby-head
   - rbx-19mode
   - rbx-20mode
   - 1.9.2
   - 1.9.3
   - 2.0.0
+  - ruby-head
+
+matrix:
+  allow_failures:
+    - rvm: jruby-head
+    - rvm: ruby-head
 
 notifications:
   email:
