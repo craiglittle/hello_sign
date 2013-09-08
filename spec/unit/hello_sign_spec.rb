@@ -10,6 +10,12 @@ describe HelloSign do
     HelloSign.password      = password
   end
 
+  after do
+    if HelloSign.instance_variable_defined?(:@client)
+      HelloSign.send(:remove_instance_variable, :@client)
+    end
+  end
+
   describe "::client" do
     let(:client) { double('client') }
 
@@ -36,8 +42,6 @@ describe HelloSign do
         HelloSign.client
       end
 
-      after { HelloSign.instance_variable_set(:@client, nil) }
-
       its(:client) { should be client }
 
       context "and the credentials change" do
@@ -55,8 +59,6 @@ describe HelloSign do
     let(:client) { double('client') }
 
     before { allow(HelloSign::Client).to receive(:new).and_return(client) }
-
-    after { HelloSign.instance_variable_set(:@client, nil) }
 
     describe "::account" do
       before do

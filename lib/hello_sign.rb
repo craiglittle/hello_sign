@@ -33,7 +33,8 @@ module HelloSign
     private
 
     def credentials_match?
-      @client && client_credentials.hash == provided_credentials.hash
+      instance_variable_defined?(:@client) &&
+        client_credentials.hash == provided_credentials.hash
     end
 
     def client_credentials
