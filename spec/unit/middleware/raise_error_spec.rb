@@ -36,7 +36,7 @@ describe HelloSign::Middleware::RaiseError do
             ).merge(response_headers)
           )
         rescue HelloSign::Error::BadRequest => e
-          expect("#{e}").to match /#{Regexp.escape("[Status code: 418] I'm a teapot")}/
+          expect("#{e}").to match(/#{Regexp.escape("[Status code: 418] I'm a teapot")}/)
         end
       end
     end
