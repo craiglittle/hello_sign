@@ -3,7 +3,10 @@ require 'hello_sign/file'
 module HelloSign
   module Parameters
     class SignatureRequest
-      attr_writer :title, :subject, :message, :ccs, :signers, :files
+      attr_accessor :title, :subject, :message, :ccs
+      private :title, :subject, :message, :ccs
+
+      attr_writer :signers, :files
 
       def formatted
         {
@@ -17,8 +20,6 @@ module HelloSign
       end
 
       private
-
-      attr_reader :title, :subject, :message, :ccs
 
       def formatted_signers
         signers.each_with_index.each_with_object({}) do |(signer, i), parameter|

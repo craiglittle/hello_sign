@@ -5,7 +5,8 @@ module HelloSign
   class File
     DEFAULT_MIME_TYPE = MIME_TYPES.fetch('txt')
 
-    attr_reader :filename, :io_object, :mime_type
+    attr_reader :filename, :io_object
+    private :filename, :io_object
 
     def initialize(file_data)
       @filename  = file_data[:filename]

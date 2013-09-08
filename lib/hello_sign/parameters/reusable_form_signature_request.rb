@@ -1,8 +1,10 @@
 module HelloSign
   module Parameters
     class ReusableFormSignatureRequest
-      attr_writer :reusable_form_id, :title, :subject, :message, :ccs, :signers,
-        :custom_fields
+      attr_accessor :reusable_form_id, :title, :subject, :message
+      private :reusable_form_id, :title, :subject, :message
+
+      attr_writer :ccs, :signers, :custom_fields
 
       def formatted
         {
@@ -17,8 +19,6 @@ module HelloSign
       end
 
       private
-
-      attr_reader :reusable_form_id, :title, :subject, :message
 
       def formatted_ccs
         ccs.each_with_object({}) do |cc, parameter|
