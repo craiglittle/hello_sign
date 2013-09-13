@@ -24,6 +24,21 @@ describe HelloSign do
             {filename: 'spec/fixtures/test.jpg'},
             {io: image_io, mime: 'image/jpeg'}
           ]
+          request.form_fields_per_document = [
+            [],
+            [
+              {
+                type:     'text',
+                x:        112,
+                y:        328,
+                width:    100,
+                height:   16,
+                required: true,
+                signer:   1
+              }
+            ]
+          ]
+
         end
 
         expect(a_post_with_auth('/signature_request/send')
