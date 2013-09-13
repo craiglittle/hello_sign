@@ -3,19 +3,20 @@ require 'hello_sign/file'
 module HelloSign
   module Parameters
     class SignatureRequest
-      attr_accessor :title, :subject, :message, :ccs
-      private :title, :subject, :message, :ccs
+      attr_accessor :title, :subject, :message, :ccs, :form_fields_per_document
+      private :title, :subject, :message, :ccs, :form_fields_per_document
 
       attr_writer :signers, :files
 
       def formatted
         {
-          title:              title,
-          subject:            subject,
-          message:            message,
-          cc_email_addresses: ccs,
-          signers:            formatted_signers,
-          file:               formatted_files
+          title:                    title,
+          subject:                  subject,
+          message:                  message,
+          cc_email_addresses:       ccs,
+          signers:                  formatted_signers,
+          file:                     formatted_files,
+          form_fields_per_document: form_fields_per_document
         }
       end
 
