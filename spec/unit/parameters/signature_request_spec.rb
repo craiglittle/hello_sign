@@ -18,7 +18,21 @@ describe HelloSign::Parameters::SignatureRequest do
             0 => {name: 'Jack', email_address: 'jack@hill.com', order: 0},
             1 => {name: 'Jill', email_address: 'jill@hill.com', order: 1}
           },
-          file: {1 => text_file, 2 => image_file}
+          file: {1 => text_file, 2 => image_file},
+          form_fields_per_document: [
+            [],
+            [
+              {
+                type:     'text',
+                x:        112,
+                y:        328,
+                width:    100,
+                height:   16,
+                required: true,
+                signer:   1
+              }
+            ]
+          ]
         }
       end
 
@@ -34,6 +48,20 @@ describe HelloSign::Parameters::SignatureRequest do
         request_parameters.files   = [
           @file_data_1 = {filename: 'test.txt', io: 'text file IO object', mime: 'text/plain'},
           @file_data_2 = {filename: 'test.jpg', io: 'image file IO object', mime: 'image/jpeg'}
+        ]
+        request_parameters.form_fields_per_document = [
+          [],
+          [
+            {
+              type:     'text',
+              x:        112,
+              y:        328,
+              width:    100,
+              height:   16,
+              required: true,
+              signer:   1
+            }
+          ]
         ]
 
         allow(HelloSign::File).to(
@@ -55,12 +83,13 @@ describe HelloSign::Parameters::SignatureRequest do
     context "when required parameters are omitted" do
       let(:expected) do
         {
-          title:              nil,
-          subject:            nil,
-          message:            nil,
-          cc_email_addresses: nil,
-          signers:            {},
-          file:               {}
+          title:                    nil,
+          subject:                  nil,
+          message:                  nil,
+          cc_email_addresses:       nil,
+          signers:                  {},
+          file:                     {},
+          form_fields_per_document: nil
         }
       end
 

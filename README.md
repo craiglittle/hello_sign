@@ -95,6 +95,20 @@ HelloSign.signature_request.deliver do |request|
     {filename: 'path/to/directions.txt', mime: 'text/xml'},
     {io: image, mime: 'image/jpeg'}
   ]
+  request.form_fields_per_document = [
+    [
+      {
+        type:     'text',
+        x:        112,
+        y:        328,
+        width:    100,
+        height:   16,
+        required: true,
+        signer:   1
+      }
+    ],
+    []
+  ]
 end
 ```
 
