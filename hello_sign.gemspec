@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = Dir['spec/**/*']
 
   gem.add_dependency 'faraday', '~> 0.8'
+  gem.add_dependency 'json'
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec',   '~> 2.14'
