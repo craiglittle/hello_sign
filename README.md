@@ -107,6 +107,8 @@ HelloSign.signature_request.deliver do |request|
         signer:   1
       }
     ],
+    [],
+    [],
     []
   ]
 end
