@@ -16,8 +16,8 @@ describe HelloSign::Parameters::SignatureRequest do
           message: 'You must sign this.',
           cc_email_addresses: ['lawyer@lawfirm.com', 'spouse@family.com'],
           signers: {
-            0 => {name: 'Jack', email_address: 'jack@hill.com', order: 0},
-            1 => {name: 'Jill', email_address: 'jill@hill.com', order: 1}
+            1 => {name: 'Jack', email_address: 'jack@hill.com', order: 0},
+            2 => {name: 'Jill', email_address: 'jill@hill.com', order: 1}
           },
           file: {1 => text_file, 2 => image_file},
           form_fields_per_document: [

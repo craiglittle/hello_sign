@@ -25,7 +25,7 @@ module HelloSign
 
       def formatted_signers
         signers.each_with_index.each_with_object({}) do |(signer, i), parameter|
-          parameter[i] = {
+          parameter[i + 1] = {
             name:          signer[:name],
             email_address: signer[:email_address],
             order:         i
