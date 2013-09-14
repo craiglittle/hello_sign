@@ -1,5 +1,6 @@
 require 'helper'
 require 'hello_sign/parameters/signature_request'
+require 'json'
 
 describe HelloSign::Parameters::SignatureRequest do
   describe "#formatted" do
@@ -32,7 +33,7 @@ describe HelloSign::Parameters::SignatureRequest do
                 signer:   1
               }
             ]
-          ]
+          ].to_json
         }
       end
 
@@ -89,7 +90,7 @@ describe HelloSign::Parameters::SignatureRequest do
           cc_email_addresses:       nil,
           signers:                  {},
           file:                     {},
-          form_fields_per_document: nil
+          form_fields_per_document: [].to_json
         }
       end
 

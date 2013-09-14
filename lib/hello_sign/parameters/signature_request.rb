@@ -1,12 +1,13 @@
 require 'hello_sign/file'
+require 'json'
 
 module HelloSign
   module Parameters
     class SignatureRequest
-      attr_accessor :title, :subject, :message, :ccs, :form_fields_per_document
-      private :title, :subject, :message, :ccs, :form_fields_per_document
+      attr_accessor :title, :subject, :message, :ccs
+      private :title, :subject, :message, :ccs
 
-      attr_writer :signers, :files
+      attr_writer :signers, :files, :form_fields_per_document
 
       def formatted
         {
@@ -16,7 +17,7 @@ module HelloSign
           cc_email_addresses:       ccs,
           signers:                  formatted_signers,
           file:                     formatted_files,
-          form_fields_per_document: form_fields_per_document
+          form_fields_per_document: formatted_form_fields_per_document
         }
       end
 
@@ -38,12 +39,20 @@ module HelloSign
         end
       end
 
+      def formatted_form_fields_per_document
+        form_fields_per_document.to_json
+      end
+
       def signers
         @signers || {}
       end
 
       def files
         @files || {}
+      end
+
+      def form_fields_per_document
+        @form_fields_per_document || []
       end
 
     end

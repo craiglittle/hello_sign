@@ -36,7 +36,9 @@ describe HelloSign do
                 required: true,
                 signer:   1
               }
-            ]
+            ],
+            [],
+            []
           ]
 
         end
