@@ -51,7 +51,28 @@ A client instantiated in this way responds to the same methods as the
 
 ## Usage
 
-All JSON-encoded responses from the HelloSign API are converted to a hash equivalent with symbols for keys before being returned.
+### Response object
+
+All responses are wrapped in a [hashie](https://github.com/intridea/hashie)-like object that is accessible in a number of ways.
+
+```ruby
+raw_response = {
+  request_id: 1,
+  signer: {
+    name:          'David Bowman',
+    email_address: 'david@bowman.com'
+  }
+}
+
+response = HelloSign::Response.new(raw_response)
+
+response[:request_id]  # => 1
+response['request_id'] # => 1
+response.request_id    # => 1
+
+response.signer.name            # => 'David Bowman'
+response.signer[:email_address] # => 'david@bowman.com'
+```
 
 ### [Account](http://www.hellosign.com/api/reference#Account)
 

@@ -1,4 +1,6 @@
+require 'hello_sign/response'
 require 'faraday'
+require 'faraday_middleware'
 
 module HelloSign
   class Connection
@@ -37,6 +39,7 @@ module HelloSign
         connection.request  :multipart
         connection.request  :url_encoded
         connection.response :raise_error
+        connection.response :mashify, mash_class: HelloSign::Response
         connection.response :json
         connection.adapter  :net_http
       end

@@ -3,6 +3,8 @@ require 'json'
 
 describe HelloSign do
   context "when returning a response with a body" do
+    let(:response) { HelloSign.client.get('/json') }
+
     before do
       stub_get_with_auth('/json')
         .to_return(
@@ -11,8 +13,16 @@ describe HelloSign do
         )
     end
 
-    it "parses the body into a hash with symbols as keys" do
-      expect(HelloSign.client.get('/json')).to eq({account_id: 1})
+    it "returns a HelloSign::Response object" do
+      expect(response).to be_a HelloSign::Response
+    end
+
+    it "is accessible by indexing" do
+      expect(response[:account_id]).to eq 1
+    end
+
+    it "is accessible by method calls" do
+      expect(response.account_id).to eq 1
     end
   end
 
