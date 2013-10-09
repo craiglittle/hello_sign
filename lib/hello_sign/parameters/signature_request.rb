@@ -4,13 +4,14 @@ require 'json'
 module HelloSign
   module Parameters
     class SignatureRequest
-      attr_accessor :title, :subject, :message, :ccs
-      private :title, :subject, :message, :ccs
+      attr_accessor :title, :subject, :message, :ccs, :test_mode
+      private :title, :subject, :message, :ccs, :test_mode
 
-      attr_writer :signers, :files, :form_fields_per_document
+      attr_writer :signers, :files, :form_fields_per_document, :test_mode
 
       def formatted
         {
+          test_mode:                test_mode || 0,
           title:                    title,
           subject:                  subject,
           message:                  message,

@@ -73,6 +73,7 @@ describe HelloSign do
 
         expect(a_post_with_auth('/signature_request/send_with_reusable_form')
           .with(body: {
+            test_mode:        '0',
             reusable_form_id: 'form_id',
             title:            'Lease',
             subject:          'Sign this',

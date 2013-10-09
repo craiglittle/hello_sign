@@ -33,7 +33,8 @@ describe HelloSign::Parameters::SignatureRequest do
                 signer:   1
               }
             ]
-          ].to_json
+          ].to_json,
+          test_mode:      0
         }
       end
 
@@ -89,6 +90,7 @@ describe HelloSign::Parameters::SignatureRequest do
           message:                  nil,
           cc_email_addresses:       nil,
           signers:                  {},
+          test_mode:                0,
           file:                     {},
           form_fields_per_document: [].to_json
         }
