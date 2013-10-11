@@ -24,11 +24,12 @@ describe HelloSign::Parameters::ReusableFormSignatureRequest do
             'cost' => '$20,000',
             'time' => 'two weeks'
           },
-          test_mode:        0
+          test_mode: 1
         }
       end
 
       before do
+        request_parameters.test_mode = 1
         request_parameters.reusable_form_id = 'form_id'
         request_parameters.title   = 'Lease'
         request_parameters.subject = 'Sign this'

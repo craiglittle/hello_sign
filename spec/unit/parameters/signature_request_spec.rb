@@ -11,6 +11,7 @@ describe HelloSign::Parameters::SignatureRequest do
     context "when all required arguments are set" do
       let(:expected) do
         {
+          test_mode: 1,
           title: 'Lease',
           subject: 'Sign this',
           message: 'You must sign this.',
@@ -33,21 +34,21 @@ describe HelloSign::Parameters::SignatureRequest do
                 signer:   1
               }
             ]
-          ].to_json,
-          test_mode:      0
+          ].to_json
         }
       end
 
       before do
-        request_parameters.title   = 'Lease'
-        request_parameters.subject = 'Sign this'
-        request_parameters.message = 'You must sign this.'
-        request_parameters.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
-        request_parameters.signers = [
+        request_parameters.test_mode = 1
+        request_parameters.title     = 'Lease'
+        request_parameters.subject   = 'Sign this'
+        request_parameters.message   = 'You must sign this.'
+        request_parameters.ccs       = ['lawyer@lawfirm.com', 'spouse@family.com']
+        request_parameters.signers   = [
           {name: 'Jack', email_address: 'jack@hill.com'},
           {name: 'Jill', email_address: 'jill@hill.com'}
         ]
-        request_parameters.files   = [
+        request_parameters.files     = [
           @file_data_1 = {filename: 'test.txt', io: 'text file IO object', mime: 'text/plain'},
           @file_data_2 = {filename: 'test.jpg', io: 'image file IO object', mime: 'image/jpeg'}
         ]
