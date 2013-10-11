@@ -23,7 +23,8 @@ describe HelloSign::Parameters::ReusableFormSignatureRequest do
           custom_fields:    {
             'cost' => '$20,000',
             'time' => 'two weeks'
-          }
+          },
+          test_mode:        0
         }
       end
 
