@@ -51,10 +51,6 @@ describe HelloSign::Client do
   end
 
   context "when a hash is passed to the constructor" do
-    subject(:hs_client) do
-      HelloSign::Client.new(email_address: email_address, password: password)
-    end
-
     it "raises an exception if an email address is not provided" do
       expect { HelloSign::Client.new(password: 'space') }.to(
         raise_error ArgumentError
