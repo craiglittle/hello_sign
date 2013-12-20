@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 
 gem 'jruby-openssl', platform: :jruby
-gem 'rubysl',        platform: :rbx
+
+platform :rbx do
+  gem 'rubysl'
+  gem 'rubysl-json'
+end
 
 group :development, :test do
   gem 'coveralls', '~> 0.6'
