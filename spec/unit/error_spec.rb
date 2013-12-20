@@ -2,6 +2,39 @@ require 'helper'
 require 'hello_sign/error'
 
 describe HelloSign::Error do
+  describe ".from_error_name" do
+    %w(
+      bad_request
+      unauthorized
+      forbidden
+      not_found
+      unknown
+      team_invite_failed
+      invalid_recipient
+      convert_failed
+      signature_request_cancel_failed
+    ).each do |error_name|
+      context "when the error name is #{error_name}" do
+        it "returns the proper exception" do
+          expect(HelloSign::Error.from_error_name(error_name)).to(
+            be(
+              HelloSign::Error.const_get(
+                error_name.split('_').map(&:capitalize).join
+              )
+            )
+          )
+        end
+      end
+    end
+
+    context "when the error name is unknown" do
+      it "returns a generic exception" do
+        expect(HelloSign::Error.from_error_name('no_such_error'))
+          .to be HelloSign::Error
+      end
+    end
+  end
+
   specify do
     expect { raise HelloSign::Error }.to(
       raise_error StandardError

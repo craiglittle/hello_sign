@@ -1,46 +1,19 @@
-require 'hello_sign/error'
-
 require 'faraday'
+require 'hello_sign/error'
 
 module HelloSign
   module Middleware
     class RaiseError < Faraday::Response::Middleware
 
       def on_complete(env)
-        body = env[:body] or return
-
-        return unless body.is_a?(Hash)
+        body = env[:body] and body.is_a?(Hash) or return
 
         error = body[:error] and begin
-          exception = begin
-            case error[:error_name]
-            when 'bad_request'
-              HelloSign::Error::BadRequest
-            when 'unauthorized'
-              HelloSign::Error::Unauthorized
-            when 'forbidden'
-              HelloSign::Error::Forbidden
-            when 'not_found'
-              HelloSign::Error::NotFound
-            when 'unknown'
-              HelloSign::Error::Unknown
-            when 'team_invite_failed'
-              HelloSign::Error::TeamInviteFailed
-            when 'invalid_recipient'
-              HelloSign::Error::InvalidRecipient
-            when 'convert_failed'
-              HelloSign::Error::ConvertFailed
-            when 'signature_request_cancel_failed'
-              HelloSign::Error::SignatureRequestCancelFailed
-            else
-              HelloSign::Error
-            end
-          end
-
+          exception   = Error.from_error_name(error[:error_name])
           message     = error[:error_msg]
           status_code = env[:response][:status]
 
-          raise exception.new(message, status_code)
+          fail exception.new(message, status_code)
         end
       end
 
