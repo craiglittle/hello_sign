@@ -24,11 +24,11 @@ module HelloSign
       end
 
       def add_member(params = {})
-        client.post("/team/add_member", body: params)
+        client.post('/team/add_member', body: params)
       end
 
       def remove_member(params = {})
-        client.post("/team/remove_member", body: params)
+        client.post('/team/remove_member', body: params)
       end
 
     end
