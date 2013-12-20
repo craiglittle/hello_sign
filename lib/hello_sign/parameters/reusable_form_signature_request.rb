@@ -6,6 +6,10 @@ module HelloSign
 
       attr_writer :ccs, :signers, :custom_fields
 
+      def initialize
+        @ccs, @signers, @custom_fields = nil, nil, nil
+      end
+
       def formatted
         {
           test_mode:        test_mode || 0,

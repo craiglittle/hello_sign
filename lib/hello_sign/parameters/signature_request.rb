@@ -9,6 +9,10 @@ module HelloSign
 
       attr_writer :signers, :files, :form_fields_per_document
 
+      def initialize
+        @signers, @files, @form_fields_per_document = nil, nil, nil
+      end
+
       def formatted
         {
           test_mode:                test_mode || 0,
