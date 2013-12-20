@@ -7,7 +7,7 @@ module HelloSign
       attr_accessor :title, :subject, :message, :ccs, :test_mode
       private :title, :subject, :message, :ccs, :test_mode
 
-      attr_writer :signers, :files, :form_fields_per_document, :test_mode
+      attr_writer :signers, :files, :form_fields_per_document
 
       def formatted
         {
