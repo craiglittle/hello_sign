@@ -4,8 +4,8 @@ require 'faraday_middleware'
 
 module HelloSign
   class Connection
-    API_ENDPOINT = 'https://api.hellosign.com'
-    API_VERSION  = '3'
+    API_ENDPOINT = 'https://api.hellosign.com'.freeze
+    API_VERSION  = '3'.freeze
 
     attr_reader :auth_configuration
 
