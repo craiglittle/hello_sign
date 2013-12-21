@@ -1,3 +1,4 @@
+require 'hello_sign/version'
 require 'hello_sign/response'
 require 'faraday'
 require 'faraday_middleware'
