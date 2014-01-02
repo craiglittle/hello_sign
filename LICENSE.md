@@ -1,4 +1,4 @@
-Copyright (c) 2013 Craig Little
+Copyright (c) 2013-2014 Craig Little
 
 MIT License
 

@@ -316,6 +316,6 @@ script/console
 
 
 ## Copyright
-Copyright (c) 2013 Craig Little. See [LICENSE][license] for details.
+Copyright (c) 2013-2014 Craig Little. See [LICENSE][license] for details.
 
 [license]: https://github.com/craiglittle/hello_sign/blob/master/LICENSE.md
