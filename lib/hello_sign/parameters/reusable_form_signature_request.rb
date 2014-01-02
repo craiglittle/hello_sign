@@ -1,18 +1,18 @@
 module HelloSign
   module Parameters
     class ReusableFormSignatureRequest
-      attr_accessor :reusable_form_id, :title, :subject, :message, :test_mode
-      private :reusable_form_id, :title, :subject, :message, :test_mode
+      attr_accessor :test_mode, :reusable_form_id, :title, :subject, :message
+      private :test_mode, :reusable_form_id, :title, :subject, :message
 
       attr_writer :ccs, :signers, :custom_fields
 
       def initialize
-        @ccs, @signers, @custom_fields = nil, nil, nil
+        @test_mode, @ccs, @signers, @custom_fields = 0, nil, nil, nil
       end
 
       def formatted
         {
-          test_mode:        test_mode || 0,
+          test_mode:        test_mode,
           reusable_form_id: reusable_form_id,
           title:            title,
           subject:          subject,
