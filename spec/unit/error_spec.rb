@@ -13,6 +13,7 @@ describe HelloSign::Error do
       invalid_recipient
       convert_failed
       signature_request_cancel_failed
+      maintenance
     ).each do |error_name|
       context "when the error name is #{error_name}" do
         it "returns the proper exception" do
@@ -91,6 +92,12 @@ describe HelloSign::Error do
 
   specify do
     expect { raise HelloSign::Error::SignatureRequestCancelFailed }.to(
+      raise_error HelloSign::Error
+    )
+  end
+
+  specify do
+    expect { raise HelloSign::Error::Maintenance }.to(
       raise_error HelloSign::Error
     )
   end

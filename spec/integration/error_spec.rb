@@ -47,4 +47,9 @@ describe HelloSign do
     stub_request_with_error('signature_request_cancel_failed')
     expect { any_call }.to raise_error HelloSign::Error::SignatureRequestCancelFailed
   end
+
+  specify do
+    stub_request_with_error('maintenance')
+    expect { any_call }.to raise_error HelloSign::Error::Maintenance
+  end
 end

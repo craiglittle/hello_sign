@@ -18,6 +18,7 @@ describe HelloSign::Middleware::RaiseError do
       'invalid_recipient'               => HelloSign::Error::InvalidRecipient,
       'convert_failed'                  => HelloSign::Error::ConvertFailed,
       'signature_request_cancel_failed' => HelloSign::Error::SignatureRequestCancelFailed,
+      'maintenance'                     => HelloSign::Error::Maintenance,
       'unidentified_error'              => HelloSign::Error
     }.each { |error_pair| it_raises_the_proper_exception(*error_pair) }
 

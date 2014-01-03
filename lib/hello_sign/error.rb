@@ -22,6 +22,8 @@ module HelloSign
         ConvertFailed
       when 'signature_request_cancel_failed'
         SignatureRequestCancelFailed
+      when 'maintenance'
+        Maintenance
       else
         Error
       end
@@ -50,7 +52,8 @@ module HelloSign
       :TeamInviteFailed,
       :InvalidRecipient,
       :ConvertFailed,
-      :SignatureRequestCancelFailed
+      :SignatureRequestCancelFailed,
+      :Maintenance
     ].each do |error_name|
       const_set(error_name, Class.new(HelloSign::Error))
     end
