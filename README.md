@@ -1,6 +1,6 @@
 # HelloSign
 
-A Ruby interface to the HelloSign API.
+A Ruby interface to the HelloSign API
 
 [![Gem Version](https://badge.fury.io/rb/hello_sign.png)][gem_version]
 [![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]
@@ -14,270 +14,36 @@ A Ruby interface to the HelloSign API.
 [code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
 [coveralls]: https://coveralls.io/r/craiglittle/hello_sign
 
-
 ## Installation
 ```ruby
 gem install hello_sign
 ```
 
-## Configuration
+## Getting started
 
-HelloSign uses the [HTTP Basic Access Authentication][http_basic] scheme to authenticate API users.
-
-To configure the client, simply execute the following with your credentials:
+Here's all it takes to send a signature request:
 
 ```ruby
 HelloSign.configure do |hs|
-  hs.email_address = 'david@bowman.com'
-  hs.password      = 'hal_9000'
+  hs.email_address = 'user@example.com'
+  hs.password      = 'password'
 end
-```
 
-Those credentials will be used when making each request that requires authentication.
-
-[http_basic]: http://en.wikipedia.org/wiki/Basic_access_authentication
-
-### Thread safety
-
-Applications that make requests on behalf of multiple HelloSign users should
-avoid global configuration. Instead, instantiate a client directly.
-
-```ruby
-hello_sign = HelloSign::Client.new(email_address: 'david@bowman.com', password: 'hal_9000')
-```
-
-A client instantiated in this way responds to the same methods as the
-`HelloSign` constant.
-
-## Usage
-
-### Response object
-
-All responses are wrapped in a [hashie](https://github.com/intridea/hashie)-like object that is accessible in a number of ways.
-
-```ruby
-raw_response = {
-  request_id: 1,
-  signer: {
-    name:          'David Bowman',
-    email_address: 'david@bowman.com'
-  }
-}
-
-response = HelloSign::Response.new(raw_response)
-
-response[:request_id]  # => 1
-response['request_id'] # => 1
-response.request_id    # => 1
-
-response.signer.name            # => 'David Bowman'
-response.signer[:email_address] # => 'david@bowman.com'
-```
-
-### [Account](http://www.hellosign.com/api/reference#Account)
-
-#### Create an account
-
-```ruby
-HelloSign.account.create(email_address: 'david@bowman.com', password: 'hal_9000')
-```
-
-Authentication is not required to make this request.
-
-#### Fetch account settings
-
-```ruby
-HelloSign.account.settings.show
-```
-
-#### Update account settings
-
-```ruby
-HelloSign.account.settings.update(callback_url: 'https://callmemaybe.com')
-```
-
-### [Signature requests](http://www.hellosign.com/api/reference#SignatureRequest)
-
-#### Send a request
-
-```ruby
 HelloSign.signature_request.deliver do |request|
-  request.title   = 'Contract'
+  request.title   = 'Our contract'
   request.subject = 'Here is the contract for you to sign!'
   request.message = 'You should definitely sign this.'
-  request.ccs     = ['lawyer@lawfirm.com', 'spouse@family.com']
   request.signers = [
     {name: 'Jack', email_address: 'jack@hill.com'},
     {name: 'Jill', email_address: 'jill@hill.com'}
   ]
-  request.files   = [
-    {filename: 'path/to/contract.pdf'},
-    {filename: 'details.txt', io: text_file},
-    {filename: 'path/to/directions.txt', mime: 'text/xml'},
-    {io: image, mime: 'image/jpeg'}
-  ]
-  request.form_fields_per_document = [
-    [
-      {
-        type:     'text',
-        x:        112,
-        y:        328,
-        width:    100,
-        height:   16,
-        required: true,
-        signer:   1
-      }
-    ],
-    [],
-    [],
-    []
-  ]
+  request.files   = [{filename: 'path/to/contract.pdf'}]
 end
 ```
 
-##### Specifying files
+For a comprehensive guide to supported functionality, check out the [wiki][wiki].
 
-There are a couple ways to specify a file when sending a signature request:
-
-* Provide a path to the file's location on disk using `filename`.
-* Pass a Ruby IO object using `io` (e.g. `text_file` and `image` above).
-
-Other things to keep in mind:
-
-* If a `filename` isn't provided, a generic one will be inferred.
-* If no `mime` key is specified, the MIME type will be inferred by the file extension. If a MIME type cannot be inferred, it will default to `text/plain`.
-* When using any method of file specification, the MIME type can always be overriden using the `mime` key.
-
-#### Send a request using a reusable form
-
-```ruby
-HelloSign.signature_request.deliver(form: 'form_id') do |request|
-  request.title         = 'Contract'
-  request.subject       = 'Here is the contract for you to sign!'
-  request.message       = 'You should definitely sign this.'
-  request.ccs           = [
-    {email_address: 'lawyer@lawfirm.com', role: 'lawyer'},
-    {email_address: 'accountant@llc.com', role: 'accountant'}
-  ]
-  request.signers       = [
-    {name: 'Jack', email_address: 'jack@hill.com', role: 'consultant'},
-    {name: 'Jill', email_address: 'jill@hill.com', role: 'client'}
-  ]
-  request.custom_fields = [
-    {name: 'cost', value: '$20,000'},
-    {name: 'time', value: 'two weeks'}
-  ]
-end
-```
-
-#### Fetch the status on a request
-```ruby
-HelloSign.signature_request('abc123').status
-```
-
-#### Fetch a list of all requests
-
-```ruby
-HelloSign.signature_request.list
-HelloSign.signature_request.list(page: 5)
-```
-
-Defaults to page one when no page number is provided.
-
-#### Send a reminder
-```ruby
-HelloSign.signature_request('abc123').remind(email_address: 'bob@smith.com')
-```
-
-#### Cancel a request
-```ruby
-HelloSign.signature_request('abc123').cancel
-```
-
-#### Fetch a final copy
-```ruby
-HelloSign.signature_request('abc123').final_copy
-```
-
-### [Reusable forms](http://www.hellosign.com/api/reference#ReusableForm)
-
-#### Fetch a list of all forms
-
-```ruby
-HelloSign.reusable_form.list
-HelloSign.reusable_form.list(page: 5)
-```
-
-Defaults to page one when no page number is provided.
-
-#### Fetch details on a form
-```ruby
-HelloSign.reusable_form('abc123').show
-```
-
-#### Grant access to a form
-```ruby
-HelloSign.reusable_form('abc123').grant_access(email_address: 'bob@smith.com')
-HelloSign.reusable_form('abc123').grant_access(account_id: '123456')
-```
-
-#### Revoke access to a form
-```ruby
-HelloSign.reusable_form('abc123').revoke_access(email_address: 'bob@smith.com')
-HelloSign.reusable_form('abc123').revoke_access(account_id: '123456')
-```
-
-### [Teams](http://www.hellosign.com/api/reference#Team)
-
-#### Create a team
-```ruby
-HelloSign.team.create(name: 'The Browncoats')
-```
-
-#### Fetch team details
-```ruby
-HelloSign.team.show
-```
-
-#### Update team details
-```ruby
-HelloSign.team.update(name: 'The Reavers')
-```
-
-#### Delete a team
-```ruby
-HelloSign.team.destroy
-```
-
-#### Add a member to the team
-```ruby
-HelloSign.team.add_member(email_address: 'new@person.com')
-HelloSign.team.add_member(account_id: '123456')
-```
-
-#### Remove a member from the team
-```ruby
-HelloSign.team.remove_member(email_address: 'old@person.com')
-HelloSign.team.remove_member(account_id: '123456')
-```
-
-### [Unclaimed drafts](http://www.hellosign.com/api/reference#UnclaimedDraft)
-
-#### Create a draft
-```ruby
-HelloSign.unclaimed_draft.create do |draft|
-  draft.files = [
-    {filename: 'path/to/test.txt'},
-    {filename: 'test.jpg', io: image}
-  ]
-end
-```
-
-See the related [notes](#specifying-files) on specifying files.
-
-## [Errors](http://www.hellosign.com/api/reference#Errors)
-
-When an error is returned from the HelloSign API, an associated exception is raised.
+[wiki]: https://github.com/craiglittle/hello_sign/wiki
 
 ## Supported Ruby interpreters
 
@@ -289,7 +55,6 @@ This gem officially supports and is tested against the following Ruby interprete
 * JRuby in 1.9 mode
 * Rubinius in 1.9 mode
 * Rubinius in 2.0 mode
-
 
 ## Contributing
 
