@@ -1,26 +1,14 @@
+require 'hello_sign/proxy/object'
 require 'hello_sign/parameters/unclaimed_draft'
 
 module HelloSign
   module Proxy
-    class UnclaimedDraft
-      attr_reader :client
-
-      def initialize(client)
-        @client = client
-      end
+    class UnclaimedDraft < Object
 
       def create
-        yield draft_parameters
-        client.post(
-          '/unclaimed_draft/create',
-          body: draft_parameters.formatted
-        )
-      end
-
-      private
-
-      def draft_parameters
-        @draft_parameters ||= Parameters::UnclaimedDraft.new
+        @client.post('/unclaimed_draft/create', {
+          body: Parameters::UnclaimedDraft.new.tap { |p| yield p }.formatted
+        })
       end
 
     end

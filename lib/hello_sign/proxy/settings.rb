@@ -1,18 +1,15 @@
+require 'hello_sign/proxy/object'
+
 module HelloSign
   module Proxy
-    class Settings
-      attr_reader :client
-
-      def initialize(client)
-        @client = client
-      end
+    class Settings < Object
 
       def show
-        client.get('/account')
+        @client.get('/account')
       end
 
       def update(params = {})
-        client.post('/account', body: params)
+        @client.post('/account', body: params)
       end
 
     end

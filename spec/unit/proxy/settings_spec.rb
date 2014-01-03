@@ -2,15 +2,9 @@ require 'helper'
 require 'hello_sign/proxy/settings'
 
 describe HelloSign::Proxy::Settings do
-  let(:client)       { double('client') }
+  let(:client) { double('client') }
 
   subject(:settings) { HelloSign::Proxy::Settings.new(client) }
-
-  describe "#client" do
-    it "returns the client" do
-      expect(settings.client).to eq client
-    end
-  end
 
   describe "#update" do
     let(:callback_url) { 'http://www.callmemaybe.com' }
