@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.files         = Dir['lib/**/*.rb']
   gem.test_files    = Dir['spec/**/*']
 
-  gem.add_dependency 'faraday',            '~> 0.8'
+  gem.add_dependency 'faraday',            '~> 0.8.0'
   gem.add_dependency 'faraday_middleware', '~> 0.9'
   gem.add_dependency 'hashie',             '>= 1.0', '< 3.0'
 
