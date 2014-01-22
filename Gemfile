@@ -4,7 +4,7 @@ gem 'jruby-openssl', platform: :jruby
 
 platform :rbx do
   gem 'rubysl'
-  gem 'rubysl-json'
+  gem 'json'
   gem 'rubinius-coverage'
 end
 
