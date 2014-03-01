@@ -4,8 +4,8 @@ require 'json'
 module HelloSign
   module Parameters
     class SignatureRequest
-      attr_accessor :title, :subject, :message, :ccs, :test_mode
-      private :title, :subject, :message, :ccs, :test_mode
+      attr_accessor :title, :subject, :message, :ccs, :test_mode, :client_id
+      private :title, :subject, :message, :ccs, :test_mode, :client_id
 
       attr_writer :signers, :files, :form_fields_per_document
 
@@ -23,7 +23,9 @@ module HelloSign
           signers:                  formatted_signers,
           file:                     formatted_files,
           form_fields_per_document: formatted_form_fields_per_document
-        }
+        }.tap do |f|
+          f.merge!(client_id: client_id) unless client_id.nil?
+        end
       end
 
       private

@@ -8,7 +8,7 @@ module HelloSign
   class << self
     extend Forwardable
 
-    attr_accessor :email_address, :password
+    attr_accessor :email_address, :password, :client_id
 
     delegate [
       :account,
@@ -20,7 +20,7 @@ module HelloSign
 
     def client
       unless credentials_match?
-        @client = HelloSign::Client.new(email_address, password)
+        @client = HelloSign::Client.new(email_address, password, client_id)
       end
 
       @client
@@ -38,11 +38,11 @@ module HelloSign
     end
 
     def client_credentials
-      [@client.email_address, @client.password]
+      [@client.email_address, @client.password, @client.client_id]
     end
 
     def provided_credentials
-      [email_address, password]
+      [email_address, password, client_id]
     end
 
     Faraday.register_middleware(

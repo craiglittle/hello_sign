@@ -4,10 +4,12 @@ require 'hello_sign'
 describe HelloSign do
   let(:email_address) { double('email address') }
   let(:password)      { double('password') }
+  let(:client_id)     { double('client_id') }
 
   before do
     HelloSign.email_address = email_address
     HelloSign.password      = password
+    HelloSign.client_id     = client_id
   end
 
   after do
@@ -26,7 +28,7 @@ describe HelloSign do
 
       it "passes the credentials when creating the client" do
         expect(HelloSign::Client).to(
-          have_received(:new).with(email_address, password)
+          have_received(:new).with(email_address, password, client_id)
         )
       end
     end
@@ -38,6 +40,7 @@ describe HelloSign do
         allow(HelloSign::Client).to receive(:new).and_return(client, new_client)
         allow(client).to receive(:email_address).and_return(email_address)
         allow(client).to receive(:password).and_return(password)
+        allow(client).to receive(:client_id).and_return(client_id)
 
         HelloSign.client
       end
@@ -48,6 +51,7 @@ describe HelloSign do
         before do
           HelloSign.email_address = 'bob@earth.com'
           HelloSign.password      = 'being_human'
+          HelloSign.client_id     = 'client_id'
         end
 
         its(:client) { should be new_client }

@@ -1,8 +1,10 @@
 module HelloSign
   module Parameters
     class ReusableFormSignatureRequest
-      attr_accessor :test_mode, :reusable_form_id, :title, :subject, :message
-      private :test_mode, :reusable_form_id, :title, :subject, :message
+      attr_accessor :test_mode, :reusable_form_id, :title, :subject, :message,
+        :client_id
+      private :test_mode, :reusable_form_id, :title, :subject, :message,
+        :client_id
 
       attr_writer :ccs, :signers, :custom_fields
 
@@ -20,7 +22,9 @@ module HelloSign
           ccs:              formatted_ccs,
           signers:          formatted_signers,
           custom_fields:    formatted_custom_fields
-        }
+        }.tap do |f|
+          f.merge!(client_id: client_id) unless client_id.nil?
+        end
       end
 
       private

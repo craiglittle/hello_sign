@@ -20,6 +20,14 @@ module HelloSign
         end
       end
 
+      def create_embedded_request(params = {}, &block)
+        if (form_id = params[:form])
+          deliver_embedded_request_with_form(form_id, &block)
+        else
+          deliver_embedded_request(&block)
+        end
+      end
+
       def status
         @client.get("/signature_request/#@request_id")
       end
@@ -44,6 +52,10 @@ module HelloSign
         @client.get("/signature_request/final_copy/#@request_id")
       end
 
+      def temporary_signature_url(signature_id)
+        @client.get("/embedded/sign_url/#{signature_id}")
+      end
+
       private
 
       def deliver_request
@@ -60,6 +72,29 @@ module HelloSign
               yield p
             end.formatted
         })
+      end
+
+      def deliver_embedded_request
+        @client.post('/signature_request/create_embedded',
+          body:
+            Parameters::SignatureRequest.new.tap do |p|
+              p.client_id = @client.client_id
+
+              yield p
+            end.formatted
+        )
+      end
+
+      def deliver_embedded_request_with_form(form_id)
+        @client.post('/signature_request/create_embedded_with_reusable_form',
+          body:
+            Parameters::ReusableFormSignatureRequest.new.tap do |p|
+              p.reusable_form_id = form_id
+              p.client_id        = @client.client_id
+
+              yield p
+            end.formatted
+        )
       end
 
     end

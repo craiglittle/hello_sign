@@ -11,6 +11,7 @@ describe HelloSign::Parameters::SignatureRequest do
     context "when all required arguments are set" do
       let(:expected) do
         {
+          client_id: 'client_id',
           test_mode: 1,
           title: 'Lease',
           subject: 'Sign this',
@@ -39,6 +40,7 @@ describe HelloSign::Parameters::SignatureRequest do
       end
 
       before do
+        request_parameters.client_id = 'client_id'
         request_parameters.test_mode = 1
         request_parameters.title     = 'Lease'
         request_parameters.subject   = 'Sign this'

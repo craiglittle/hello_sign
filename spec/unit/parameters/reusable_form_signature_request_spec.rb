@@ -17,18 +17,20 @@ describe HelloSign::Parameters::ReusableFormSignatureRequest do
             'accountant' => {email_address: 'accountant@llc.com'}
           },
           signers:          {
-            'consultant' => {name: 'Jack', email_address: 'jack@hill.com'}, 
+            'consultant' => {name: 'Jack', email_address: 'jack@hill.com'},
             'client'     => {name: 'Jill', email_address: 'jill@hill.com'}
           },
           custom_fields:    {
             'cost' => '$20,000',
             'time' => 'two weeks'
           },
-          test_mode: 1
+          test_mode: 1,
+          client_id: 'client_id'
         }
       end
 
       before do
+        request_parameters.client_id = 'client_id'
         request_parameters.test_mode = 1
         request_parameters.reusable_form_id = 'form_id'
         request_parameters.title   = 'Lease'
