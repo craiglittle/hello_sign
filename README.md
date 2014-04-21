@@ -6,13 +6,11 @@ A Ruby interface to the HelloSign API
 [![Build Status](https://travis-ci.org/craiglittle/hello_sign.png?branch=master)][build_status]
 [![Dependency Status](https://gemnasium.com/craiglittle/hello_sign.png)][gemnasium]
 [![Code Climate](https://codeclimate.com/github/craiglittle/hello_sign.png)][code_climate]
-[![Coverage Status](https://coveralls.io/repos/craiglittle/hello_sign/badge.png?branch=master)][coveralls]
 
 [gem_version]: http://badge.fury.io/rb/hello_sign
 [build_status]: https://travis-ci.org/craiglittle/hello_sign
 [gemnasium]: https://gemnasium.com/craiglittle/hello_sign
 [code_climate]: https://codeclimate.com/github/craiglittle/hello_sign
-[coveralls]: https://coveralls.io/r/craiglittle/hello_sign
 
 ## Installation
 ```ruby
